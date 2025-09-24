@@ -33,7 +33,7 @@
         <Grid AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
             <Grid Margin="9" RowDefinitions="*,Auto,Auto">
                 <ScrollView Grid.Row="0" VerticalOptions="Fill">
-                    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+                    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="8">
 
                         <Label Grid.Row="0" 
                                x:Name="lbl_heading" 
@@ -188,12 +188,14 @@
                                x:Name="lbl_sourceMoney" 
                                FontSize="16" 
                                HorizontalOptions="Fill" 
-                               FontAttributes="Bold"/>
+                               FontAttributes="Bold"
+                               Margin="0,8,0,4"/>
                         <Entry Grid.Row="22" 
                                x:Name="entry_sourceMoney" 
                                FontSize="16" 
                                Placeholder="Enter Source Of Money" 
-                               MaxLength="200"/>
+                               MaxLength="200"
+                               Margin="0,0,0,12"/>
 
                         <Label Grid.Row="23" 
                                x:Name="lbl_remarks" 
@@ -205,10 +207,11 @@
                                 FontSize="16" 
                                 Placeholder="Enter Remarks" 
                                 MaxLength="200" 
-                                AutoSize="TextChanges"
+                                AutoSize="Disabled"
+                                HeightRequest="100"
                                 Margin="0,12,0,12"/>
 
-                        <Grid Grid.Row="25" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="10" Margin="0,12,0,12">
+                        <Grid Grid.Row="25" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="10" Margin="0,16,0,16">
                             <Label Grid.Column="0" 
                                    x:Name="lbl_expenseevidence" 
                                    FontSize="16" 
