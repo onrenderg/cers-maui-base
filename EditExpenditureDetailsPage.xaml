@@ -205,26 +205,35 @@
                                 FontSize="16" 
                                 Placeholder="Enter Remarks" 
                                 MaxLength="200" 
-                                AutoSize="TextChanges"/>
+                                AutoSize="TextChanges"
+                                Margin="0,12,0,12"/>
 
-                        <Grid Grid.Row="25" ColumnDefinitions="Auto,Auto,Auto">
+                        <Grid Grid.Row="25" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="10" Margin="0,12,0,12">
                             <Label Grid.Column="0" 
-                                   VerticalOptions="Center" 
                                    x:Name="lbl_expenseevidence" 
                                    FontSize="16" 
-                                   HorizontalOptions="Start" 
-                                   FontAttributes="Bold"/>
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Start"
+                                   VerticalOptions="Center"
+                                   VerticalTextAlignment="Center"
+                                   LineBreakMode="TailTruncation"/>
                             <Button Grid.Column="1" 
                                     x:Name="btn_uploadpdf" 
-                                    HorizontalOptions="Start" 
+                                    HorizontalOptions="End" 
+                                    VerticalOptions="Center"
+                                    HeightRequest="40"
+                                    Padding="16,8"
                                     Clicked="btn_uploaddoc_Clicked"/>
                             <ImageButton Grid.Column="2" 
                                          BackgroundColor="Transparent" 
+                                         WidthRequest="40"
                                          HeightRequest="40" 
                                          IsVisible="false" 
                                          Source="ic_viewpdf" 
                                          x:Name="imgbtn_viewpdf" 
-                                         HorizontalOptions="Start" 
+                                         HorizontalOptions="End" 
+                                         VerticalOptions="Center"
+                                         Margin="6,0,0,0"
                                          Clicked="imgbtn_viewpdf_Clicked" />
                         </Grid>
                     </Grid>
