@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CERS.App">
+    <Application.Resources>
+        <Style x:Key="NavigationLabelColor" x:Name="Style" TargetType="Label">
+            <Setter Property="TextColor">
+                <OnPlatform x:TypeArguments="Color">
+                    <On Platform="Android">White</On>
+                    <On Platform="iOS">Black</On>
+                </OnPlatform>
+            </Setter>
+        </Style>
+        <Color x:Key="Light_Btn_Text_Color">White</Color>
+        <Color x:Key="Light_Btn_Background_Color">#0f0f0f</Color>
+
+        <Color x:Key="Light_Btn_Danger_Text_Color">White</Color>
+        <Color x:Key="Light_Btn_Danger_Background_Color">OrangeRed</Color>
+
+        <Color x:Key="Light_Lbl_Text_Color">white</Color>
+        <Color x:Key="Light_Lbl_Text_Color1">#0f0f0f</Color>
+        <Color x:Key="Footer_Label_Text_Color">white</Color>
+
+        <Color x:Key="Light_Frame_Background_Color">Transparent</Color>
+        <Color x:Key="Light_Frame_Border_Color">#0f0f0f</Color>
+
+        <Color x:Key="Light_Grid_Background_Color">#F5F5F5</Color>
+        <Color x:Key="Light_Grid_Background_tab_Color">#90a3f0</Color>
+
+        <Color x:Key="Light_Calender_Grid_Background_Color">#ebf0f0</Color>
+        <Color x:Key="Light_Calender_Stack_Background_Color">White</Color>
+
+
+        <!--Dark colors -->
+        <Color x:Key="Dark_Btn_Text_Color">White</Color>
+        <Color x:Key="Dark_Btn_Background_Color">#0f0f0f</Color>
+
+        <Color x:Key="Dark_Btn_Danger_Text_Color">White</Color>
+        <Color x:Key="Dark_Btn_Danger_Background_Color">OrangeRed</Color>
+
+        <Color x:Key="Dark_Lbl_Text_Color">White</Color>
+
+        <Color x:Key="Dark_Frame_Background_Color">Transparent</Color>
+        <Color x:Key="Dark_Frame_Border_Color">#0f0f0f</Color>
+        <Color x:Key="Dark_Frame_Loading_Border_Color">#0f0f0f</Color>
+
+        <Color x:Key="Dark_Grid_Background_Color">#4F4B4B</Color>
+        <Color x:Key="Dark_Grid_Background_tab_Color">#4F4B4B</Color>
+
+        <Color x:Key="Dark_Calender_Grid_Background_Color">#4F4B4B</Color>
+        <Color x:Key="Dark_Calender_Stack_Background_Color">Black</Color>
+
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor"
+                    Value="{AppThemeBinding Light={StaticResource Light_Btn_Background_Color}, Dark={StaticResource Dark_Btn_Background_Color}}" />
+            <Setter Property="TextColor"
+                    Value="{AppThemeBinding Light={StaticResource Light_Btn_Text_Color}, Dark={StaticResource Dark_Btn_Text_Color}}" />
+            <Setter Property="FontSize">
+                <Setter.Value>
+                    <OnIdiom Phone="14" Default="13" Desktop="20" Tablet="18" TV="20" Watch="8"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="Danger_ButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor"
+                    Value="{AppThemeBinding Light={StaticResource Light_Btn_Danger_Background_Color}, Dark={StaticResource Dark_Btn_Danger_Background_Color}}" />
+            <Setter Property="TextColor"
+                    Value="{AppThemeBinding Light={StaticResource Light_Btn_Danger_Text_Color}, Dark={StaticResource Dark_Btn_Danger_Text_Color}}" />
+            <Setter Property="FontSize">
+                <Setter.Value>
+                    <OnIdiom Phone="14" Default="13" Desktop="20" Tablet="18" TV="20" Watch="8"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="BoxView_Line" TargetType="BoxView">
+            <Setter Property="BackgroundColor"
+                        Value="{AppThemeBinding Light={StaticResource Light_Calender_Grid_Background_Color}, Dark={StaticResource Dark_Calender_Grid_Background_Color}}" />
+            <Setter Property="HeightRequest" Value="2"/>
+            <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+        </Style>
+
+
+        <Style x:Key="LabelStyle" TargetType="Label">
+            <Setter Property="TextColor"
+                    Value="{AppThemeBinding Light={StaticResource Light_Lbl_Text_Color1}, Dark={StaticResource Dark_Lbl_Text_Color}}" />
+            <Setter Property="FontSize">
+                <Setter.Value>
+                    <OnIdiom Phone="14" Default="13" Desktop="20" Tablet="18" TV="20" Watch="8"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="VerticalTextAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="LabelStyle_CalenderColorGrid" TargetType="Label">
+            <Setter Property="TextColor"
+                    Value="{AppThemeBinding Light={StaticResource Light_Lbl_Text_Color}, Dark={StaticResource Dark_Lbl_Text_Color}}" />
+            <Setter Property="FontSize">
+                <Setter.Value>
+                    <OnIdiom Phone="10" Default="9" Desktop="12" Tablet="13" TV="13" Watch="5"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="VerticalTextAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="LabelStyle_Calender" TargetType="Label">
+            <Setter Property="TextColor"
+                    Value="{AppThemeBinding Light={StaticResource Light_Lbl_Text_Color}, Dark={StaticResource Dark_Lbl_Text_Color}}" />
+            <Setter Property="FontSize">
+                <Setter.Value>
+                    <OnIdiom Phone="14" Default="13" Desktop="20" Tablet="18" TV="20" Watch="8"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="VerticalTextAlignment" Value="Center"/>
+            <Setter Property="HorizontalTextAlignment" Value="Center"/>
+            <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
+        </Style>
+
+        <Style x:Key="LabelStyle_TabMenu" TargetType="Label">
+            <Setter Property="TextColor"
+                    Value="{AppThemeBinding Light={StaticResource Light_Lbl_Text_Color}, Dark={StaticResource Dark_Lbl_Text_Color}}" />
+            <Setter Property="FontSize">
+                <Setter.Value>
+                    <OnIdiom Phone="12" Default="12" Desktop="16" Tablet="16" TV="18" Watch="8"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="VerticalTextAlignment" Value="Center"/>
+            <Setter Property="HorizontalTextAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="LabelStyle_PageTitle" TargetType="Label">
+            <Setter Property="TextColor"
+                    Value="{AppThemeBinding Light={StaticResource Light_Lbl_Text_Color}, Dark={StaticResource Dark_Lbl_Text_Color}}" />
+            <Setter Property="FontSize">
+                <Setter.Value>
+                    <OnIdiom Phone="16" Default="16" Desktop="20" Tablet="20" TV="22" Watch="9"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="VerticalTextAlignment" Value="Center"/>
+            <Setter Property="HorizontalTextAlignment" Value="Center"/>
+            <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+        </Style>
+        <Style x:Key="NIC_LabelStyle_PageTitle" TargetType="Label">
+            <Setter Property="TextColor"
+                        Value="{AppThemeBinding Light={StaticResource Dark_Lbl_Text_Color}, Dark={StaticResource Dark_Lbl_Text_Color}}" />
+            <Setter Property="FontSize">
+                <Setter.Value>
+                    <OnIdiom Phone="16" Default="16" Desktop="20" Tablet="20" TV="22" Watch="9"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BackgroundColor" Value="#0f0f0f"/>
+            <Setter Property="VerticalTextAlignment" Value="Center"/>
+            <Setter Property="HorizontalTextAlignment" Value="Center"/>
+            <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="Padding" Value="4"/>
+        </Style>
+
+
+        <Style x:Key="Lable_Slider_Style" TargetType="Label">
+            <Setter Property="TextColor"
+                        Value="{AppThemeBinding Light={StaticResource Light_Lbl_Text_Color}, Dark={StaticResource Dark_Lbl_Text_Color}}" />
+            <Setter Property="FontSize">
+                <Setter.Value>
+                    <OnIdiom Phone="13" Default="13" Desktop="20" Tablet="18" TV="20" Watch="8"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="VerticalTextAlignment" Value="Center"/>
+            <Setter Property="HorizontalTextAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="NavBar_LabelStyle" TargetType="Label">
+            <Setter Property="TextColor"
+                    Value="{AppThemeBinding Light={StaticResource Light_Lbl_Text_Color}, Dark={StaticResource Dark_Lbl_Text_Color}}" />
+            <Setter Property="FontSize">
+                <Setter.Value>
+                    <OnIdiom Phone="17" Default="16" Desktop="23" Tablet="21" TV="22" Watch="9"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="VerticalTextAlignment" Value="Center"/>
+            <Setter Property="HorizontalTextAlignment" Value="Center"/>
+            <Setter Property="Text" Value="Visitor Management"/>
+        </Style>
+
+        <Style x:Key="FrameStyle" TargetType="Frame">
+            <Setter Property="BackgroundColor"
+                    Value="{AppThemeBinding Light={StaticResource Light_Frame_Background_Color}, Dark={StaticResource Dark_Frame_Background_Color}}" />
+            <Setter Property="BorderColor"
+                    Value="{AppThemeBinding Light={StaticResource Light_Frame_Border_Color}, Dark={StaticResource Dark_Frame_Border_Color}}" />
+        </Style>
+
+        <Style x:Key="FrameLoadingStyle" TargetType="Frame">
+            <Setter Property="BackgroundColor"
+                    Value="{AppThemeBinding Light={StaticResource Light_Frame_Background_Color}, Dark={StaticResource Dark_Frame_Background_Color}}" />
+            <Setter Property="BorderColor"
+                    Value="{AppThemeBinding Light={StaticResource Light_Frame_Border_Color}, Dark={StaticResource Dark_Frame_Loading_Border_Color}}" />
+        </Style>
+
+        <Style x:Key="FooterGridStyle" TargetType="Grid">
+            <Setter Property="BackgroundColor"
+                    Value="{AppThemeBinding Light={StaticResource Light_Grid_Background_tab_Color}, Dark={StaticResource Dark_Grid_Background_tab_Color}}" />
+            <Setter Property="Padding" Value="6"/>
+        </Style>
+
+
+
+        <Style x:Key="CalenderGrid" TargetType="Grid">
+            <Setter Property="BackgroundColor"
+                    Value="{AppThemeBinding Light={StaticResource Light_Calender_Grid_Background_Color}, Dark={StaticResource Dark_Calender_Grid_Background_Color}}" />
+        </Style>
+
+        <Style x:Key="CalenderStack" TargetType="StackLayout">
+            <Setter Property="BackgroundColor"
+                    Value="{AppThemeBinding Light={StaticResource Light_Calender_Stack_Background_Color}, Dark={StaticResource Dark_Calender_Stack_Background_Color}}" />
+            <Setter Property="Spacing" Value="0"/>
+        </Style>
+    </Application.Resources>
+</Application>

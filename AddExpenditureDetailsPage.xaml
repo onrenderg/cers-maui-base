@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CERS.AddExpenditureDetailsPage"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"            
+             ios:Page.UseSafeArea="true">
+
+    <NavigationPage.TitleView  >
+        <StackLayout  Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
+            <Image Source="seclogo.png"  HeightRequest="40"  VerticalOptions="CenterAndExpand"/>
+            <StackLayout  Orientation="Vertical" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Spacing="0">
+                <Label x:Name="lbl_title" Text="State Election Commission, H.P." Style="{StaticResource NavigationLabelColor}" FontSize="20" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+            </StackLayout>
+        </StackLayout>
+    </NavigationPage.TitleView>
+
+   
+
+    <Grid>
+        <StackLayout Margin="9">
+            <ScrollView VerticalOptions ="FillAndExpand">
+                <StackLayout>
+
+                    <Label x:Name="lbl_heading" FontSize="18" BackgroundColor="Navy" TextColor="White" FontAttributes="Bold" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center"/>
+                    <StackLayout Orientation="Vertical">
+                        <Label x:Name="lbl_heading1" Text="Expenditure Details" HorizontalOptions="CenterAndExpand" FontSize="18" TextDecorations="Underline" FontAttributes="Bold"/>
+                        <Label x:Name="lbl_mandatory" Text="Mandatory Fields*" FontSize="14"   HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center"/>
+
+                        <Label  x:Name="lbl_expdate" FontSize="16" HorizontalOptions="FillAndExpand" FontAttributes="Bold"/>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
+                            <!--<Image Source="calendar.png" Aspect="AspectFit" Margin="0" HeightRequest="40"/>-->
+                            <Entry TextColor="Black"  HorizontalOptions="FillAndExpand"  FontSize="16"  Placeholder="Select Expenditure Date" x:Name="Entry_expdate" Focused="Entry_expdate_Focused" />
+                            <DatePicker x:Name="datepicker_expdate" IsVisible="false"  Format="dd/MM/yyyy" DateSelected="datepicker_expdate_DateSelected"  HorizontalOptions="FillAndExpand"/>
+                        </StackLayout>                                       
+
+                        <Label x:Name="lbl_exptype" FontSize="16" HorizontalOptions="FillAndExpand" FontAttributes="Bold"/>
+                        <!--<Picker x:Name="picker_exptype"  FontSize="16" Title="Select Expenditure Source" SelectedIndexChanged="picker_exptype_SelectedIndexChanged"/>-->
+                        <Editor Placeholder="Select Expenditure Type" x:Name="editor_exptype"  Focused="editor_exptype_Focused" AutoSize="TextChanges" FontSize="16" />
+
+                        <Label  x:Name="lbl_paymentdate" FontSize="16" HorizontalOptions="FillAndExpand" FontAttributes="Bold"/>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
+                            <Entry TextColor="Black" FontSize="16"  HorizontalOptions="FillAndExpand"  Placeholder="Select Payment Date" x:Name="Entry_paymentdate" Focused="Entry_paymentdate_Focused" />
+                            <DatePicker x:Name="datepicker_paymentdate" IsVisible="false"  Format="dd/MM/yyyy" DateSelected="datepicker_paymentdate_DateSelected"  HorizontalOptions="FillAndExpand"/>
+                        </StackLayout>
+
+                        <Label x:Name="lbl_payMode" FontSize="16" HorizontalOptions="FillAndExpand" FontAttributes="Bold"/>
+                        <Picker x:Name="picker_payMode"  FontSize="16"  SelectedIndexChanged="picker_payMode_SelectedIndexChanged"/>
+
+                        <Label x:Name="lbl_voucherBillNumber" FontSize="16" HorizontalOptions="FillAndExpand" FontAttributes="Bold"/>
+                        <Entry x:Name="entry_voucherBillNumber"  FontSize="16" Placeholder="Enter Voucher/Bill Number" MaxLength="100" />                        
+                      
+                        <Label x:Name="lbl_amount" FontSize="16" HorizontalOptions="FillAndExpand" FontAttributes="Bold"/>
+                        <Entry x:Name="entry_amount" FontSize="16"  Placeholder="Enter Amount" MaxLength="9" Keyboard="Numeric"/>
+
+                        <Label x:Name="lbl_amountoutstanding" FontSize="16" HorizontalOptions="FillAndExpand" FontAttributes="Bold"/>
+                        <Entry x:Name="entry_amountoutstanding" FontSize="16"  Placeholder="Enter Amount Outstanding" MaxLength="9" Keyboard="Numeric"/>
+
+                        <Label x:Name="lbl_payeeName" FontSize="16" HorizontalOptions="FillAndExpand" FontAttributes="Bold"/>
+                        <Entry x:Name="entry_payeeName"  FontSize="16" Placeholder="Enter Payee Name" MaxLength="30"/>
+
+                        <Label x:Name="lbl_payeeAddress" FontSize="16" HorizontalOptions="FillAndExpand" FontAttributes="Bold"/>
+                        <Editor x:Name="entry_payeeAddress"  FontSize="16" Placeholder="Enter Payee Address" MaxLength="250" AutoSize="TextChanges"/>
+
+                        <Label x:Name="lbl_sourceMoney" FontSize="16" HorizontalOptions="FillAndExpand" FontAttributes="Bold"/>
+                        <Entry x:Name="entry_sourceMoney"  FontSize="16" Placeholder="Enter Source Of Money" MaxLength="200"/>
+
+                        <Label x:Name="lbl_remarks" FontSize="16" HorizontalOptions="FillAndExpand" FontAttributes="Bold"/>
+                        <Editor x:Name="entry_remarks"  FontSize="16" Placeholder="Enter Remarks" MaxLength="200" AutoSize="TextChanges"/>
+
+                        <StackLayout Orientation="Horizontal">
+                            <Label VerticalOptions="CenterAndExpand" x:Name="lbl_expenseevidence" FontSize="16" HorizontalOptions="Start" FontAttributes="Bold"/>
+                            <Button x:Name="btn_uploadpdf" HorizontalOptions="Start" Clicked="btn_uploaddoc_Clicked"/>
+
+                        </StackLayout>
+                    </StackLayout>
+
+                </StackLayout>
+            </ScrollView>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Margin="9">
+                <Button x:Name="btn_save" Clicked="btn_save_Clicked" Padding="5" Text="Save" FontAttributes="Bold" FontSize="20" BackgroundColor="ForestGreen" TextColor="White" HorizontalOptions="FillAndExpand"/>
+            </StackLayout>
+
+            <Grid VerticalOptions="End" Style="{StaticResource FooterGridStyle}" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.Column="0">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Tab_Home_Tapped"/>
+                    </StackLayout.GestureRecognizers>
+                    <Image x:Name="Tab_Home_Image" Source="ic_homewhite.png" HeightRequest="20"/>
+                    <Label x:Name="Tab_Home_Label" Text="Home" Style="{StaticResource LabelStyle_TabMenu}"/>
+                </StackLayout>            
+
+                <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.Column="1">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Tab_New_Tapped"/>
+                    </StackLayout.GestureRecognizers>
+                    <Image x:Name="Tab_New_Image" Source="ic_addwhite.png" HeightRequest="20"/>
+                    <Label x:Name="Tab_New_Label" Text="Add Expenses" Style="{StaticResource LabelStyle_TabMenu}"/>
+                </StackLayout>            
+
+
+                <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.Column="2" >
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Tab_Settings_Tapped"/>
+                    </StackLayout.GestureRecognizers>
+                    <Image x:Name="Tab_Settings_Image" Source="ic_morewhite.png" HeightRequest="20"/>
+                    <Label x:Name="Tab_Settings_Label" Text="More" Style="{StaticResource LabelStyle_TabMenu}"/>
+                </StackLayout>
+
+
+            </Grid>
+
+        </StackLayout>
+
+        <ContentView x:Name="popupexptype" BackgroundColor="#C0808080" Padding="20" IsVisible="false" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+            <StackLayout HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="white">
+                <Label x:Name="lbl_popupexptype" Text="Tap To Select exptype" Padding="6" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="16" FontAttributes="Bold" TextColor="Navy" />
+                <Frame  Padding="0" Margin="3" CornerRadius="20" BorderColor="Navy">
+                    <SearchBar Placeholder="Type exptype Name" x:Name="SearchBar_exptype" IsSpellCheckEnabled="False" PlaceholderColor="#736f6f" BackgroundColor="#e0e0e0" TextColor="Black"  CancelButtonColor="Red"  Keyboard="Plain" TextChanged="SearchBar_exptype_TextChanged"/>
+                </Frame>
+
+                <ListView x:Name="listview_exptype" HasUnevenRows="True" SeparatorColor="Navy" ItemTapped="listview_exptype_ItemTapped" BackgroundColor="White">
+                    <ListView.ItemTemplate >
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Orientation="Vertical" Grid.Row="0">
+                                    <Label Text="{Binding Exp_Desc}" HorizontalOptions="FillAndExpand" Padding="10" HorizontalTextAlignment="Start" TextColor="Black"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Button BackgroundColor="Navy" TextColor="White" FontAttributes="Bold"  x:Name="popupexptypeCancel" Clicked="popupexptypeCancel_Clicked" Text="Cancel" Margin="5" HorizontalOptions="FillAndExpand"/>
+            </StackLayout>
+        </ContentView>
+
+
+        <ContentView x:Name="Loading_activity" BackgroundColor="#C0808080" Padding="20, 20" IsVisible="false" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+            <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                <Frame BackgroundColor="White" HorizontalOptions="FillAndExpand">
+                    <StackLayout Orientation="Horizontal" Margin="6" HorizontalOptions="FillAndExpand">
+                        <ActivityIndicator IsVisible="true" IsRunning="true" Margin="5"/>
+                        <Label x:Name="lbl_PleaseWait" Text="Please Wait ..." TextColor="Black" FontAttributes="Bold" HorizontalOptions="FillAndExpand" WidthRequest="600" VerticalTextAlignment="Center"/>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+        </ContentView>
+    </Grid>
+</ContentPage>

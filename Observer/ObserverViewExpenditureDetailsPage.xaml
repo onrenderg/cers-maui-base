@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CERS.Observer.ObserverViewExpenditureDetailsPage"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls" 
+             ios:Page.UseSafeArea="true"   x:Name="title_page" >
+
+    <NavigationPage.TitleView  >
+        <StackLayout  Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
+            <Image Source="seclogo.png"  HeightRequest="40"  VerticalOptions="CenterAndExpand"/>
+            <StackLayout  Orientation="Vertical" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Spacing="0">
+                <Label x:Name="lbl_title" Text="State Election Commission, H.P." Style="{StaticResource NavigationLabelColor}" FontSize="20" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+            </StackLayout>
+        </StackLayout>
+    </NavigationPage.TitleView>
+    <Grid>
+        <StackLayout Margin="9">
+            <Label x:Name="lbl_heading0" FontSize="18" BackgroundColor="Navy" TextColor="White" FontAttributes="Bold" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center"/>
+            <Label x:Name="lbl_heading" FontSize="18" BackgroundColor="Navy" TextColor="White" FontAttributes="Bold" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center"/>
+
+            <SearchBar  x:Name="searchbar_expendituredetails" CancelButtonColor="Red" HorizontalOptions="FillAndExpand" Placeholder="Search" TextChanged="searchbar_expendituredetails_TextChanged"/>
+
+            <ListView x:Name="listView_expendituredetails" HasUnevenRows="True" SeparatorColor="#126b8a"  SelectionMode="None" >
+                <ListView.ItemTemplate >
+                    <DataTemplate>
+                        <ViewCell >
+                            <Frame VerticalOptions="StartAndExpand" Margin="0,10,0,10"  HasShadow="False" CornerRadius="20" BackgroundColor="White" BorderColor="Navy">
+                                <Grid >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="5*"/>
+                                        <ColumnDefinition Width="5*"/>
+                                    </Grid.ColumnDefinitions>
+
+
+                                    <Label  IsVisible="{Binding expdatevisibility}" Text="{Binding lblexpDate}" TextColor="Navy"  HorizontalTextAlignment="Start" FontSize="16"  FontAttributes="Bold" Grid.Row="1" Grid.Column="0"/>
+                                    <Label  IsVisible="{Binding expdatevisibility}"  Text="{Binding expDateDisplay}"  HorizontalOptions="Start" HorizontalTextAlignment="Start"  FontSize="16" TextColor="Maroon"  Grid.Row="1" Grid.Column="1"/>
+
+                                    <Label IsVisible="{Binding exptypevisibility}" Text="{Binding lblexptype}" TextColor="Navy"  HorizontalTextAlignment="Start" FontSize="16"  FontAttributes="Bold" Grid.Row="2" Grid.Column="0"/>
+                                    <Label IsVisible="{Binding exptypevisibility}" Text="{Binding ExpTypeName}" TextColor="Maroon"  HorizontalOptions="Start" HorizontalTextAlignment="Start" FontSize="16" Grid.Row="2" Grid.Column="1"/>
+
+                                    <!--<Label IsVisible="false" Text="{Binding lblamtType}" TextColor="Navy"  HorizontalTextAlignment="Start" FontSize="16"  FontAttributes="Bold" Grid.Row="3" Grid.Column="0"/>
+                                    <Label IsVisible="false" Text="{Binding amtType}" TextColor="Maroon"  HorizontalOptions="Start" HorizontalTextAlignment="Start" FontSize="16" Grid.Row="3" Grid.Column="1"/>-->
+
+                                    <Label Text="{Binding lblAmount}" TextColor="Navy"  HorizontalTextAlignment="Start" FontSize="16"  FontAttributes="Bold" Grid.Row="3" Grid.Column="0"/>
+                                    <Label Text="{Binding amounttodisplay}" TextColor="Maroon"  HorizontalOptions="Start" HorizontalTextAlignment="Start" FontSize="16" Grid.Row="3" Grid.Column="1"/>
+
+                                    <Label Text="{Binding lbl_amountoutstanding}" TextColor="Navy"  HorizontalTextAlignment="Start" FontSize="16"  FontAttributes="Bold" Grid.Row="4" Grid.Column="0"/>
+                                    <Label Text="{Binding amountoutstandingtodisplay}" TextColor="Maroon"  HorizontalOptions="Start" HorizontalTextAlignment="Start" FontSize="16" Grid.Row="4" Grid.Column="1"/>
+
+                                    <Label Text="{Binding lblpaymentDate}" TextColor="Navy"  HorizontalTextAlignment="Start" FontSize="16"  FontAttributes="Bold" Grid.Row="5" Grid.Column="0"/>
+                                    <Label Text="{Binding paymentDateDisplay}" TextColor="Maroon"  HorizontalOptions="Start" HorizontalTextAlignment="Start" FontSize="16" Grid.Row="5" Grid.Column="1"/>
+
+                                    <Label Text="{Binding lblvoucherBillNumber}" TextColor="Navy"  HorizontalTextAlignment="Start" FontSize="16"  FontAttributes="Bold" Grid.Row="6" Grid.Column="0"/>
+                                    <Label Text="{Binding voucherBillNumber}" TextColor="Maroon"  HorizontalOptions="Start" HorizontalTextAlignment="Start" FontSize="16" Grid.Row="6" Grid.Column="1"/>
+
+                                    <Label Text="{Binding lblpayMode}" TextColor="Navy"  HorizontalTextAlignment="Start" FontSize="16"  FontAttributes="Bold" Grid.Row="7" Grid.Column="0"/>
+                                    <Label Text="{Binding PayModeName}" TextColor="Maroon"  HorizontalOptions="Start" HorizontalTextAlignment="Start" FontSize="16" Grid.Row="7" Grid.Column="1"/>
+
+                                    <Label Text="{Binding lblpayeeName}" TextColor="Navy"  HorizontalTextAlignment="Start" FontSize="16"  FontAttributes="Bold" Grid.Row="8" Grid.Column="0"/>
+                                    <Label Text="{Binding payeeName}" TextColor="Maroon"  HorizontalOptions="Start" HorizontalTextAlignment="Start" FontSize="16" Grid.Row="8" Grid.Column="1"/>
+
+                                    <Label Text="{Binding lblpayeeAddress}" TextColor="Navy"  HorizontalTextAlignment="Start" FontSize="16"  FontAttributes="Bold" Grid.Row="9" Grid.Column="0"/>
+                                    <Label Text="{Binding payeeAddress}" TextColor="Maroon"  HorizontalOptions="Start" HorizontalTextAlignment="Start" FontSize="16" Grid.Row="9" Grid.Column="1"/>
+
+                                    <Label Text="{Binding lblsourceMoney}" TextColor="Navy"  HorizontalTextAlignment="Start" FontSize="16"  FontAttributes="Bold" Grid.Row="10" Grid.Column="0"/>
+                                    <Label Text="{Binding sourceMoney}" TextColor="Maroon" HorizontalOptions="Start" HorizontalTextAlignment="Start" FontSize="16"  Grid.Row="10" Grid.Column="1"/>
+
+                                    <Label Text="{Binding lblremarks}" TextColor="Navy"  HorizontalTextAlignment="Start" FontSize="16"  FontAttributes="Bold" Grid.Row="11" Grid.Column="0"/>
+                                    <Label Text="{Binding remarks}" TextColor="Maroon"  HorizontalOptions="Start" HorizontalTextAlignment="Start" FontSize="16" Grid.Row="11" Grid.Column="1"/>
+
+                                    <Label Text="{Binding lblEnteredOn}" TextColor="Navy"  HorizontalTextAlignment="Start" FontSize="16"  FontAttributes="Bold" Grid.Row="12" Grid.Column="0"/>
+                                    <Label Text="{Binding DtTm}" TextColor="Maroon"  HorizontalOptions="Start" HorizontalTextAlignment="Start" FontSize="16" Grid.Row="12" Grid.Column="1"/>
+
+                                    <Label IsVisible="false" Text="{Binding lblObserverRemarks}" TextColor="Navy"  HorizontalTextAlignment="Start" FontSize="16"  FontAttributes="Bold" Grid.Row="13" Grid.Column="0"/>
+                                    <Label IsVisible="false" Text="{Binding ObserverRemarks}" TextColor="Maroon"  HorizontalOptions="Start" HorizontalTextAlignment="Start" FontSize="16" Grid.Row="13" Grid.Column="1"/>
+
+                                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Grid.Row="14" Grid.ColumnSpan="2">
+                                        <Button x:Name="btn_remarks" BackgroundColor="Navy" TextColor="White" CommandParameter="{Binding ExpenseID}" Text="{Binding lblObserverRemarks}" HorizontalOptions="CenterAndExpand"  Clicked="btn_remarks_Clicked" FontAttributes="Bold"/>
+                                        <ImageButton BackgroundColor="Transparent" HeightRequest="40" IsVisible="{Binding pdfvisibility}" Source="ic_viewpdf" CommandParameter="{Binding ExpenseID}" x:Name="imgbtn_viewpdf" HorizontalOptions="Start" Clicked="imgbtn_viewpdf_Clicked" />
+                                    </StackLayout>
+                                    <!--<Button  Grid.Row="14" Grid.ColumnSpan="2" CommandParameter="{Binding ExpenseID}"  Text="{Binding lblremarks}" FontAttributes="Bold" HorizontalOptions="Center" FontSize="18" BackgroundColor="Navy" TextColor="White" CornerRadius="15"  Clicked="btn_remarks_Clicked" x:Name="btn_remarks"/>-->
+
+
+                                </Grid>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+
+        <ContentView x:Name="popupRemarks" BackgroundColor="#C0808080" Padding="20" IsVisible="false" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+            <StackLayout HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="white">
+                <Label x:Name="lbl_popupRemarks" FontSize="18" BackgroundColor="Navy" TextColor="White" FontAttributes="Bold" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" Margin="3"/>
+
+                <ListView x:Name="listview_Remarks" HasUnevenRows="True" SeparatorColor="#126b8a"  SelectionMode="None" ItemTapped="listview_Remarks_ItemTapped"  BackgroundColor="White">
+                    <ListView.ItemTemplate >
+                        <DataTemplate>
+                            <ViewCell >
+                                <Frame VerticalOptions="StartAndExpand" Margin="3"  HasShadow="False" CornerRadius="20" BackgroundColor="White" BorderColor="Navy">
+                                    <StackLayout Orientation="Vertical">
+                                        <Label Text="{Binding lblObserverRemarks}" TextColor="Navy"  HorizontalTextAlignment="Start"  FontAttributes="Bold" Grid.Row="0" Grid.Column="0"/>
+                                        <Label Text="{Binding ObserverRemarks}"  HorizontalOptions="Start" HorizontalTextAlignment="Start" TextColor="Maroon" Grid.Row="1" Grid.Column="0"/>
+
+                                        <Label Text="{Binding lblUserRemarks}" TextColor="Navy"  HorizontalTextAlignment="Start"  FontAttributes="Bold" Grid.Row="2" Grid.Column="0"/>
+                                        <Label Text="{Binding UserRemarks}"  HorizontalOptions="Start" HorizontalTextAlignment="Start" TextColor="Maroon" Grid.Row="3" Grid.Column="0"/>
+
+                                        <!--<Label Text="{Binding lblRepliedDatetime}" TextColor="Navy" HorizontalOptions="FillAndExpand" Grid.ColumnSpan="2"  HorizontalTextAlignment="Start"  FontAttributes="Bold" Grid.Row="4" Grid.Column="0"/>
+                                        <Label Text="{Binding RepliedDatetime}"  HorizontalOptions="Start" HorizontalTextAlignment="Start" TextColor="Maroon" Grid.Row="5" Grid.Column="0"/>-->
+
+                                        <ImageButton  x:Name="img_edit" CommandParameter="{Binding ExpenseObserverRemId}" Clicked="img_edit_Clicked"  HorizontalOptions="CenterAndExpand" Source="ic_edit.png" BackgroundColor="Transparent" HeightRequest="30" IsVisible="{Binding imgeditvisibility}" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"  />
+
+                                    </StackLayout>
+
+                                </Frame>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <StackLayout Orientation="Horizontal">
+                    <Button BackgroundColor="Navy" TextColor="White" FontAttributes="Bold"  x:Name="popupRemarksCancel" Clicked="popupRemarksCancel_Clicked" Text="Cancel" Margin="5" HorizontalOptions="FillAndExpand"/>
+                    <Button BackgroundColor="Navy"  TextColor="White" FontAttributes="Bold"  x:Name="popupRemarksAddNew" Clicked="popupRemarksAddNew_Clicked" Text="Add New" Margin="5" HorizontalOptions="FillAndExpand"/>
+                </StackLayout>
+
+            </StackLayout>
+        </ContentView>
+
+        <ContentView x:Name="popupreplyremarks" BackgroundColor="#C0808080" Padding="20, 20" IsVisible="false" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+            <StackLayout VerticalOptions="Center" HorizontalOptions="FillAndExpand">
+                <Frame BorderColor="#0085b2" Padding="2">
+                    <StackLayout Orientation="Vertical" BackgroundColor="White" Spacing="8" Padding="6">
+
+                        <Label  x:Name="lbl_remarks" Text="Enter remarks" TextColor="Navy" BackgroundColor="Transparent" FontAttributes="Bold" HorizontalOptions="FillAndExpand"  FontSize="16"/>
+                        <Entry x:Name="entry_remarks" PlaceholderColor="Black" TextColor="Black" Placeholder="Enter remarks" Keyboard="Text" MaxLength="250" HorizontalOptions="FillAndExpand"/>
+
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                            <Button BackgroundColor="Navy" TextColor="White" x:Name="PopupreplyremarkscancelBtn" Clicked="PopupreplyremarkscancelBtn_Clicked" HorizontalOptions="FillAndExpand" Text="Cancel"/>
+                            <Button BackgroundColor="Navy" TextColor="White" x:Name="PopupreplyremarksyesBtn" Clicked="PopupreplyremarksyesBtn_Clicked" HorizontalOptions="FillAndExpand" Text="Submit"/>
+                        </StackLayout>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+        </ContentView>
+
+
+        <ContentView x:Name="popupeditremarks" BackgroundColor="#C0808080" Padding="20, 20" IsVisible="false" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+            <StackLayout VerticalOptions="Center" HorizontalOptions="FillAndExpand">
+                <Frame BorderColor="#0085b2" Padding="2">
+                    <StackLayout Orientation="Vertical" BackgroundColor="White" Spacing="8" Padding="6">
+
+
+                        <Label  x:Name="lbl_editremarks" Text="Enter remarks" TextColor="Navy" BackgroundColor="Transparent" FontAttributes="Bold" HorizontalOptions="FillAndExpand"  FontSize="16"/>
+                        <Entry x:Name="entry_editremarks" PlaceholderColor="Black" TextColor="Black" Placeholder="Enter remarks" Keyboard="Text" MaxLength="250" HorizontalOptions="FillAndExpand"/>
+
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                            <Button BackgroundColor="Navy" TextColor="White" x:Name="PopupeditremarkscancelBtn" Clicked="PopupeditremarkscancelBtn_Clicked" HorizontalOptions="FillAndExpand" Text="Cancel"/>
+                            <Button BackgroundColor="Navy" TextColor="White" x:Name="PopupeditremarksyesBtn" Clicked="PopupeditremarksyesBtn_Clicked" HorizontalOptions="FillAndExpand" Text="Submit"/>
+                        </StackLayout>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+        </ContentView>
+
+        <!--<ContentView x:Name="popupremarks" BackgroundColor="#C0808080" Padding="20, 20" IsVisible="false" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+            <StackLayout VerticalOptions="Center" HorizontalOptions="FillAndExpand">
+                <Frame BorderColor="#0085b2" Padding="2">
+                    <StackLayout Orientation="Vertical" BackgroundColor="White" Spacing="8" Padding="6">
+
+
+                        <Label  x:Name="lbl_remarks" Text="Enter remarks" TextColor="Navy" BackgroundColor="Transparent" FontAttributes="Bold" HorizontalOptions="FillAndExpand"  FontSize="16"/>
+                        <Entry x:Name="entry_remarks" PlaceholderColor="Black" TextColor="Black" Placeholder="Enter remarks" Keyboard="Text" MaxLength="250" HorizontalOptions="FillAndExpand"/>
+
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                            <Button BackgroundColor="Navy" TextColor="White" x:Name="PopupremarkscancelBtn" Clicked="PopupremarkscancelBtn_Clicked" HorizontalOptions="FillAndExpand" Text="Cancel"/>
+                            <Button BackgroundColor="Navy" TextColor="White" x:Name="PopupremarksyesBtn" Clicked="PopupremarksyesBtn_Clicked" HorizontalOptions="FillAndExpand" Text="Submit"/>
+                        </StackLayout>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+        </ContentView>-->
+
+        <ContentView x:Name="Loading_activity" BackgroundColor="#C0808080" Padding="20, 20" IsVisible="false" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+            <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                <Frame Style="{StaticResource FrameLoadingStyle}">
+                    <StackLayout Orientation="Horizontal" Padding="6">
+                        <ActivityIndicator IsVisible="true" IsRunning="true" Margin="5"/>
+                        <Label x:Name="Lbl_PleaseWait" Text="Please Wait ..." Style="{StaticResource LabelStyle}" HorizontalOptions="FillAndExpand" WidthRequest="600"/>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+        </ContentView>
+    </Grid>
+</ContentPage>

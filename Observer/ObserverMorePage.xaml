@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CERS.Observer.ObserverMorePage" xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls" 
+             ios:Page.UseSafeArea="true"   >
+
+    <NavigationPage.TitleView  >
+        <StackLayout  Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
+
+            <Image Source="seclogo.png"  HeightRequest="40"  VerticalOptions="CenterAndExpand"/>
+            <StackLayout  Orientation="Vertical" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Spacing="0">
+
+                <Label x:Name="lbl_title" Text="State Election Commission, H.P." Style="{StaticResource NavigationLabelColor}" FontSize="20" FontAttributes="Bold" HorizontalTextAlignment="Center"
+                      VerticalTextAlignment="Center" />
+
+            </StackLayout>
+        </StackLayout>
+    </NavigationPage.TitleView>
+
+
+
+    <Grid>
+        <StackLayout Margin="9">
+
+            <ScrollView VerticalOptions="FillAndExpand" >
+                <StackLayout >
+
+                    <StackLayout>
+
+                        <StackLayout Margin="0"  >
+                            <Image Source="ic_launcher" HorizontalOptions="Center" WidthRequest="130" HeightRequest="100" />
+                            <Label  x:Name="lbl_appname" FontSize="Large"  HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" FontAttributes="Bold"/>
+                            <Label x:Name="lbl_appversion" FontSize="Small" TextColor="Brown" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" FontAttributes="Bold"/>
+
+                            <Label x:Name="Lbl_HP" TextColor="Black" HorizontalOptions="Center" HorizontalTextAlignment="Center" IsVisible="false"/>
+                            <StackLayout  Orientation="Horizontal">
+                                <Label x:Name="lbl_dept" Text="State Election Commission, Himachal Pradesh"  FontSize="17" TextColor="DarkBlue" FontAttributes="Bold" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Start" Margin="5,0,0,0"/>
+                                <!--&#10;-->
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal" Padding="5">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                Tapped="Deptt_Call"
+                                NumberOfTapsRequired="1" />
+                                </StackLayout.GestureRecognizers>
+                                <Image Source="ic_phone" HeightRequest="20"/>
+                                <Label x:Name="lbl_call"  Text="Call Us"  HorizontalOptions="FillAndExpand" FontSize="16" FontAttributes="Bold"/>
+                            </StackLayout>
+
+                            <BoxView BackgroundColor="SkyBlue" HeightRequest="1" Margin="10,0,0,0"/>
+                            <StackLayout Orientation="Horizontal" Padding="5">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                Tapped="deptt_WebSite"
+                                NumberOfTapsRequired="1" />
+                                </StackLayout.GestureRecognizers>
+                                <Image Source="ic_website" HeightRequest="20"/>
+                                <Label x:Name="lbl_website" Text="Website"   HorizontalOptions="FillAndExpand"  FontSize="16" FontAttributes="Bold"/>
+                            </StackLayout>
+
+                            <BoxView BackgroundColor="SkyBlue" HeightRequest="1" Margin="10,0,0,0"/>
+                            <StackLayout Orientation="Horizontal" Padding="5">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                Tapped="Deptt_email"
+                                NumberOfTapsRequired="1" />
+                                </StackLayout.GestureRecognizers>
+                                <Image Source="ic_email" HeightRequest="20"/>
+                                <Label x:Name="lbl_email" Text="Email"  HorizontalOptions="FillAndExpand"  FontSize="16" FontAttributes="Bold"/>
+                            </StackLayout>
+
+                            <BoxView BackgroundColor="SkyBlue" HeightRequest="1" Margin="10,0,0,0"/>
+                            <StackLayout Orientation="Horizontal" Padding="5">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                Tapped="policytapped"
+                                NumberOfTapsRequired="1" />
+                                </StackLayout.GestureRecognizers>
+                                <Image Source="policy.png" HeightRequest="20"/>
+                                <Label x:Name="lbl_policy" Text="Privacy Policy"  HorizontalOptions="FillAndExpand"   FontSize="16" FontAttributes="Bold"/>
+                            </StackLayout>
+
+                            <BoxView BackgroundColor="SkyBlue" HeightRequest="1" Margin="10,0,0,0"/>
+                            <StackLayout Orientation="Horizontal" Padding="5">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                Tapped="logoutTapped"
+                                NumberOfTapsRequired="1" />
+                                </StackLayout.GestureRecognizers>
+                                <Image Source="ic_logout1.png" HeightRequest="20"/>
+                                <Label x:Name="lbl_logout" Text="Logout"  HorizontalOptions="FillAndExpand"  FontSize="16" FontAttributes="Bold" />
+                            </StackLayout>
+
+                            <BoxView BackgroundColor="SkyBlue" HeightRequest="1" Margin="10,0,0,0"/>
+                            <StackLayout Orientation="Horizontal" Padding="5">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                Tapped="languageTapped"
+                                NumberOfTapsRequired="1" />
+                                </StackLayout.GestureRecognizers>
+                                <Image Source="ic_changelanguage.png" HeightRequest="20"/>
+                                <Label x:Name="lbl_language" Text="Change Language"  HorizontalOptions="FillAndExpand"  FontSize="16" FontAttributes="Bold" />
+                            </StackLayout>
+
+                            <Image  Source="niclogo.png" HorizontalOptions="Center" WidthRequest="130" HeightRequest="50" ></Image>
+                        </StackLayout>
+
+
+                    </StackLayout>
+
+                </StackLayout>
+            </ScrollView>
+
+
+            <Grid VerticalOptions="End" Style="{StaticResource FooterGridStyle}" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.Column="0">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Tab_Home_Tapped"/>
+                    </StackLayout.GestureRecognizers>
+                    <Image x:Name="Tab_Home_Image" Source="ic_homewhite.png" HeightRequest="20"/>
+                    <Label x:Name="Tab_Home_Label" Text="Home" Style="{StaticResource LabelStyle_TabMenu}"/>
+                </StackLayout>
+
+                <StackLayout IsVisible="false" Orientation="Vertical" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.Column="1">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Tab_New_Tapped"/>
+                    </StackLayout.GestureRecognizers>
+                    <Image x:Name="Tab_New_Image" Source="ic_addwhite.png" HeightRequest="20"/>
+                    <Label x:Name="Tab_New_Label" Text="Add Expenses" Style="{StaticResource LabelStyle_TabMenu}"/>
+                </StackLayout>
+
+
+                <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.Column="2" >
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Tab_Settings_Tapped"/>
+                    </StackLayout.GestureRecognizers>
+                    <Image x:Name="Tab_Settings_Image" Source="ic_morewhite.png" HeightRequest="20"/>
+                    <Label x:Name="Tab_Settings_Label" Text="More" Style="{StaticResource LabelStyle_TabMenu}"/>
+                </StackLayout>
+
+
+            </Grid>
+
+        </StackLayout>
+
+
+
+
+        <ContentView x:Name="Loading_activity" BackgroundColor="#C0808080" Padding="20, 20" IsVisible="false" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+            <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                <Frame Style="{StaticResource FrameLoadingStyle}">
+                    <StackLayout Orientation="Horizontal" Padding="6">
+                        <ActivityIndicator IsVisible="true" IsRunning="true" Margin="5"/>
+                        <Label x:Name="Lbl_PleaseWait" Text="Please Wait ..." Style="{StaticResource LabelStyle}" HorizontalOptions="FillAndExpand" WidthRequest="600"/>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+        </ContentView>
+    </Grid>
+</ContentPage>

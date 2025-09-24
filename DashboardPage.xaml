@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CERS.DashboardPage"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"            
+             ios:Page.UseSafeArea="true">
+
+    <NavigationPage.TitleView>
+        <Grid ColumnDefinitions="Auto,*" HorizontalOptions="Fill" VerticalOptions="Center">
+            <Image Grid.Column="0" 
+                   Source="seclogo.png" 
+                   HeightRequest="40" 
+                   VerticalOptions="Center"/>
+            <Grid Grid.Column="1" 
+                  RowDefinitions="Auto" 
+                  VerticalOptions="Center" 
+                  HorizontalOptions="Center">
+                <Label Grid.Row="0"
+                       x:Name="lbl_title" 
+                       Text="State Election Commission, H.P." 
+                       Style="{StaticResource NavigationLabelColor}" 
+                       FontSize="20" 
+                       FontAttributes="Bold" 
+                       HorizontalTextAlignment="Center" 
+                       VerticalTextAlignment="Center" />
+            </Grid>
+        </Grid>
+    </NavigationPage.TitleView>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="refresh.png" Clicked="ToolbarItem_Clicked" Text="Refresh"/>
+    </ContentPage.ToolbarItems>
+
+    <Grid Margin="9">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="70"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header Section -->
+        <Label x:Name="lbl_heading" Grid.Row="0" FontSize="18" BackgroundColor="Navy" TextColor="White" FontAttributes="Bold" HorizontalOptions="Fill" HorizontalTextAlignment="Center" Margin="0,0,0,5"/>
+
+        <!-- Main Content Frame -->
+        <Frame Grid.Row="1" HasShadow="True" CornerRadius="15" BackgroundColor="White" BorderColor="#07a6db" Margin="0,5,0,5" Padding="15">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Title -->
+                <Label x:Name="lbl_heading1" Grid.Row="0" FontSize="18" HorizontalOptions="Center" FontAttributes="Bold" TextColor="Navy" TextDecorations="Underline" Margin="0,0,0,10"/>
+
+                <!-- Radio Button Section -->
+                <Grid Grid.Row="1" Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Label x:Name="lbl_Type" Grid.Column="0" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" TextColor="Navy"/>
+                    <RadioButton Grid.Column="1" FontSize="16" x:Name="rb_exptype" IsChecked="true" GroupName="expgroup" CheckedChanged="rb_exp_CheckedChanged" TextColor="Navy"/>
+                    <RadioButton Grid.Column="2" FontSize="16" x:Name="rb_expdate" IsChecked="False" GroupName="expgroup" CheckedChanged="rb_exp_CheckedChanged" TextColor="Navy"/>
+                </Grid>
+
+                <!-- Tap Area for Adding Expenses -->
+                <Grid Grid.Row="2">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped"/>
+                    </Grid.GestureRecognizers>
+                    <Label IsVisible="false" x:Name="lbl_norecords" FontSize="16" FontAttributes="Bold" TextColor="Red" HorizontalOptions="Center" Margin="0,20,0,20"/>
+                </Grid>
+
+                <!-- Total Amount -->
+                <Label Grid.Row="3" IsVisible="false" x:Name="lbl_totalamount" FontSize="16" FontAttributes="Bold" TextColor="Navy" HorizontalOptions="Center" Margin="0,10,0,10"/>
+
+                <!-- Data Grid and ListView -->
+                <Grid Grid.Row="4">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Header Grid -->
+                    <Grid x:Name="grid_data" Grid.Row="0" Margin="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="7.5*"/>
+                            <ColumnDefinition Width="2.5*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" VerticalOptions="Center" FontSize="16" x:Name="lblexptype" HorizontalOptions="Start" TextColor="Navy" FontAttributes="Bold"/>
+                        <Label Grid.Column="1" VerticalOptions="Center" FontSize="16" x:Name="lblAmount" HorizontalOptions="End" TextColor="Navy" FontAttributes="Bold"/>
+                    </Grid>
+
+                    <!-- ListView -->
+                    <ListView Grid.Row="1" x:Name="listView_expendituredetailstypewise" HasUnevenRows="True" VerticalOptions="Fill" SeparatorColor="Transparent" SelectionMode="None" ItemTapped="listView_expendituredetailstypewise_ItemTapped">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell Appearing="ViewCell_Appearing">
+                                    <Grid Margin="4" RowSpacing="5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="8*"/>
+                                            <ColumnDefinition Width="2*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Start" FontSize="16" Text="{Binding displaytitle}" TextColor="Navy"/>
+                                        <Label Grid.Column="1" VerticalOptions="Center" HorizontalOptions="End" FontSize="16" Text="{Binding amount}" TextColor="Navy"/>
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+
+                <!-- Footer Labels -->
+                <Label Grid.Row="5" Margin="0,10,0,5" Padding="0" x:Name="lbl_tapfooter" HorizontalOptions="Center" FontAttributes="Bold" FontSize="14" TextColor="Navy"/>
+                <Label Grid.Row="6" Margin="0,0,0,10" Padding="0" x:Name="lbl_tapfooter1" HorizontalOptions="Center" FontAttributes="Bold" FontSize="12" TextColor="#0066CC"/>
+
+                <!-- Buttons -->
+                <Button Grid.Row="7" x:Name="btn_finalsubmit" Clicked="btn_finalsubmit_Clicked" FontAttributes="Bold" BackgroundColor="Navy" TextColor="White" FontSize="16" Margin="0,10,0,5" CornerRadius="8"/>
+                <Button Grid.Row="8" x:Name="btn_form46" Clicked="btn_form46_Clicked" FontAttributes="Bold" BackgroundColor="Navy" TextColor="White" FontSize="16" Margin="0,5,0,10" CornerRadius="8"/>
+            </Grid>
+        </Frame>
+
+        <!-- Last Updated Label -->
+        <Label Grid.Row="2" Margin="0,10,0,0" Padding="0" x:Name="lbl_lastupdated" TextColor="Navy" FontAttributes="Bold" HorizontalOptions="Center" FontSize="12" HorizontalTextAlignment="Center"/>
+
+        <!-- Footer Navigation -->
+        <Grid Grid.Row="3" Style="{StaticResource FooterGridStyle}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Home Tab -->
+            <Grid Grid.Column="0" HorizontalOptions="Fill">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Tab_Home_Tapped"/>
+                </Grid.GestureRecognizers>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Image Grid.Row="0" x:Name="Tab_Home_Image" Source="ic_homewhite.png" HeightRequest="20" HorizontalOptions="Center"/>
+                <Label Grid.Row="1" x:Name="Tab_Home_Label" Text="Home" Style="{StaticResource LabelStyle_TabMenu}" HorizontalOptions="Center"/>
+            </Grid>
+
+            <!-- Add Expenses Tab -->
+            <Grid Grid.Column="1" HorizontalOptions="Fill">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Tab_New_Tapped"/>
+                </Grid.GestureRecognizers>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Image Grid.Row="0" x:Name="Tab_New_Image" Source="ic_addwhite.png" HeightRequest="20" HorizontalOptions="Center"/>
+                <Label Grid.Row="1" x:Name="Tab_New_Label" Text="Add Expenses" Style="{StaticResource LabelStyle_TabMenu}" HorizontalOptions="Center"/>
+            </Grid>
+
+            <!-- More Tab -->
+            <Grid Grid.Column="2" HorizontalOptions="Fill">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Tab_Settings_Tapped"/>
+                </Grid.GestureRecognizers>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Image Grid.Row="0" x:Name="Tab_Settings_Image" Source="ic_morewhite.png" HeightRequest="20" HorizontalOptions="Center"/>
+                <Label Grid.Row="1" x:Name="Tab_Settings_Label" Text="More" Style="{StaticResource LabelStyle_TabMenu}" HorizontalOptions="Center"/>
+            </Grid>
+        </Grid>
+
+        <ContentView x:Name="Loading_activity" BackgroundColor="#C0808080" Padding="20, 20" IsVisible="false" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+            <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                <Frame BackgroundColor="White" HorizontalOptions="Fill">
+                    <StackLayout Orientation="Horizontal" Margin="6" HorizontalOptions="Fill">
+                        <ActivityIndicator IsVisible="true" IsRunning="true" Margin="5"/>
+                        <Label x:Name="lbl_PleaseWait" Text="Please Wait ..." TextColor="Black" FontAttributes="Bold" HorizontalOptions="Fill" WidthRequest="600" VerticalTextAlignment="Center"/>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+        </ContentView>
+    </Grid>
+</ContentPage>
