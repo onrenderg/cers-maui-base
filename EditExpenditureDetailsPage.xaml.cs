@@ -53,7 +53,7 @@ namespace CERS
                 picker_payMode.ItemDisplayBinding = new Binding("paymode_Desc_Local");
             }
         }
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
             userDetails = userDetailsDatabase.GetUserDetails("Select * from UserDetails").ToList();
@@ -124,18 +124,27 @@ namespace CERS
                 datepicker_paymentdate.MinimumDate = Convert.ToDateTime(userDetails.ElementAt(0).NominationDate);
                 loadpreviousdata(expenseid);
             }
-            catch
+            catch (Exception ex)
             {
-
+                Console.WriteLine($"Error in OnAppearing: {ex.Message}");
+                await DisplayAlert("Error", $"Failed to load data: {ex.Message}", "OK");
             }
 
         }
 
         void loadpreviousdata(string expendid)
         {
-            expendituredetailslist = expendituredetailsdatabase.GetExpenditureDetails($"Select * from ExpenditureDetails where ExpenseID='{expendid}'").ToList();
+            try
+            {
+                expendituredetailslist = expendituredetailsdatabase.GetExpenditureDetails($"Select * from ExpenditureDetails where ExpenseID='{expendid}'").ToList();
 
-            Entry_expdate.Text = expendituredetailslist.ElementAt(0).expDateDisplay;
+                if (expendituredetailslist == null || expendituredetailslist.Count == 0)
+                {
+                    Console.WriteLine("No expenditure data found for ID: " + expendid);
+                    return;
+                }
+
+                Entry_expdate.Text = expendituredetailslist.ElementAt(0).expDateDisplay;
             expendituredateselected = expendituredetailslist.ElementAt(0).expDate.Replace('-', '/');
 
 
@@ -173,7 +182,11 @@ namespace CERS
             {
                 imgbtn_viewpdf.IsVisible = true;
             }
-
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading previous data: {ex.Message}");
+            }
         }
 
         private async void imgbtn_viewpdf_Clicked(object? sender, EventArgs e)

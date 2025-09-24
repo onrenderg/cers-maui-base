@@ -29,304 +29,306 @@
 
 
 
-    <Grid>
-        <Grid Margin="9" RowDefinitions="*,Auto,Auto">
-            <ScrollView Grid.Row="0" VerticalOptions="Fill">
-                <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+    <AbsoluteLayout>
+        <Grid AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+            <Grid Margin="9" RowDefinitions="*,Auto,Auto">
+                <ScrollView Grid.Row="0" VerticalOptions="Fill">
+                    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
 
-                    <Label Grid.Row="0" 
-                           x:Name="lbl_heading" 
-                           FontSize="18" 
-                           BackgroundColor="Navy" 
-                           TextColor="White" 
-                           FontAttributes="Bold" 
-                           HorizontalOptions="Fill" 
-                           HorizontalTextAlignment="Center"/>
-                    
-                    <Label Grid.Row="1" 
-                           x:Name="lbl_heading1" 
-                           Text="Expenditure Details" 
-                           HorizontalOptions="Center" 
-                           FontSize="18" 
-                           TextDecorations="Underline" 
-                           FontAttributes="Bold"/>
-                    
-                    <Label Grid.Row="2" 
-                           x:Name="lbl_mandatory" 
-                           Text="Mandatory Fields*" 
-                           FontSize="14" 
-                           HorizontalOptions="Center" 
-                           HorizontalTextAlignment="Center"/>
-
-                    <Label Grid.Row="3" 
-                           x:Name="lbl_expdate" 
-                           FontSize="16" 
-                           HorizontalOptions="Fill" 
-                           FontAttributes="Bold"/>
-                    
-                    <Grid Grid.Row="4" ColumnDefinitions="*,*" HorizontalOptions="Fill">
-                        <Entry Grid.Column="0" 
-                               TextColor="Black" 
+                        <Label Grid.Row="0" 
+                               x:Name="lbl_heading" 
+                               FontSize="18" 
+                               BackgroundColor="Navy" 
+                               TextColor="White" 
+                               FontAttributes="Bold" 
                                HorizontalOptions="Fill" 
-                               FontSize="16" 
-                               Placeholder="Select Expenditure Date" 
-                               x:Name="Entry_expdate" 
-                               Focused="Entry_expdate_Focused" />
-                        <DatePicker Grid.Column="1" 
-                                    x:Name="datepicker_expdate" 
-                                    IsVisible="false" 
-                                    Format="dd/MM/yyyy" 
-                                    DateSelected="datepicker_expdate_DateSelected" 
-                                    HorizontalOptions="Fill"/>
-                    </Grid>
-
-                    <Label Grid.Row="5" 
-                           x:Name="lbl_exptype" 
-                           FontSize="16" 
-                           HorizontalOptions="Fill" 
-                           FontAttributes="Bold"/>
-                    
-                    <Editor Grid.Row="6" 
-                            Placeholder="Select Expenditure Type" 
-                            x:Name="editor_exptype" 
-                            Focused="editor_exptype_Focused" 
-                            AutoSize="TextChanges" 
-                            FontSize="16" />
-
-                    <Label Grid.Row="7" 
-                           x:Name="lbl_paymentdate" 
-                           FontSize="16" 
-                           HorizontalOptions="Fill" 
-                           FontAttributes="Bold"/>
-                    
-                    <Grid Grid.Row="8" ColumnDefinitions="*,*" HorizontalOptions="Fill">
-                        <Entry Grid.Column="0" 
-                               TextColor="Black" 
-                               FontSize="16" 
-                               HorizontalOptions="Fill" 
-                               Placeholder="Select Payment Date" 
-                               x:Name="Entry_paymentdate" 
-                               Focused="Entry_paymentdate_Focused" />
-                        <DatePicker Grid.Column="1" 
-                                    x:Name="datepicker_paymentdate" 
-                                    IsVisible="false" 
-                                    Format="dd/MM/yyyy" 
-                                    DateSelected="datepicker_paymentdate_DateSelected" 
-                                    HorizontalOptions="Fill"/>
-                    </Grid>
-
-                    <Label Grid.Row="9" 
-                           x:Name="lbl_payMode" 
-                           FontSize="16" 
-                           HorizontalOptions="Fill" 
-                           FontAttributes="Bold"/>
-                    <Picker Grid.Row="10" 
-                            x:Name="picker_payMode" 
-                            FontSize="16" 
-                            SelectedIndexChanged="picker_payMode_SelectedIndexChanged"/>
-
-                    <Label Grid.Row="11" 
-                           x:Name="lbl_voucherBillNumber" 
-                           FontSize="16" 
-                           HorizontalOptions="Fill" 
-                           FontAttributes="Bold"/>
-                    <Entry Grid.Row="12" 
-                           x:Name="entry_voucherBillNumber" 
-                           FontSize="16" 
-                           Placeholder="Enter Voucher/Bill Number" 
-                           MaxLength="100" />
-
-                    <Label Grid.Row="13" 
-                           x:Name="lbl_amount" 
-                           FontSize="16" 
-                           HorizontalOptions="Fill" 
-                           FontAttributes="Bold"/>
-                    <Entry Grid.Row="14" 
-                           x:Name="entry_amount" 
-                           FontSize="16" 
-                           Placeholder="Enter Amount" 
-                           MaxLength="9" 
-                           Keyboard="Numeric"/>
-
-                    <Label Grid.Row="15" 
-                           x:Name="lbl_amountoutstanding" 
-                           FontSize="16" 
-                           HorizontalOptions="Fill" 
-                           FontAttributes="Bold"/>
-                    <Entry Grid.Row="16" 
-                           x:Name="entry_amountoutstanding" 
-                           FontSize="16" 
-                           Placeholder="Enter Amount Outstanding" 
-                           MaxLength="9" 
-                           Keyboard="Numeric"/>
-
-                    <Label Grid.Row="17" 
-                           x:Name="lbl_payeeName" 
-                           FontSize="16" 
-                           HorizontalOptions="Fill" 
-                           FontAttributes="Bold"/>
-                    <Entry Grid.Row="18" 
-                           x:Name="entry_payeeName" 
-                           FontSize="16" 
-                           Placeholder="Enter Payee Name" 
-                           MaxLength="30"/>
-
-                    <Label Grid.Row="19" 
-                           x:Name="lbl_payeeAddress" 
-                           FontSize="16" 
-                           HorizontalOptions="Fill" 
-                           FontAttributes="Bold"/>
-                    <Editor Grid.Row="20" 
-                            x:Name="entry_payeeAddress" 
-                            FontSize="16" 
-                            Placeholder="Enter Payee Address" 
-                            MaxLength="250" 
-                            AutoSize="TextChanges"/>
-
-                    <Label Grid.Row="21" 
-                           x:Name="lbl_sourceMoney" 
-                           FontSize="16" 
-                           HorizontalOptions="Fill" 
-                           FontAttributes="Bold"/>
-                    <Entry Grid.Row="22" 
-                           x:Name="entry_sourceMoney" 
-                           FontSize="16" 
-                           Placeholder="Enter Source Of Money" 
-                           MaxLength="200"/>
-
-                    <Label Grid.Row="23" 
-                           x:Name="lbl_remarks" 
-                           FontSize="16" 
-                           HorizontalOptions="Fill" 
-                           FontAttributes="Bold"/>
-                    <Editor Grid.Row="24" 
-                            x:Name="entry_remarks" 
-                            FontSize="16" 
-                            Placeholder="Enter Remarks" 
-                            MaxLength="200" 
-                            AutoSize="TextChanges"/>
-
-                    <Grid Grid.Row="25" ColumnDefinitions="Auto,Auto,Auto">
-                        <Label Grid.Column="0" 
-                               VerticalOptions="Center" 
-                               x:Name="lbl_expenseevidence" 
-                               FontSize="16" 
-                               HorizontalOptions="Start" 
+                               HorizontalTextAlignment="Center"/>
+                        
+                        <Label Grid.Row="1" 
+                               x:Name="lbl_heading1" 
+                               Text="Expenditure Details" 
+                               HorizontalOptions="Center" 
+                               FontSize="18" 
+                               TextDecorations="Underline" 
                                FontAttributes="Bold"/>
-                        <Button Grid.Column="1" 
-                                x:Name="btn_uploadpdf" 
-                                HorizontalOptions="Start" 
-                                Clicked="btn_uploaddoc_Clicked"/>
-                        <ImageButton Grid.Column="2" 
-                                     BackgroundColor="Transparent" 
-                                     HeightRequest="40" 
-                                     IsVisible="false" 
-                                     Source="ic_viewpdf" 
-                                     x:Name="imgbtn_viewpdf" 
-                                     HorizontalOptions="Start" 
-                                     Clicked="imgbtn_viewpdf_Clicked" />
+                        
+                        <Label Grid.Row="2" 
+                               x:Name="lbl_mandatory" 
+                               Text="Mandatory Fields*" 
+                               FontSize="14" 
+                               HorizontalOptions="Center" 
+                               HorizontalTextAlignment="Center"/>
+
+                        <Label Grid.Row="3" 
+                               x:Name="lbl_expdate" 
+                               FontSize="16" 
+                               HorizontalOptions="Fill" 
+                               FontAttributes="Bold"/>
+                        
+                        <Grid Grid.Row="4" ColumnDefinitions="*,*" HorizontalOptions="Fill">
+                            <Entry Grid.Column="0" 
+                                   TextColor="Black" 
+                                   HorizontalOptions="Fill" 
+                                   FontSize="16" 
+                                   Placeholder="Select Expenditure Date" 
+                                   x:Name="Entry_expdate" 
+                                   Focused="Entry_expdate_Focused" />
+                            <DatePicker Grid.Column="1" 
+                                        x:Name="datepicker_expdate" 
+                                        IsVisible="false" 
+                                        Format="dd/MM/yyyy" 
+                                        DateSelected="datepicker_expdate_DateSelected" 
+                                        HorizontalOptions="Fill"/>
+                        </Grid>
+
+                        <Label Grid.Row="5" 
+                               x:Name="lbl_exptype" 
+                               FontSize="16" 
+                               HorizontalOptions="Fill" 
+                               FontAttributes="Bold"/>
+                        
+                        <Editor Grid.Row="6" 
+                                Placeholder="Select Expenditure Type" 
+                                x:Name="editor_exptype" 
+                                Focused="editor_exptype_Focused" 
+                                AutoSize="TextChanges" 
+                                FontSize="16" />
+
+                        <Label Grid.Row="7" 
+                               x:Name="lbl_paymentdate" 
+                               FontSize="16" 
+                               HorizontalOptions="Fill" 
+                               FontAttributes="Bold"/>
+                        
+                        <Grid Grid.Row="8" ColumnDefinitions="*,*" HorizontalOptions="Fill">
+                            <Entry Grid.Column="0" 
+                                   TextColor="Black" 
+                                   FontSize="16" 
+                                   HorizontalOptions="Fill" 
+                                   Placeholder="Select Payment Date" 
+                                   x:Name="Entry_paymentdate" 
+                                   Focused="Entry_paymentdate_Focused" />
+                            <DatePicker Grid.Column="1" 
+                                        x:Name="datepicker_paymentdate" 
+                                        IsVisible="false" 
+                                        Format="dd/MM/yyyy" 
+                                        DateSelected="datepicker_paymentdate_DateSelected" 
+                                        HorizontalOptions="Fill"/>
+                        </Grid>
+
+                        <Label Grid.Row="9" 
+                               x:Name="lbl_payMode" 
+                               FontSize="16" 
+                               HorizontalOptions="Fill" 
+                               FontAttributes="Bold"/>
+                        <Picker Grid.Row="10" 
+                                x:Name="picker_payMode" 
+                                FontSize="16" 
+                                SelectedIndexChanged="picker_payMode_SelectedIndexChanged"/>
+
+                        <Label Grid.Row="11" 
+                               x:Name="lbl_voucherBillNumber" 
+                               FontSize="16" 
+                               HorizontalOptions="Fill" 
+                               FontAttributes="Bold"/>
+                        <Entry Grid.Row="12" 
+                               x:Name="entry_voucherBillNumber" 
+                               FontSize="16" 
+                               Placeholder="Enter Voucher/Bill Number" 
+                               MaxLength="100" />
+
+                        <Label Grid.Row="13" 
+                               x:Name="lbl_amount" 
+                               FontSize="16" 
+                               HorizontalOptions="Fill" 
+                               FontAttributes="Bold"/>
+                        <Entry Grid.Row="14" 
+                               x:Name="entry_amount" 
+                               FontSize="16" 
+                               Placeholder="Enter Amount" 
+                               MaxLength="9" 
+                               Keyboard="Numeric"/>
+
+                        <Label Grid.Row="15" 
+                               x:Name="lbl_amountoutstanding" 
+                               FontSize="16" 
+                               HorizontalOptions="Fill" 
+                               FontAttributes="Bold"/>
+                        <Entry Grid.Row="16" 
+                               x:Name="entry_amountoutstanding" 
+                               FontSize="16" 
+                               Placeholder="Enter Amount Outstanding" 
+                               MaxLength="9" 
+                               Keyboard="Numeric"/>
+
+                        <Label Grid.Row="17" 
+                               x:Name="lbl_payeeName" 
+                               FontSize="16" 
+                               HorizontalOptions="Fill" 
+                               FontAttributes="Bold"/>
+                        <Entry Grid.Row="18" 
+                               x:Name="entry_payeeName" 
+                               FontSize="16" 
+                               Placeholder="Enter Payee Name" 
+                               MaxLength="30"/>
+
+                        <Label Grid.Row="19" 
+                               x:Name="lbl_payeeAddress" 
+                               FontSize="16" 
+                               HorizontalOptions="Fill" 
+                               FontAttributes="Bold"/>
+                        <Editor Grid.Row="20" 
+                                x:Name="entry_payeeAddress" 
+                                FontSize="16" 
+                                Placeholder="Enter Payee Address" 
+                                MaxLength="250" 
+                                AutoSize="TextChanges"/>
+
+                        <Label Grid.Row="21" 
+                               x:Name="lbl_sourceMoney" 
+                               FontSize="16" 
+                               HorizontalOptions="Fill" 
+                               FontAttributes="Bold"/>
+                        <Entry Grid.Row="22" 
+                               x:Name="entry_sourceMoney" 
+                               FontSize="16" 
+                               Placeholder="Enter Source Of Money" 
+                               MaxLength="200"/>
+
+                        <Label Grid.Row="23" 
+                               x:Name="lbl_remarks" 
+                               FontSize="16" 
+                               HorizontalOptions="Fill" 
+                               FontAttributes="Bold"/>
+                        <Editor Grid.Row="24" 
+                                x:Name="entry_remarks" 
+                                FontSize="16" 
+                                Placeholder="Enter Remarks" 
+                                MaxLength="200" 
+                                AutoSize="TextChanges"/>
+
+                        <Grid Grid.Row="25" ColumnDefinitions="Auto,Auto,Auto">
+                            <Label Grid.Column="0" 
+                                   VerticalOptions="Center" 
+                                   x:Name="lbl_expenseevidence" 
+                                   FontSize="16" 
+                                   HorizontalOptions="Start" 
+                                   FontAttributes="Bold"/>
+                            <Button Grid.Column="1" 
+                                    x:Name="btn_uploadpdf" 
+                                    HorizontalOptions="Start" 
+                                    Clicked="btn_uploaddoc_Clicked"/>
+                            <ImageButton Grid.Column="2" 
+                                         BackgroundColor="Transparent" 
+                                         HeightRequest="40" 
+                                         IsVisible="false" 
+                                         Source="ic_viewpdf" 
+                                         x:Name="imgbtn_viewpdf" 
+                                         HorizontalOptions="Start" 
+                                         Clicked="imgbtn_viewpdf_Clicked" />
+                        </Grid>
                     </Grid>
-                </Grid>
-            </ScrollView>
-            
-            <Grid Grid.Row="1" HorizontalOptions="Fill" Margin="9">
-                <Button x:Name="btn_save" 
-                        Clicked="btn_save_Clicked" 
-                        Padding="5" 
-                        Text="Save" 
-                        FontAttributes="Bold" 
-                        FontSize="20" 
-                        BackgroundColor="ForestGreen" 
-                        TextColor="White" 
-                        HorizontalOptions="Fill"/>
-            </Grid>
-
-            <Grid Grid.Row="2" VerticalOptions="End" Style="{StaticResource FooterGridStyle}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
+                </ScrollView>
                 
-                <Grid Grid.Row="0" Grid.Column="0" RowDefinitions="Auto,Auto" HorizontalOptions="Fill">
-                    <Grid.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="Tab_Home_Tapped"/>
-                    </Grid.GestureRecognizers>
-                    <Image Grid.Row="0" 
-                           x:Name="Tab_Home_Image" 
-                           Source="ic_homewhite.png" 
-                           HeightRequest="20"/>
-                    <Label Grid.Row="1" 
-                           x:Name="Tab_Home_Label" 
-                           Text="Home" 
-                           Style="{StaticResource LabelStyle_TabMenu}"/>
+                <Grid Grid.Row="1" HorizontalOptions="Fill" Margin="9">
+                    <Button x:Name="btn_save" 
+                            Clicked="btn_save_Clicked" 
+                            Padding="5" 
+                            Text="Save" 
+                            FontAttributes="Bold" 
+                            FontSize="20" 
+                            BackgroundColor="ForestGreen" 
+                            TextColor="White" 
+                            HorizontalOptions="Fill"/>
                 </Grid>
 
-                <Grid Grid.Row="0" Grid.Column="1" RowDefinitions="Auto,Auto" HorizontalOptions="Fill">
-                    <Grid.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="Tab_New_Tapped"/>
-                    </Grid.GestureRecognizers>
-                    <Image Grid.Row="0" 
-                           x:Name="Tab_New_Image" 
-                           Source="ic_addwhite.png" 
-                           HeightRequest="20"/>
-                    <Label Grid.Row="1" 
-                           x:Name="Tab_New_Label" 
-                           Text="Add Expenses" 
-                           Style="{StaticResource LabelStyle_TabMenu}"/>
-                </Grid>
+                <Grid Grid.Row="2" VerticalOptions="End" Style="{StaticResource FooterGridStyle}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    
+                    <Grid Grid.Row="0" Grid.Column="0" RowDefinitions="Auto,Auto" HorizontalOptions="Fill">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="Tab_Home_Tapped"/>
+                        </Grid.GestureRecognizers>
+                        <Image Grid.Row="0" 
+                               x:Name="Tab_Home_Image" 
+                               Source="ic_homewhite.png" 
+                               HeightRequest="20"/>
+                        <Label Grid.Row="1" 
+                               x:Name="Tab_Home_Label" 
+                               Text="Home" 
+                               Style="{StaticResource LabelStyle_TabMenu}"/>
+                    </Grid>
 
-                <Grid Grid.Row="0" Grid.Column="2" RowDefinitions="Auto,Auto" HorizontalOptions="Fill">
-                    <Grid.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="Tab_Settings_Tapped"/>
-                    </Grid.GestureRecognizers>
-                    <Image Grid.Row="0" 
-                           x:Name="Tab_Settings_Image" 
-                           Source="ic_morewhite.png" 
-                           HeightRequest="20"/>
-                    <Label Grid.Row="1" 
-                           x:Name="Tab_Settings_Label" 
-                           Text="More" 
-                           Style="{StaticResource LabelStyle_TabMenu}"/>
+                    <Grid Grid.Row="0" Grid.Column="1" RowDefinitions="Auto,Auto" HorizontalOptions="Fill">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="Tab_New_Tapped"/>
+                        </Grid.GestureRecognizers>
+                        <Image Grid.Row="0" 
+                               x:Name="Tab_New_Image" 
+                               Source="ic_addwhite.png" 
+                               HeightRequest="20"/>
+                        <Label Grid.Row="1" 
+                               x:Name="Tab_New_Label" 
+                               Text="Add Expenses" 
+                               Style="{StaticResource LabelStyle_TabMenu}"/>
+                    </Grid>
+
+                    <Grid Grid.Row="0" Grid.Column="2" RowDefinitions="Auto,Auto" HorizontalOptions="Fill">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="Tab_Settings_Tapped"/>
+                        </Grid.GestureRecognizers>
+                        <Image Grid.Row="0" 
+                               x:Name="Tab_Settings_Image" 
+                               Source="ic_morewhite.png" 
+                               HeightRequest="20"/>
+                        <Label Grid.Row="1" 
+                               x:Name="Tab_Settings_Label" 
+                               Text="More" 
+                               Style="{StaticResource LabelStyle_TabMenu}"/>
+                    </Grid>
                 </Grid>
             </Grid>
         </Grid>
-    </Grid>
 
-    <ContentView x:Name="popupexptype" BackgroundColor="#C0808080" Padding="20" IsVisible="false" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
-        <StackLayout HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="white">
-            <Label x:Name="lbl_popupexptype" Text="Tap To Select exptype" Padding="6" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="16" FontAttributes="Bold" TextColor="Navy" />
-            <Frame  Padding="0" Margin="3" CornerRadius="20" BorderColor="Navy">
-                <SearchBar Placeholder="Type exptype Name" x:Name="SearchBar_exptype" IsSpellCheckEnabled="False" PlaceholderColor="#736f6f" BackgroundColor="#e0e0e0" TextColor="Black"  CancelButtonColor="Red"  Keyboard="Plain" TextChanged="SearchBar_exptype_TextChanged"/>
-            </Frame>
+        <ContentView x:Name="popupexptype" BackgroundColor="#C0808080" Padding="20" IsVisible="false" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+            <StackLayout HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="white">
+                <Label x:Name="lbl_popupexptype" Text="Tap To Select exptype" Padding="6" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="16" FontAttributes="Bold" TextColor="Navy" />
+                <Frame  Padding="0" Margin="3" CornerRadius="20" BorderColor="Navy">
+                    <SearchBar Placeholder="Type exptype Name" x:Name="SearchBar_exptype" IsSpellCheckEnabled="False" PlaceholderColor="#736f6f" BackgroundColor="#e0e0e0" TextColor="Black"  CancelButtonColor="Red"  Keyboard="Plain" TextChanged="SearchBar_exptype_TextChanged"/>
+                </Frame>
 
-            <ListView x:Name="listview_exptype" HasUnevenRows="True" SeparatorColor="Navy" ItemTapped="listview_exptype_ItemTapped" BackgroundColor="White">
-                <ListView.ItemTemplate >
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout Orientation="Vertical" Grid.Row="0">
-                                <Label Text="{Binding Exp_Desc}" HorizontalOptions="FillAndExpand" Padding="10" HorizontalTextAlignment="Start" TextColor="Black"/>
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            <Button BackgroundColor="Navy" TextColor="White" FontAttributes="Bold"  x:Name="popupexptypeCancel" Clicked="popupexptypeCancel_Clicked" Text="Cancel" Margin="5" HorizontalOptions="FillAndExpand"/>
-        </StackLayout>
-    </ContentView>
+                <ListView x:Name="listview_exptype" HasUnevenRows="True" SeparatorColor="Navy" ItemTapped="listview_exptype_ItemTapped" BackgroundColor="White">
+                    <ListView.ItemTemplate >
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Orientation="Vertical" Grid.Row="0">
+                                    <Label Text="{Binding Exp_Desc}" HorizontalOptions="FillAndExpand" Padding="10" HorizontalTextAlignment="Start" TextColor="Black"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Button BackgroundColor="Navy" TextColor="White" FontAttributes="Bold"  x:Name="popupexptypeCancel" Clicked="popupexptypeCancel_Clicked" Text="Cancel" Margin="5" HorizontalOptions="FillAndExpand"/>
+            </StackLayout>
+        </ContentView>
 
 
-    <ContentView x:Name="Loading_activity" BackgroundColor="#C0808080" Padding="20, 20" IsVisible="false" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
-        <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-            <Frame BackgroundColor="White" HorizontalOptions="FillAndExpand">
-                <StackLayout Orientation="Horizontal" Margin="6" HorizontalOptions="FillAndExpand">
-                    <ActivityIndicator IsVisible="true" IsRunning="true" Margin="5"/>
-                    <Label x:Name="lbl_PleaseWait" Text="Please Wait ..." TextColor="Black" FontAttributes="Bold" HorizontalOptions="FillAndExpand" WidthRequest="600" VerticalTextAlignment="Center"/>
-                </StackLayout>
-            </Frame>
-        </StackLayout>
-    </ContentView>
+        <ContentView x:Name="Loading_activity" BackgroundColor="#C0808080" Padding="20, 20" IsVisible="false" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+            <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                <Frame BackgroundColor="White" HorizontalOptions="FillAndExpand">
+                    <StackLayout Orientation="Horizontal" Margin="6" HorizontalOptions="FillAndExpand">
+                        <ActivityIndicator IsVisible="true" IsRunning="true" Margin="5"/>
+                        <Label x:Name="lbl_PleaseWait" Text="Please Wait ..." TextColor="Black" FontAttributes="Bold" HorizontalOptions="FillAndExpand" WidthRequest="600" VerticalTextAlignment="Center"/>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+        </ContentView>
+    </AbsoluteLayout>
 </ContentPage>
