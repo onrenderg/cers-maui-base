@@ -220,7 +220,7 @@
             </Grid>
         </ContentView>
 
-        <ContentView x:Name="popupDetails_Verified" BackgroundColor="#C0808080" Padding="40, 40" IsVisible="false" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+        <ContentView x:Name="popupDetails_Verified" BackgroundColor="#C0808080" Padding="15, 15" IsVisible="false" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
             <Grid HorizontalOptions="Center" VerticalOptions="Center">
                 <Frame BorderColor="#0596f7" CornerRadius="15" Padding="10" VerticalOptions="Fill">
                     <Grid RowDefinitions="*,Auto">
@@ -343,7 +343,7 @@
                                           Margin="0,12,0,0" />
                             </Grid>
                         </ScrollView>
-                        <Grid Grid.Row="1" ColumnDefinitions="*,*" HorizontalOptions="Fill">
+                        <Grid Grid.Row="1" ColumnDefinitions="*,*" HorizontalOptions="Fill" Margin="0,15,10,10" ColumnSpacing="15">
                             <Button Grid.Column="0" 
                                     BackgroundColor="#0596f7" 
                                     TextColor="White" 
