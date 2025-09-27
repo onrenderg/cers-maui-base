@@ -9,7 +9,7 @@
         <StackLayout  Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
             <Image Source="seclogo.png"  HeightRequest="40"  VerticalOptions="CenterAndExpand"/>
             <StackLayout  Orientation="Vertical" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Spacing="0">
-                <Label x:Name="lbl_title" Text="State Election Commission, H.P." Style="{StaticResource NavigationLabelColor}" FontSize="20" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                <Label x:Name="lbl_title" Text="State Election Commission, H.P." Style="{StaticResource NavigationLabelColor}" FontSize="17" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
             </StackLayout>
         </StackLayout>
     </NavigationPage.TitleView>
@@ -21,7 +21,7 @@
             <ScrollView VerticalOptions ="FillAndExpand">
                 <StackLayout>
 
-                    <Label x:Name="lbl_heading" FontSize="18" BackgroundColor="Navy" TextColor="White" FontAttributes="Bold" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center"/>
+                    <Label x:Name="lbl_heading" FontSize="16" BackgroundColor="Navy" TextColor="White" FontAttributes="Bold" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center"/>
                     <StackLayout Orientation="Vertical">
                         <Label x:Name="lbl_heading1" Text="Expenditure Details" HorizontalOptions="CenterAndExpand" FontSize="18" TextDecorations="Underline" FontAttributes="Bold"/>
                         <Label x:Name="lbl_mandatory" Text="Mandatory Fields*" FontSize="14"   HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center"/>

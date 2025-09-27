@@ -19,7 +19,7 @@
                        x:Name="lbl_title" 
                        Text="State Election Commission, H.P." 
                        Style="{StaticResource NavigationLabelColor}" 
-                       FontSize="20" 
+                       FontSize="17" 
                        FontAttributes="Bold" 
                        HorizontalTextAlignment="Center" 
                        VerticalTextAlignment="Center" />
@@ -40,7 +40,7 @@
         </Grid.RowDefinitions>
 
         <!-- Header Section -->
-        <Label x:Name="lbl_heading" Grid.Row="0" FontSize="18" BackgroundColor="Navy" TextColor="White" FontAttributes="Bold" HorizontalOptions="Fill" HorizontalTextAlignment="Center" Margin="0,0,0,5"/>
+        <Label x:Name="lbl_heading" Grid.Row="0" FontSize="16" BackgroundColor="Navy" TextColor="White" FontAttributes="Bold" HorizontalOptions="Fill" HorizontalTextAlignment="Center" Margin="0,0,0,5"/>
 
         <!-- Main Content Frame -->
         <Frame Grid.Row="1" HasShadow="True" CornerRadius="15" BackgroundColor="White" BorderColor="#07a6db" Margin="0,5,0,5" Padding="15">
