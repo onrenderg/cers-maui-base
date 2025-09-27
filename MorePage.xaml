@@ -29,7 +29,8 @@
                     <StackLayout>
 
                         <StackLayout Margin="0"  >
-                            <Image Source="ic_launcher" HorizontalOptions="Center" WidthRequest="130" HeightRequest="100" />
+                            <!--<Image Source="ic_launcher" HorizontalOptions="Center" WidthRequest="130" HeightRequest="100" />-->
+                            <Image Source="ic_launcher" HorizontalOptions="Center" WidthRequest="130" HeightRequest="100" Margin="0,30,0,0" />
                             <Label  x:Name="lbl_appname" FontSize="20"  HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" FontAttributes="Bold"/>
                             <Label x:Name="lbl_appversion" FontSize="16" TextColor="Brown" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" FontAttributes="Bold"/>
 
@@ -38,7 +39,7 @@
                                 <Label x:Name="lbl_dept" Text="State Election Commission, Himachal Pradesh"  FontSize="17" TextColor="DarkBlue" FontAttributes="Bold" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Start" Margin="5,0,0,0"/>
                                 <!--&#10;-->
                             </StackLayout>
-                            <StackLayout Orientation="Horizontal" Padding="5">
+                            <StackLayout Orientation="Horizontal" Padding="10, 15">
                                 <StackLayout.GestureRecognizers>
                                     <TapGestureRecognizer
                                 Tapped="Deptt_Call"
@@ -49,7 +50,7 @@
                             </StackLayout>
                             
                             <BoxView BackgroundColor="SkyBlue" HeightRequest="1" Margin="10,0,0,0"/>
-                            <StackLayout Orientation="Horizontal" Padding="5">
+                            <StackLayout Orientation="Horizontal" Padding="10, 15">
                                 <StackLayout.GestureRecognizers>
                                     <TapGestureRecognizer
                                 Tapped="deptt_WebSite"
@@ -60,7 +61,7 @@
                             </StackLayout>
                             
                             <BoxView BackgroundColor="SkyBlue" HeightRequest="1" Margin="10,0,0,0"/>
-                            <StackLayout Orientation="Horizontal" Padding="5">
+                            <StackLayout Orientation="Horizontal" Padding="10, 15">
                                 <StackLayout.GestureRecognizers>
                                     <TapGestureRecognizer
                                 Tapped="Deptt_email"
@@ -71,7 +72,7 @@
                             </StackLayout>
 
                             <BoxView BackgroundColor="SkyBlue" HeightRequest="1" Margin="10,0,0,0"/>
-                            <StackLayout Orientation="Horizontal" Padding="5">
+                            <StackLayout Orientation="Horizontal" Padding="10, 15">
                                 <StackLayout.GestureRecognizers>
                                     <TapGestureRecognizer
                                 Tapped="policytapped"
@@ -82,7 +83,7 @@
                             </StackLayout>
 
                             <BoxView BackgroundColor="SkyBlue" HeightRequest="1" Margin="10,0,0,0"/>
-                            <StackLayout Orientation="Horizontal" Padding="5">
+                            <StackLayout Orientation="Horizontal" Padding="10, 15">
                                 <StackLayout.GestureRecognizers>
                                     <TapGestureRecognizer
                                 Tapped="logoutTapped"
@@ -93,7 +94,7 @@
                             </StackLayout>
 
                             <BoxView BackgroundColor="SkyBlue" HeightRequest="1" Margin="10,0,0,0"/>
-                            <StackLayout Orientation="Horizontal" Padding="5">
+                            <StackLayout Orientation="Horizontal" Padding="10, 15">
                                 <StackLayout.GestureRecognizers>
                                     <TapGestureRecognizer
                                 Tapped="languageTapped"
@@ -103,7 +104,8 @@
                                 <Label x:Name="lbl_language" Text="Change Language"  HorizontalOptions="FillAndExpand"  FontSize="16" FontAttributes="Bold" />
                             </StackLayout>
 
-                            <Image  Source="niclogo.png" HorizontalOptions="Center" WidthRequest="130" HeightRequest="50" ></Image>
+                            <Image Source="niclogo.png" HorizontalOptions="Center" WidthRequest="130" HeightRequest="50" Margin="0,20,0,30"></Image>
+                            <!--<Image  Source="niclogo.png" HorizontalOptions="Center" WidthRequest="130" HeightRequest="50" ></Image>-->
                         </StackLayout>
 
 
