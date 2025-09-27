@@ -67,6 +67,7 @@
                         
                         <Grid Grid.Row="4" ColumnDefinitions="*,*" HorizontalOptions="Fill">
                             <Entry Grid.Column="0" 
+                                   Grid.ColumnSpan="2"
                                    TextColor="Black" 
                                    HorizontalOptions="Fill" 
                                    FontSize="16" 
@@ -92,7 +93,8 @@
                                 x:Name="editor_exptype" 
                                 Focused="editor_exptype_Focused" 
                                 AutoSize="TextChanges" 
-                                FontSize="16" />
+                                FontSize="16" 
+                                HorizontalOptions="Fill" />
 
                         <Label Grid.Row="7" 
                                x:Name="lbl_paymentdate" 
@@ -102,6 +104,7 @@
                         
                         <Grid Grid.Row="8" ColumnDefinitions="*,*" HorizontalOptions="Fill">
                             <Entry Grid.Column="0" 
+                                   Grid.ColumnSpan="2"
                                    TextColor="Black" 
                                    FontSize="16" 
                                    HorizontalOptions="Fill" 
@@ -124,6 +127,7 @@
                         <Picker Grid.Row="10" 
                                 x:Name="picker_payMode" 
                                 FontSize="16" 
+                                HorizontalOptions="Fill" 
                                 SelectedIndexChanged="picker_payMode_SelectedIndexChanged"/>
 
                         <Label Grid.Row="11" 
@@ -135,7 +139,8 @@
                                x:Name="entry_voucherBillNumber" 
                                FontSize="16" 
                                Placeholder="Enter Voucher/Bill Number" 
-                               MaxLength="100" />
+                               MaxLength="100" 
+                               HorizontalOptions="Fill" />
 
                         <Label Grid.Row="13" 
                                x:Name="lbl_amount" 
@@ -147,7 +152,8 @@
                                FontSize="16" 
                                Placeholder="Enter Amount" 
                                MaxLength="9" 
-                               Keyboard="Numeric"/>
+                               Keyboard="Numeric" 
+                               HorizontalOptions="Fill"/>
 
                         <Label Grid.Row="15" 
                                x:Name="lbl_amountoutstanding" 
@@ -159,7 +165,8 @@
                                FontSize="16" 
                                Placeholder="Enter Amount Outstanding" 
                                MaxLength="9" 
-                               Keyboard="Numeric"/>
+                               Keyboard="Numeric" 
+                               HorizontalOptions="Fill"/>
 
                         <Label Grid.Row="17" 
                                x:Name="lbl_payeeName" 
@@ -170,7 +177,8 @@
                                x:Name="entry_payeeName" 
                                FontSize="16" 
                                Placeholder="Enter Payee Name" 
-                               MaxLength="30"/>
+                               MaxLength="30" 
+                               HorizontalOptions="Fill"/>
 
                         <Label Grid.Row="19" 
                                x:Name="lbl_payeeAddress" 
@@ -182,7 +190,8 @@
                                 FontSize="16" 
                                 Placeholder="Enter Payee Address" 
                                 MaxLength="250" 
-                                AutoSize="TextChanges"/>
+                                AutoSize="TextChanges" 
+                                HorizontalOptions="Fill"/>
 
                         <Label Grid.Row="21" 
                                x:Name="lbl_sourceMoney" 
@@ -195,7 +204,8 @@
                                FontSize="16" 
                                Placeholder="Enter Source Of Money" 
                                MaxLength="200"
-                               Margin="0,0,0,12"/>
+                               Margin="0,0,0,12" 
+                               HorizontalOptions="Fill"/>
 
                         <Label Grid.Row="23" 
                                x:Name="lbl_remarks" 
@@ -208,7 +218,8 @@
                                 Placeholder="Enter Remarks" 
                                 MaxLength="200" 
                                 AutoSize="TextChanges"
-                                Margin="0,0,0,12"/>
+                                Margin="0,0,0,12" 
+                                HorizontalOptions="Fill"/>
 
                         <Grid Grid.Row="25" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="10" Margin="0,0,0,16">
                             <Label Grid.Column="0" 
