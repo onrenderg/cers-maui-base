@@ -156,16 +156,16 @@
                                                 <RowDefinition Height="Auto"/>
                                             </Grid.RowDefinitions>-->
 
-                                        <Label Text="{Binding lblObserverRemarks}" TextColor="Navy"  HorizontalTextAlignment="Start"  FontAttributes="Bold" Grid.Row="0" Grid.Column="0"/>
-                                        <Label Text="{Binding ObserverRemarks}"  HorizontalOptions="Start" HorizontalTextAlignment="Start" TextColor="Maroon" Grid.Row="1" Grid.Column="0"/>
+                                        <Label Text="{Binding lblObserverRemarks}" TextColor="Navy"  HorizontalTextAlignment="Start"  FontAttributes="Bold"/>
+                                        <Label Text="{Binding ObserverRemarks}"  HorizontalOptions="Start" HorizontalTextAlignment="Start" TextColor="Maroon"/>
 
-                                        <Label Text="{Binding lblUserRemarks}" TextColor="Navy"  HorizontalTextAlignment="Start"  FontAttributes="Bold" Grid.Row="2" Grid.Column="0"/>
-                                        <Label Text="{Binding UserRemarks}"  HorizontalOptions="Start" HorizontalTextAlignment="Start" TextColor="Maroon" Grid.Row="3" Grid.Column="0"/>
+                                        <Label Text="{Binding lblUserRemarks}" TextColor="Navy"  HorizontalTextAlignment="Start"  FontAttributes="Bold"/>
+                                        <Label Text="{Binding UserRemarks}"  HorizontalOptions="Start" HorizontalTextAlignment="Start" TextColor="Maroon"/>
 
                                         <!--<Label Text="{Binding lblRepliedDatetime}" TextColor="Navy" HorizontalOptions="FillAndExpand" Grid.ColumnSpan="2"  HorizontalTextAlignment="Start"  FontAttributes="Bold" Grid.Row="4" Grid.Column="0"/>
                                         <Label Text="{Binding RepliedDatetime}"  HorizontalOptions="Start" HorizontalTextAlignment="Start" TextColor="Maroon" Grid.Row="5" Grid.Column="0"/>-->
 
-                                        <ImageButton IsVisible="{Binding imgreplyvisibility}" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"  x:Name="img_viewimage" CommandParameter="{Binding ExpenseObserverRemId}" Clicked="img_viewimage_Clicked"  HorizontalOptions="CenterAndExpand" Source="ic_reply" BackgroundColor="Transparent" HeightRequest="30" />
+                                        <ImageButton IsVisible="{Binding imgreplyvisibility}" x:Name="img_viewimage" CommandParameter="{Binding ExpenseObserverRemId}" Clicked="img_viewimage_Clicked"  HorizontalOptions="CenterAndExpand" Source="ic_reply" BackgroundColor="Transparent" HeightRequest="30" />
                                         <!--</Grid>-->
                                     </StackLayout>
 

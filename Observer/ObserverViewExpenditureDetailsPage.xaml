@@ -25,80 +25,83 @@
                     <DataTemplate>
                         <ViewCell >
                             <Frame VerticalOptions="StartAndExpand" Margin="0,10,0,10"  HasShadow="False" CornerRadius="20" BackgroundColor="White" BorderColor="Navy">
-                                <Grid >
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="5*"/>
-                                        <ColumnDefinition Width="5*"/>
-                                    </Grid.ColumnDefinitions>
+                                <StackLayout Padding="15,12,15,8" Spacing="4">
 
+                                    <StackLayout IsVisible="{Binding expdatevisibility}" Spacing="2">
+                                        <Label Text="{Binding lblexpDate}" TextColor="Navy" HorizontalTextAlignment="Start" FontSize="14" FontAttributes="Bold"/>
+                                        <Label Text="{Binding expDateDisplay}" HorizontalOptions="Start" HorizontalTextAlignment="Start" FontSize="14" TextColor="Maroon"/>
+                                    </StackLayout>
 
-                                    <Label  IsVisible="{Binding expdatevisibility}" Text="{Binding lblexpDate}" TextColor="Navy"  HorizontalTextAlignment="Start" FontSize="16"  FontAttributes="Bold" Grid.Row="1" Grid.Column="0"/>
-                                    <Label  IsVisible="{Binding expdatevisibility}"  Text="{Binding expDateDisplay}"  HorizontalOptions="Start" HorizontalTextAlignment="Start"  FontSize="16" TextColor="Maroon"  Grid.Row="1" Grid.Column="1"/>
-
-                                    <Label IsVisible="{Binding exptypevisibility}" Text="{Binding lblexptype}" TextColor="Navy"  HorizontalTextAlignment="Start" FontSize="16"  FontAttributes="Bold" Grid.Row="2" Grid.Column="0"/>
-                                    <Label IsVisible="{Binding exptypevisibility}" Text="{Binding ExpTypeName}" TextColor="Maroon"  HorizontalOptions="Start" HorizontalTextAlignment="Start" FontSize="16" Grid.Row="2" Grid.Column="1"/>
+                                    <StackLayout IsVisible="{Binding exptypevisibility}" Spacing="2">
+                                        <Label Text="{Binding lblexptype}" TextColor="Navy" HorizontalTextAlignment="Start" FontSize="14" FontAttributes="Bold"/>
+                                        <Label Text="{Binding ExpTypeName}" TextColor="Maroon" HorizontalOptions="Start" HorizontalTextAlignment="Start" FontSize="14"/>
+                                    </StackLayout>
 
                                     <!--<Label IsVisible="false" Text="{Binding lblamtType}" TextColor="Navy"  HorizontalTextAlignment="Start" FontSize="16"  FontAttributes="Bold" Grid.Row="3" Grid.Column="0"/>
                                     <Label IsVisible="false" Text="{Binding amtType}" TextColor="Maroon"  HorizontalOptions="Start" HorizontalTextAlignment="Start" FontSize="16" Grid.Row="3" Grid.Column="1"/>-->
 
-                                    <Label Text="{Binding lblAmount}" TextColor="Navy"  HorizontalTextAlignment="Start" FontSize="16"  FontAttributes="Bold" Grid.Row="3" Grid.Column="0"/>
-                                    <Label Text="{Binding amounttodisplay}" TextColor="Maroon"  HorizontalOptions="Start" HorizontalTextAlignment="Start" FontSize="16" Grid.Row="3" Grid.Column="1"/>
+                                    <StackLayout Spacing="2">
+                                        <Label Text="{Binding lblAmount}" TextColor="Navy" HorizontalTextAlignment="Start" FontSize="14" FontAttributes="Bold"/>
+                                        <Label Text="{Binding amounttodisplay}" TextColor="Maroon" HorizontalOptions="Start" HorizontalTextAlignment="Start" FontSize="14"/>
+                                    </StackLayout>
 
-                                    <Label Text="{Binding lbl_amountoutstanding}" TextColor="Navy"  HorizontalTextAlignment="Start" FontSize="16"  FontAttributes="Bold" Grid.Row="4" Grid.Column="0"/>
-                                    <Label Text="{Binding amountoutstandingtodisplay}" TextColor="Maroon"  HorizontalOptions="Start" HorizontalTextAlignment="Start" FontSize="16" Grid.Row="4" Grid.Column="1"/>
+                                    <StackLayout Spacing="2">
+                                        <Label Text="{Binding lbl_amountoutstanding}" TextColor="Navy" HorizontalTextAlignment="Start" FontSize="14" FontAttributes="Bold"/>
+                                        <Label Text="{Binding amountoutstandingtodisplay}" TextColor="Maroon" HorizontalOptions="Start" HorizontalTextAlignment="Start" FontSize="14"/>
+                                    </StackLayout>
 
-                                    <Label Text="{Binding lblpaymentDate}" TextColor="Navy"  HorizontalTextAlignment="Start" FontSize="16"  FontAttributes="Bold" Grid.Row="5" Grid.Column="0"/>
-                                    <Label Text="{Binding paymentDateDisplay}" TextColor="Maroon"  HorizontalOptions="Start" HorizontalTextAlignment="Start" FontSize="16" Grid.Row="5" Grid.Column="1"/>
+                                    <StackLayout Spacing="2">
+                                        <Label Text="{Binding lblpaymentDate}" TextColor="Navy" HorizontalTextAlignment="Start" FontSize="14" FontAttributes="Bold"/>
+                                        <Label Text="{Binding paymentDateDisplay}" TextColor="Maroon" HorizontalOptions="Start" HorizontalTextAlignment="Start" FontSize="14"/>
+                                    </StackLayout>
 
-                                    <Label Text="{Binding lblvoucherBillNumber}" TextColor="Navy"  HorizontalTextAlignment="Start" FontSize="16"  FontAttributes="Bold" Grid.Row="6" Grid.Column="0"/>
-                                    <Label Text="{Binding voucherBillNumber}" TextColor="Maroon"  HorizontalOptions="Start" HorizontalTextAlignment="Start" FontSize="16" Grid.Row="6" Grid.Column="1"/>
+                                    <StackLayout Spacing="2">
+                                        <Label Text="{Binding lblvoucherBillNumber}" TextColor="Navy" HorizontalTextAlignment="Start" FontSize="14" FontAttributes="Bold"/>
+                                        <Label Text="{Binding voucherBillNumber}" TextColor="Maroon" HorizontalOptions="Start" HorizontalTextAlignment="Start" FontSize="14"/>
+                                    </StackLayout>
 
-                                    <Label Text="{Binding lblpayMode}" TextColor="Navy"  HorizontalTextAlignment="Start" FontSize="16"  FontAttributes="Bold" Grid.Row="7" Grid.Column="0"/>
-                                    <Label Text="{Binding PayModeName}" TextColor="Maroon"  HorizontalOptions="Start" HorizontalTextAlignment="Start" FontSize="16" Grid.Row="7" Grid.Column="1"/>
+                                    <StackLayout Spacing="2">
+                                        <Label Text="{Binding lblpayMode}" TextColor="Navy" HorizontalTextAlignment="Start" FontSize="14" FontAttributes="Bold"/>
+                                        <Label Text="{Binding PayModeName}" TextColor="Maroon" HorizontalOptions="Start" HorizontalTextAlignment="Start" FontSize="14"/>
+                                    </StackLayout>
 
-                                    <Label Text="{Binding lblpayeeName}" TextColor="Navy"  HorizontalTextAlignment="Start" FontSize="16"  FontAttributes="Bold" Grid.Row="8" Grid.Column="0"/>
-                                    <Label Text="{Binding payeeName}" TextColor="Maroon"  HorizontalOptions="Start" HorizontalTextAlignment="Start" FontSize="16" Grid.Row="8" Grid.Column="1"/>
+                                    <StackLayout Spacing="2">
+                                        <Label Text="{Binding lblpayeeName}" TextColor="Navy" HorizontalTextAlignment="Start" FontSize="14" FontAttributes="Bold"/>
+                                        <Label Text="{Binding payeeName}" TextColor="Maroon" HorizontalOptions="Start" HorizontalTextAlignment="Start" FontSize="14"/>
+                                    </StackLayout>
 
-                                    <Label Text="{Binding lblpayeeAddress}" TextColor="Navy"  HorizontalTextAlignment="Start" FontSize="16"  FontAttributes="Bold" Grid.Row="9" Grid.Column="0"/>
-                                    <Label Text="{Binding payeeAddress}" TextColor="Maroon"  HorizontalOptions="Start" HorizontalTextAlignment="Start" FontSize="16" Grid.Row="9" Grid.Column="1"/>
+                                    <StackLayout Spacing="2">
+                                        <Label Text="{Binding lblpayeeAddress}" TextColor="Navy" HorizontalTextAlignment="Start" FontSize="14" FontAttributes="Bold"/>
+                                        <Label Text="{Binding payeeAddress}" TextColor="Maroon" HorizontalOptions="Start" HorizontalTextAlignment="Start" FontSize="14"/>
+                                    </StackLayout>
 
-                                    <Label Text="{Binding lblsourceMoney}" TextColor="Navy"  HorizontalTextAlignment="Start" FontSize="16"  FontAttributes="Bold" Grid.Row="10" Grid.Column="0"/>
-                                    <Label Text="{Binding sourceMoney}" TextColor="Maroon" HorizontalOptions="Start" HorizontalTextAlignment="Start" FontSize="16"  Grid.Row="10" Grid.Column="1"/>
+                                    <StackLayout Spacing="2">
+                                        <Label Text="{Binding lblsourceMoney}" TextColor="Navy" HorizontalTextAlignment="Start" FontSize="14" FontAttributes="Bold"/>
+                                        <Label Text="{Binding sourceMoney}" TextColor="Maroon" HorizontalOptions="Start" HorizontalTextAlignment="Start" FontSize="14"/>
+                                    </StackLayout>
 
-                                    <Label Text="{Binding lblremarks}" TextColor="Navy"  HorizontalTextAlignment="Start" FontSize="16"  FontAttributes="Bold" Grid.Row="11" Grid.Column="0"/>
-                                    <Label Text="{Binding remarks}" TextColor="Maroon"  HorizontalOptions="Start" HorizontalTextAlignment="Start" FontSize="16" Grid.Row="11" Grid.Column="1"/>
+                                    <StackLayout Spacing="2">
+                                        <Label Text="{Binding lblremarks}" TextColor="Navy" HorizontalTextAlignment="Start" FontSize="14" FontAttributes="Bold"/>
+                                        <Label Text="{Binding remarks}" TextColor="Maroon" HorizontalOptions="Start" HorizontalTextAlignment="Start" FontSize="14"/>
+                                    </StackLayout>
 
-                                    <Label Text="{Binding lblEnteredOn}" TextColor="Navy"  HorizontalTextAlignment="Start" FontSize="16"  FontAttributes="Bold" Grid.Row="12" Grid.Column="0"/>
-                                    <Label Text="{Binding DtTm}" TextColor="Maroon"  HorizontalOptions="Start" HorizontalTextAlignment="Start" FontSize="16" Grid.Row="12" Grid.Column="1"/>
+                                    <StackLayout Spacing="2">
+                                        <Label Text="{Binding lblEnteredOn}" TextColor="Navy" HorizontalTextAlignment="Start" FontSize="14" FontAttributes="Bold"/>
+                                        <Label Text="{Binding DtTm}" TextColor="Maroon" HorizontalOptions="Start" HorizontalTextAlignment="Start" FontSize="14"/>
+                                    </StackLayout>
 
-                                    <Label IsVisible="false" Text="{Binding lblObserverRemarks}" TextColor="Navy"  HorizontalTextAlignment="Start" FontSize="16"  FontAttributes="Bold" Grid.Row="13" Grid.Column="0"/>
-                                    <Label IsVisible="false" Text="{Binding ObserverRemarks}" TextColor="Maroon"  HorizontalOptions="Start" HorizontalTextAlignment="Start" FontSize="16" Grid.Row="13" Grid.Column="1"/>
+                                    <StackLayout IsVisible="false" Spacing="2">
+                                        <Label Text="{Binding lblObserverRemarks}" TextColor="Navy" HorizontalTextAlignment="Start" FontSize="14" FontAttributes="Bold"/>
+                                        <Label Text="{Binding ObserverRemarks}" TextColor="Maroon" HorizontalOptions="Start" HorizontalTextAlignment="Start" FontSize="14"/>
+                                    </StackLayout>
 
-                                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Grid.Row="14" Grid.ColumnSpan="2">
-                                        <Button x:Name="btn_remarks" BackgroundColor="Navy" TextColor="White" CommandParameter="{Binding ExpenseID}" Text="{Binding lblObserverRemarks}" HorizontalOptions="CenterAndExpand"  Clicked="btn_remarks_Clicked" FontAttributes="Bold"/>
+                                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,8,0,0">
+                                        <Button x:Name="btn_remarks" BackgroundColor="Navy" TextColor="White" CommandParameter="{Binding ExpenseID}" Text="{Binding lblObserverRemarks}" HorizontalOptions="CenterAndExpand" Clicked="btn_remarks_Clicked" FontAttributes="Bold" FontSize="16"/>
                                         <ImageButton BackgroundColor="Transparent" HeightRequest="40" IsVisible="{Binding pdfvisibility}" Source="ic_viewpdf" CommandParameter="{Binding ExpenseID}" x:Name="imgbtn_viewpdf" HorizontalOptions="Start" Clicked="imgbtn_viewpdf_Clicked" />
                                     </StackLayout>
                                     <!--<Button  Grid.Row="14" Grid.ColumnSpan="2" CommandParameter="{Binding ExpenseID}"  Text="{Binding lblremarks}" FontAttributes="Bold" HorizontalOptions="Center" FontSize="18" BackgroundColor="Navy" TextColor="White" CornerRadius="15"  Clicked="btn_remarks_Clicked" x:Name="btn_remarks"/>-->
 
-
-                                </Grid>
+                                </StackLayout>
                             </Frame>
                         </ViewCell>
                     </DataTemplate>
