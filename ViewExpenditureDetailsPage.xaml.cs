@@ -40,25 +40,69 @@ namespace CERS
             expensesvalue = expvalue;
             expdatetodisplayvalue = expdatetodispvalue;
             
-            if (expensestype.Equals("type"))
-            {
-                loadtypewisedata(expensesvalue);
-            }
-            else if (expensestype.Equals("date"))
-            {
-                loaddatewisedata(expensesvalue);
-            }
+            // Initial data load
+            RefreshData();
             
             userDetails = userDetailsDatabase.GetUserDetails("Select * from UserDetails").ToList();
             lbl_heading0.Text = App.setselfagentuserheading();
             searchbar_expendituredetails.Placeholder = App.GetLabelByKey("Search");
         }
 
+        // ADD: Override OnAppearing to refresh data when returning from EditExpenditureDetailsPage
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            
+            try
+            {
+                // Refresh data when page appears (e.g., returning from EditExpenditureDetailsPage)
+                RefreshData();
+                Console.WriteLine("Data refreshed on page appearing");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error refreshing data on page appearing: {ex.Message}");
+            }
+        }
+
+        // ADD: Method to handle data refresh
+        private void RefreshData()
+        {
+            try
+            {
+                if (expensestype.Equals("type"))
+                {
+                    loadtypewisedata(expensesvalue);
+                }
+                else if (expensestype.Equals("date"))
+                {
+                    loaddatewisedata(expensesvalue);
+                }
+                
+                Console.WriteLine("Data refreshed successfully");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error refreshing data: {ex.Message}");
+            }
+        }
+
+        // UPDATED: OnPageAppearing method to ensure proper initialization
         private void OnPageAppearing(object? sender, EventArgs e)
         {
-            if (searchbar_expendituredetails != null)
+            try
             {
-                searchbar_expendituredetails.TextChanged += searchbar_expendituredetails_TextChanged;
+                if (searchbar_expendituredetails != null)
+                {
+                    searchbar_expendituredetails.TextChanged += searchbar_expendituredetails_TextChanged;
+                }
+                
+                // Ensure data is loaded when page appears
+                RefreshData();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in OnPageAppearing: {ex.Message}");
             }
         }
 

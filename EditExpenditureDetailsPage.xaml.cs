@@ -145,43 +145,43 @@ namespace CERS
                 }
 
                 Entry_expdate.Text = expendituredetailslist.ElementAt(0).expDateDisplay;
-            expendituredateselected = expendituredetailslist.ElementAt(0).expDate.Replace('-', '/');
+                expendituredateselected = expendituredetailslist.ElementAt(0).expDate.Replace('-', '/');
 
 
-            if (App.Language == 0)
-            {
-                editor_exptype.Text = expendituredetailslist.ElementAt(0).ExpTypeName;
-            }
-            else
-            {
-                editor_exptype.Text = expendituredetailslist.ElementAt(0).ExpTypeNameLocal;
+                if (App.Language == 0)
+                {
+                    editor_exptype.Text = expendituredetailslist.ElementAt(0).ExpTypeName;
+                }
+                else
+                {
+                    editor_exptype.Text = expendituredetailslist.ElementAt(0).ExpTypeNameLocal;
 
-            }
-            expendituresourcecode = expendituredetailslist.ElementAt(0).expCode;
+                }
+                expendituresourcecode = expendituredetailslist.ElementAt(0).expCode;
 
 
-            entry_amount.Text = expendituredetailslist.ElementAt(0).amount;
-            entry_amountoutstanding.Text = expendituredetailslist.ElementAt(0).amountoutstanding;
-            Entry_paymentdate.Text = expendituredetailslist.ElementAt(0).paymentDateDisplay;
-            paymentdateselected = expendituredetailslist.ElementAt(0).paymentDate.Replace('-', '/');
-            /* DateTime dateTime11 = DateTime.ParseExact(paymentdateselected, "yyyy/MM/dd", provider);
-             paymentdateselected = dateTime11.ToString();*/
+                entry_amount.Text = expendituredetailslist.ElementAt(0).amount;
+                entry_amountoutstanding.Text = expendituredetailslist.ElementAt(0).amountoutstanding;
+                Entry_paymentdate.Text = expendituredetailslist.ElementAt(0).paymentDateDisplay;
+                paymentdateselected = expendituredetailslist.ElementAt(0).paymentDate.Replace('-', '/');
+                /* DateTime dateTime11 = DateTime.ParseExact(paymentdateselected, "yyyy/MM/dd", provider);
+                 paymentdateselected = dateTime11.ToString();*/
 
-            entry_voucherBillNumber.Text = expendituredetailslist.ElementAt(0).voucherBillNumber;
-            //paymentmode
-            string paymode = expendituredetailslist.ElementAt(0).payMode;
+                entry_voucherBillNumber.Text = expendituredetailslist.ElementAt(0).voucherBillNumber;
+                //paymentmode
+                string paymode = expendituredetailslist.ElementAt(0).payMode;
 
-            picker_payMode.SelectedIndex = paymentModeslist.FindIndex(s => s.paymode_code == paymode);
+                picker_payMode.SelectedIndex = paymentModeslist.FindIndex(s => s.paymode_code == paymode);
 
-            entry_payeeName.Text = expendituredetailslist.ElementAt(0).payeeName;
-            entry_payeeAddress.Text = expendituredetailslist.ElementAt(0).payeeAddress;
-            entry_sourceMoney.Text = expendituredetailslist.ElementAt(0).sourceMoney;
-            entry_remarks.Text = expendituredetailslist.ElementAt(0).remarks;
-            string pdf = expendituredetailslist.ElementAt(0).evidenceFile;
-            if (pdf.Equals("Y"))
-            {
-                imgbtn_viewpdf.IsVisible = true;
-            }
+                entry_payeeName.Text = expendituredetailslist.ElementAt(0).payeeName;
+                entry_payeeAddress.Text = expendituredetailslist.ElementAt(0).payeeAddress;
+                entry_sourceMoney.Text = expendituredetailslist.ElementAt(0).sourceMoney;
+                entry_remarks.Text = expendituredetailslist.ElementAt(0).remarks;
+                string pdf = expendituredetailslist.ElementAt(0).evidenceFile;
+                if (pdf.Equals("Y"))
+                {
+                    imgbtn_viewpdf.IsVisible = true;
+                }
             }
             catch (Exception ex)
             {
@@ -193,7 +193,7 @@ namespace CERS
         {
             /* ImageButton b = (ImageButton)sender;
              var id = b.CommandParameter.ToString();*/
-            var service = new HitServices();    
+            var service = new HitServices();
             var current = Connectivity.NetworkAccess;
             if (current == NetworkAccess.Internet)
             {
@@ -392,7 +392,8 @@ namespace CERS
                     );
                 if (response_savedata == 200)
                 {
-                    Application.Current!.MainPage = new NavigationPage(new DashboardPage());
+                    // Application.Current!.MainPage = new NavigationPage(new DashboardPage());
+                    await Navigation.PopToRootAsync(); // Go back to Dashboard properly
                 }
             }
         }
@@ -476,12 +477,17 @@ namespace CERS
             }
             return true;
         }
-        private void Tab_Home_Tapped(object? sender, EventArgs e)
+        // private void Tab_Home_Tapped(object? sender, EventArgs e)
+        // {
+        //     Preferences.Set("Active", 0);
+        //     Application.Current!.MainPage = new NavigationPage(new DashboardPage());
+        // }
+        // Replace Tab navigation methods:
+        private async void Tab_Home_Tapped(object? sender, EventArgs e)
         {
             Preferences.Set("Active", 0);
-            Application.Current!.MainPage = new NavigationPage(new DashboardPage());
+            await Navigation.PopToRootAsync(); // Instead of replacing MainPage
         }
-
 
         // private void Tab_New_Tapped(object? sender, EventArgs e)
         // {
@@ -502,36 +508,52 @@ namespace CERS
 
         // }
 
-    
-        private void Tab_New_Tapped(object? sender, EventArgs e)
+
+        // private void Tab_New_Tapped(object? sender, EventArgs e)
+        // {
+        //     /*Preferences.Set("Active", 1);
+        //     Application.Current.MainPage = new NavigationPage(new AddExpenditureDetailsPage());*/
+        //     DateTime currentdate = DateTime.Now;
+        //     userDetails = userDetailsDatabase.GetUserDetails("Select * from UserDetails").ToList();
+        //     DateTime resultdateadd30 = DateTime.Parse(userDetails.ElementAt(0).Resultdatethirtydays);
+
+        //     // mgogo - Date validation bypassed
+        //     // if (currentdate >= resultdateadd30)
+        //     // {
+        //     //     DisplayAlert(App.GetLabelByKey("AppName"), App.GetLabelByKey("expensedateover"), App.Btn_Close);
+        //     // }
+        //     // else
+        //     // {
+        //     //     Preferences.Set("Active", 1);
+        //     //     Application.Current!.MainPage = new NavigationPage(new AddExpenditureDetailsPage());
+        //     // }
+
+        //     // Direct navigation - bypass date check
+        //     Preferences.Set("Active", 1);
+        //     Application.Current!.MainPage = new NavigationPage(new AddExpenditureDetailsPage());
+        // }
+
+        private async void Tab_New_Tapped(object? sender, EventArgs e)
         {
-            /*Preferences.Set("Active", 1);
-            Application.Current.MainPage = new NavigationPage(new AddExpenditureDetailsPage());*/
-            DateTime currentdate = DateTime.Now;
-            userDetails = userDetailsDatabase.GetUserDetails("Select * from UserDetails").ToList();
-            DateTime resultdateadd30 = DateTime.Parse(userDetails.ElementAt(0).Resultdatethirtydays);
-            
-            // mgogo - Date validation bypassed
-            // if (currentdate >= resultdateadd30)
-            // {
-            //     DisplayAlert(App.GetLabelByKey("AppName"), App.GetLabelByKey("expensedateover"), App.Btn_Close);
-            // }
-            // else
-            // {
-            //     Preferences.Set("Active", 1);
-            //     Application.Current!.MainPage = new NavigationPage(new AddExpenditureDetailsPage());
-            // }
-            
-            // Direct navigation - bypass date check
             Preferences.Set("Active", 1);
-            Application.Current!.MainPage = new NavigationPage(new AddExpenditureDetailsPage());
+            await Navigation.PushAsync(new AddExpenditureDetailsPage()); // Proper navigation
         }
 
-        private void Tab_Settings_Tapped(object? sender, EventArgs e)
+        // private void Tab_Settings_Tapped(object? sender, EventArgs e)
+        // {
+        //     Preferences.Set("Active", 2);
+        //     Application.Current!.MainPage = new NavigationPage(new MorePage());
+
+        // }
+        
+        
+
+
+        private async void Tab_Settings_Tapped(object? sender, EventArgs e)
         {
             Preferences.Set("Active", 2);
-            Application.Current!.MainPage = new NavigationPage(new MorePage());
-
+            await Navigation.PushAsync(new MorePage()); // Proper navigation
         }
+
     }
 }
