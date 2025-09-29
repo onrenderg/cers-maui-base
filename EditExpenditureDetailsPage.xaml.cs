@@ -483,6 +483,26 @@ namespace CERS
         }
 
 
+        // private void Tab_New_Tapped(object? sender, EventArgs e)
+        // {
+        //     /*Preferences.Set("Active", 1);
+        //     Application.Current.MainPage = new NavigationPage(new AddExpenditureDetailsPage());*/
+        //     DateTime currentdate = DateTime.Now;
+        //     userDetails = userDetailsDatabase.GetUserDetails("Select * from UserDetails").ToList();
+        //     DateTime resultdateadd30 = DateTime.Parse(userDetails.ElementAt(0).Resultdatethirtydays);
+        //     if (currentdate >= resultdateadd30)
+        //     {
+        //         DisplayAlert(App.GetLabelByKey("AppName"), App.GetLabelByKey("expensedateover"), App.Btn_Close);
+        //     }
+        //     else
+        //     {
+        //         Preferences.Set("Active", 1);
+        //         Application.Current!.MainPage = new NavigationPage(new AddExpenditureDetailsPage());
+        //     }
+
+        // }
+
+    
         private void Tab_New_Tapped(object? sender, EventArgs e)
         {
             /*Preferences.Set("Active", 1);
@@ -490,16 +510,21 @@ namespace CERS
             DateTime currentdate = DateTime.Now;
             userDetails = userDetailsDatabase.GetUserDetails("Select * from UserDetails").ToList();
             DateTime resultdateadd30 = DateTime.Parse(userDetails.ElementAt(0).Resultdatethirtydays);
-            if (currentdate >= resultdateadd30)
-            {
-                DisplayAlert(App.GetLabelByKey("AppName"), App.GetLabelByKey("expensedateover"), App.Btn_Close);
-            }
-            else
-            {
-                Preferences.Set("Active", 1);
-                Application.Current!.MainPage = new NavigationPage(new AddExpenditureDetailsPage());
-            }
-
+            
+            // mgogo - Date validation bypassed
+            // if (currentdate >= resultdateadd30)
+            // {
+            //     DisplayAlert(App.GetLabelByKey("AppName"), App.GetLabelByKey("expensedateover"), App.Btn_Close);
+            // }
+            // else
+            // {
+            //     Preferences.Set("Active", 1);
+            //     Application.Current!.MainPage = new NavigationPage(new AddExpenditureDetailsPage());
+            // }
+            
+            // Direct navigation - bypass date check
+            Preferences.Set("Active", 1);
+            Application.Current!.MainPage = new NavigationPage(new AddExpenditureDetailsPage());
         }
 
         private void Tab_Settings_Tapped(object? sender, EventArgs e)
