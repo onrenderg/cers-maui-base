@@ -78,29 +78,34 @@ namespace CERS
                     DateTime currentdate = DateTime.Now;
                     DateTime resultdateadd30 = DateTime.Parse(userDetails.ElementAt(0).Resultdatethirtydays);
 
-                    if (resultdateadd30 >= currentdate)
-                    {
-                        btn_finalsubmit.IsVisible = true;
-                    }
-                    else
-                    {
-                        btn_finalsubmit.IsVisible = false;
-                    }
+                    //mgogog
+                    // if (resultdateadd30 >= currentdate)
+                    // {
+                    //     btn_finalsubmit.IsVisible = true;
+                    // }
+                    // else
+                    // {
+                    //     btn_finalsubmit.IsVisible = false;
+                    // }
+                btn_finalsubmit.IsVisible = true; // Show button even if date parsing fails
                 }
                 catch 
                 {
+                    btn_finalsubmit.IsVisible = true; // Show button even if date parsing fails
 
                 }              
             }
 
             expenditureDetailsformstatuslist = expenditureDetailsDatabase.GetExpenditureDetails(
                     "Select * from ExpenditureDetails where ExpStatus='F'").ToList();
+                    //mgogo
+
             if (expenditureDetailsformstatuslist.Any())
             {
                 lbl_tapfooter.Text = App.GetLabelByKey("taptoviewentry1");
                 lbl_tapfooter1.Text = App.GetLabelByKey("obsremavailable");
                 btn_finalsubmit.IsVisible = false;
-                btn_form46.IsVisible = true;
+                // btn_form46.IsVisible = true;
             }
             else
             {
@@ -108,6 +113,8 @@ namespace CERS
                 lbl_tapfooter1.Text = App.GetLabelByKey("obsremavailable");
                 btn_form46.IsVisible = false;
             }
+            btn_finalsubmit.IsVisible = true; // ADD THIS LINE - Always show final submit button
+
 
             string usertype = userDetails.ElementAt(0).LoggedInAs;
             if (usertype.Contains("Self"))
