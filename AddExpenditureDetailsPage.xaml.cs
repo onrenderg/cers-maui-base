@@ -164,6 +164,27 @@ namespace CERS
             popupexptype.IsVisible = false;
         }
 
+
+
+// mgogo
+        // private void Entry_expdate_Focused(object? sender, FocusEventArgs e)
+        // {
+        //     Entry_expdate.Unfocus();
+        //     MainThread.BeginInvokeOnMainThread(() =>
+        //     {
+        //         try
+        //         {
+        //             datepicker_expdate.MaximumDate = Convert.ToDateTime(userDetails.ElementAt(0).ResultDate);
+        //             // datepicker_expdate.MaximumDate = DateTime.Now;
+        //             datepicker_expdate.Focus();
+        //         }
+        //         catch
+        //         {
+
+        //         }
+        //     });
+        // }
+
         private void Entry_expdate_Focused(object? sender, FocusEventArgs e)
         {
             Entry_expdate.Unfocus();
@@ -173,22 +194,62 @@ namespace CERS
                 {
                     datepicker_expdate.MaximumDate = Convert.ToDateTime(userDetails.ElementAt(0).ResultDate);
                     // datepicker_expdate.MaximumDate = DateTime.Now;
+                    
+                    // Make the DatePicker visible and focusable
+                    datepicker_expdate.IsVisible = true;
                     datepicker_expdate.Focus();
                 }
                 catch
                 {
-
+                    // Fallback - make DatePicker visible even if date parsing fails
+                    datepicker_expdate.IsVisible = true;
+                    datepicker_expdate.Focus();
                 }
             });
         }
+
+
+
+        // private void datepicker_expdate_DateSelected(object? sender, DateChangedEventArgs e)
+        // {
+        //     expendituredateselected = e.NewDate.ToString("yyyy/MM/dd").Replace('-', '/');
+        //     Entry_expdate.Text = e.NewDate.ToString("dd/MM/yyyy").Replace('-', '/');
+        //     Console.WriteLine("dateselected====" + expendituredateselected);
+        // }
 
         private void datepicker_expdate_DateSelected(object? sender, DateChangedEventArgs e)
         {
             expendituredateselected = e.NewDate.ToString("yyyy/MM/dd").Replace('-', '/');
             Entry_expdate.Text = e.NewDate.ToString("dd/MM/yyyy").Replace('-', '/');
             Console.WriteLine("dateselected====" + expendituredateselected);
+            
+            // Hide the DatePicker after selection
+            datepicker_expdate.IsVisible = false;
         }
 
+
+        // private void Entry_paymentdate_Focused(object? sender, FocusEventArgs e)
+        // {
+        //     Entry_paymentdate.Unfocus();
+        //     MainThread.BeginInvokeOnMainThread(() =>
+        //     {
+        //         try
+        //         {
+        //             datepicker_paymentdate.MaximumDate = Convert.ToDateTime(userDetails.ElementAt(0).Resultdatethirtydays);
+        //             // datepicker_paymentdate.MaximumDate = DateTime.Now;
+                    
+        //             // Make the DatePicker visible and focusable
+        //             datepicker_paymentdate.IsVisible = true;
+        //             datepicker_paymentdate.Focus();
+        //         }
+        //         catch 
+        //         {
+        //             // Fallback - make DatePicker visible even if date parsing fails
+        //             datepicker_paymentdate.IsVisible = true;
+        //             datepicker_paymentdate.Focus();
+        //         }
+        //     });
+        // }
 
         private void Entry_paymentdate_Focused(object? sender, FocusEventArgs e)
         {
@@ -197,13 +258,33 @@ namespace CERS
             {
                 try
                 {
-                    datepicker_paymentdate.MaximumDate = Convert.ToDateTime(userDetails.ElementAt(0).Resultdatethirtydays);
-                    // datepicker_paymentdate.MaximumDate = DateTime.Now;
+                    datepicker_paymentdate.MaximumDate = DateTime.Now;
+                    // datepicker_paymentdate.MaximumDate = DateTime.Now.AddDays(-30);
+                    
+                    // Make the DatePicker visible and focusable
+                    datepicker_paymentdate.IsVisible = true;
                     datepicker_paymentdate.Focus();
                 }
-                catch { }
+                catch
+                {
+                    // Fallback - make DatePicker visible even if date parsing fails
+                    datepicker_paymentdate.IsVisible = true;
+                    datepicker_paymentdate.Focus();
+                }
             });
         }
+
+        // private void datepicker_paymentdate_DateSelected(object? sender, DateChangedEventArgs e)
+        // {
+        //     paymentdateselected = e.NewDate.ToString("yyyy/MM/dd").Replace('-', '/');
+        //     Entry_paymentdate.Text = e.NewDate.ToString("dd/MM/yyyy").Replace('-', '/');
+        //     Console.WriteLine("paymentdate====" + paymentdateselected);
+            
+        //     // Hide the DatePicker after selection
+        //     datepicker_paymentdate.IsVisible = false;
+        // }
+
+
         private void picker_payMode_SelectedIndexChanged(object? sender, EventArgs e)
         {
             if (picker_payMode.SelectedIndex != -1)
@@ -235,6 +316,9 @@ namespace CERS
             paymentdateselected = e.NewDate.ToString("yyyy/MM/dd").Replace('-', '/');
             Entry_paymentdate.Text = e.NewDate.ToString("dd/MM/yyyy").Replace('-', '/');
             Console.WriteLine("paymentdate====" + paymentdateselected);
+            
+            // Hide the DatePicker after selection
+            datepicker_paymentdate.IsVisible = false;
         }
 
         public async void btn_uploaddoc_Clicked(object? sender, EventArgs e)
