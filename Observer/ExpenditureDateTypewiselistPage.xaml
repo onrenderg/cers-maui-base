@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CERS.Observer.ExpenditureDateTypewiselistPage"
@@ -19,8 +19,12 @@
     </ContentPage.ToolbarItems>
 
     <Grid>
-        <StackLayout Margin="9">
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <StackLayout Margin="9" Grid.Row="0">
             <StackLayout >
                 <Label x:Name="lbl_heading" FontSize="18" BackgroundColor="Navy" TextColor="White" FontAttributes="Bold" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center"/>
                 <Frame VerticalOptions="FillAndExpand" HasShadow="False" CornerRadius="20" BackgroundColor="White" BorderColor="#07a6db">
@@ -54,7 +58,7 @@
                                 <Label VerticalOptions="Center"  FontSize="16" x:Name="lblAmount" HorizontalOptions="EndAndExpand" TextColor="Navy"    Grid.Column="1" FontAttributes="Bold"  />
                             </Grid>
 
-                            <ListView x:Name="listView_expendituredetailstypewise" HasUnevenRows="True" VerticalOptions="FillAndExpand" SeparatorColor="Transparent"  SelectionMode="None" Grid.Row="2" ItemTapped="listView_expendituredetailstypewise_ItemTapped">
+                            <ListView x:Name="listView_expendituredetailstypewise" HasUnevenRows="True" VerticalOptions="FillAndExpand" SeparatorColor="Transparent"  SelectionMode="None" Grid.Row="1" ItemTapped="listView_expendituredetailstypewise_ItemTapped">
                      
                                 <ListView.ItemTemplate >
                                     <DataTemplate>
@@ -89,47 +93,42 @@
                 <Label  Margin="0" Padding="0" x:Name="lbl_lastupdated" TextColor="Navy" FontAttributes="Bold" HorizontalOptions="Center" FontSize="14" HorizontalTextAlignment="Center"/>
 
             </StackLayout>
-
-
-
-            <Grid VerticalOptions="End" Style="{StaticResource FooterGridStyle}" >
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.Column="0">
-                    <StackLayout.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="Tab_Home_Tapped"/>
-                    </StackLayout.GestureRecognizers>
-                    <Image x:Name="Tab_Home_Image" Source="ic_homewhite.png" HeightRequest="20"/>
-                    <Label x:Name="Tab_Home_Label" Text="Home" Style="{StaticResource LabelStyle_TabMenu}"/>
-                </StackLayout>
-
-                <StackLayout IsVisible="false" Orientation="Vertical" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.Column="1">
-                    <StackLayout.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="Tab_New_Tapped"/>
-                    </StackLayout.GestureRecognizers>
-                    <Image x:Name="Tab_New_Image" Source="ic_addwhite.png" HeightRequest="20"/>
-                    <Label x:Name="Tab_New_Label" Text="Add Expenses" Style="{StaticResource LabelStyle_TabMenu}"/>
-                </StackLayout>
-
-
-                <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.Column="2" >
-                    <StackLayout.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="Tab_Settings_Tapped"/>
-                    </StackLayout.GestureRecognizers>
-                    <Image x:Name="Tab_Settings_Image" Source="ic_morewhite.png" HeightRequest="20"/>
-                    <Label x:Name="Tab_Settings_Label" Text="More" Style="{StaticResource LabelStyle_TabMenu}"/>
-                </StackLayout>
-
-
-            </Grid>
-
         </StackLayout>
+
+        <!-- Footer moved to proper Grid row -->
+        <Grid Grid.Row="1" Style="{StaticResource FooterGridStyle}" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.Column="0">
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Tab_Home_Tapped"/>
+                </StackLayout.GestureRecognizers>
+                <Image x:Name="Tab_Home_Image" Source="ic_homewhite.png" HeightRequest="20"/>
+                <Label x:Name="Tab_Home_Label" Text="Home" Style="{StaticResource LabelStyle_TabMenu}"/>
+            </StackLayout>
+
+            <StackLayout IsVisible="false" Orientation="Vertical" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.Column="1">
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Tab_New_Tapped"/>
+                </StackLayout.GestureRecognizers>
+                <Image x:Name="Tab_New_Image" Source="ic_addwhite.png" HeightRequest="20"/>
+                <Label x:Name="Tab_New_Label" Text="Add Expenses" Style="{StaticResource LabelStyle_TabMenu}"/>
+            </StackLayout>
+
+            <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.Column="2" >
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Tab_Settings_Tapped"/>
+                </StackLayout.GestureRecognizers>
+                <Image x:Name="Tab_Settings_Image" Source="ic_morewhite.png" HeightRequest="20"/>
+                <Label x:Name="Tab_Settings_Label" Text="More" Style="{StaticResource LabelStyle_TabMenu}"/>
+            </StackLayout>
+        </Grid>
 
 
 

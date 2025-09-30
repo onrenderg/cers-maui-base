@@ -113,8 +113,6 @@ namespace CERS
                 lbl_tapfooter1.Text = App.GetLabelByKey("obsremavailable");
                 btn_form46.IsVisible = false;
             }
-            btn_finalsubmit.IsVisible = true; // ADD THIS LINE - Always show final submit button
-
 
             string usertype = userDetails.ElementAt(0).LoggedInAs;
             if (usertype.Contains("Self"))
