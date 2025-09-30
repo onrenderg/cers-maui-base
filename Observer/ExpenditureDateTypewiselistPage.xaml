@@ -27,7 +27,7 @@
         <StackLayout Margin="9" Grid.Row="0">
             <StackLayout >
                 <Label x:Name="lbl_heading" FontSize="18" BackgroundColor="Navy" TextColor="White" FontAttributes="Bold" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center"/>
-                <Frame VerticalOptions="FillAndExpand" HasShadow="False" CornerRadius="20" BackgroundColor="White" BorderColor="#07a6db">
+                <Frame VerticalOptions="FillAndExpand" HasShadow="False" CornerRadius="20" BackgroundColor="White" BorderColor="#07a6db" Margin="0,10,0,0">
 
                     <StackLayout>
                         <Label x:Name="lbl_heading1" FontSize="18" HorizontalOptions="CenterAndExpand" FontAttributes="Bold" TextColor="Navy" TextDecorations="Underline"/>

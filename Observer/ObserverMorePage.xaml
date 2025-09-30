@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CERS.Observer.ObserverMorePage" xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls" 
@@ -28,7 +28,7 @@
                     <StackLayout>
 
                         <StackLayout Margin="0"  >
-                            <Image Source="ic_launcher" HorizontalOptions="Center" WidthRequest="130" HeightRequest="100" />
+                            <Image Source="ic_launcher" HorizontalOptions="Center" WidthRequest="130" HeightRequest="100" Margin="0,10,0,0" />
                             <Label  x:Name="lbl_appname" FontSize="Large"  HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" FontAttributes="Bold"/>
                             <Label x:Name="lbl_appversion" FontSize="Small" TextColor="Brown" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" FontAttributes="Bold"/>
 
@@ -37,40 +37,40 @@
                                 <Label x:Name="lbl_dept" Text="State Election Commission, Himachal Pradesh"  FontSize="17" TextColor="DarkBlue" FontAttributes="Bold" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Start" Margin="5,0,0,0"/>
                                 <!--&#10;-->
                             </StackLayout>
-                            <StackLayout Orientation="Horizontal" Padding="5">
+                            <StackLayout Orientation="Horizontal" Padding="10, 15">
                                 <StackLayout.GestureRecognizers>
                                     <TapGestureRecognizer
                                 Tapped="Deptt_Call"
                                 NumberOfTapsRequired="1" />
                                 </StackLayout.GestureRecognizers>
-                                <Image Source="ic_phone" HeightRequest="20"/>
+                                <Image Source="ic_phone.png" HeightRequest="20"/>
                                 <Label x:Name="lbl_call"  Text="Call Us"  HorizontalOptions="FillAndExpand" FontSize="16" FontAttributes="Bold"/>
                             </StackLayout>
 
                             <BoxView BackgroundColor="SkyBlue" HeightRequest="1" Margin="10,0,0,0"/>
-                            <StackLayout Orientation="Horizontal" Padding="5">
+                            <StackLayout Orientation="Horizontal" Padding="10, 15">
                                 <StackLayout.GestureRecognizers>
                                     <TapGestureRecognizer
                                 Tapped="deptt_WebSite"
                                 NumberOfTapsRequired="1" />
                                 </StackLayout.GestureRecognizers>
-                                <Image Source="ic_website" HeightRequest="20"/>
+                                <Image Source="ic_website.png" HeightRequest="20"/>
                                 <Label x:Name="lbl_website" Text="Website"   HorizontalOptions="FillAndExpand"  FontSize="16" FontAttributes="Bold"/>
                             </StackLayout>
 
                             <BoxView BackgroundColor="SkyBlue" HeightRequest="1" Margin="10,0,0,0"/>
-                            <StackLayout Orientation="Horizontal" Padding="5">
+                            <StackLayout Orientation="Horizontal" Padding="10, 15">
                                 <StackLayout.GestureRecognizers>
                                     <TapGestureRecognizer
                                 Tapped="Deptt_email"
                                 NumberOfTapsRequired="1" />
                                 </StackLayout.GestureRecognizers>
-                                <Image Source="ic_email" HeightRequest="20"/>
+                                <Image Source="ic_email.png" HeightRequest="20"/>
                                 <Label x:Name="lbl_email" Text="Email"  HorizontalOptions="FillAndExpand"  FontSize="16" FontAttributes="Bold"/>
                             </StackLayout>
 
                             <BoxView BackgroundColor="SkyBlue" HeightRequest="1" Margin="10,0,0,0"/>
-                            <StackLayout Orientation="Horizontal" Padding="5">
+                            <StackLayout Orientation="Horizontal" Padding="10, 15">
                                 <StackLayout.GestureRecognizers>
                                     <TapGestureRecognizer
                                 Tapped="policytapped"
@@ -81,7 +81,7 @@
                             </StackLayout>
 
                             <BoxView BackgroundColor="SkyBlue" HeightRequest="1" Margin="10,0,0,0"/>
-                            <StackLayout Orientation="Horizontal" Padding="5">
+                            <StackLayout Orientation="Horizontal" Padding="10, 15">
                                 <StackLayout.GestureRecognizers>
                                     <TapGestureRecognizer
                                 Tapped="logoutTapped"
@@ -92,7 +92,7 @@
                             </StackLayout>
 
                             <BoxView BackgroundColor="SkyBlue" HeightRequest="1" Margin="10,0,0,0"/>
-                            <StackLayout Orientation="Horizontal" Padding="5">
+                            <StackLayout Orientation="Horizontal" Padding="10, 15">
                                 <StackLayout.GestureRecognizers>
                                     <TapGestureRecognizer
                                 Tapped="languageTapped"
@@ -101,8 +101,7 @@
                                 <Image Source="ic_changelanguage.png" HeightRequest="20"/>
                                 <Label x:Name="lbl_language" Text="Change Language"  HorizontalOptions="FillAndExpand"  FontSize="16" FontAttributes="Bold" />
                             </StackLayout>
-
-                            <Image  Source="niclogo.png" HorizontalOptions="Center" WidthRequest="130" HeightRequest="50" ></Image>
+                            <Image Source="niclogo.png" HorizontalOptions="Center" WidthRequest="130" HeightRequest="50" Margin="0,15,0,30"></Image>
                         </StackLayout>
 
 

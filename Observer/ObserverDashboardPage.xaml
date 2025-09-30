@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CERS.Observer.ObserverDashboardPage"
@@ -23,7 +23,7 @@
 
             <StackLayout VerticalOptions="FillAndExpand">
                 <Label x:Name="lbl_heading" FontSize="18" BackgroundColor="Navy" TextColor="White" FontAttributes="Bold" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center"/>
-                <Frame VerticalOptions="FillAndExpand" HasShadow="False" CornerRadius="20" BackgroundColor="White" BorderColor="#07a6db">
+                <Frame VerticalOptions="FillAndExpand" HasShadow="False" CornerRadius="20" BackgroundColor="White" BorderColor="#07a6db" Margin="0,10,0,0">
                     <StackLayout VerticalOptions="FillAndExpand">
                         <StackLayout Orientation="Horizontal">
                             <Label x:Name="lbl_selectward" FontSize="16" VerticalOptions="Center" TextColor="Navy" FontAttributes="Bold"/>
