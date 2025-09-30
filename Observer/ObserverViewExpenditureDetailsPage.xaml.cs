@@ -37,8 +37,8 @@ namespace CERS.Observer
         public ObserverViewExpenditureDetailsPage(string candidateid, string expendselected, string expvalue, string expdatetodispvalue)
         {
             InitializeComponent();
-            this.Appearing += (s, e) => { searchbar_expendituredetails.TextChanged += searchbar_expendituredetails_TextChanged; };
-            this.Disappearing += (s, e) => { searchbar_expendituredetails.TextChanged -= searchbar_expendituredetails_TextChanged; };
+            this.Appearing += OnPageAppearing;
+            this.Disappearing += OnPageDisappearing;
             expensestype = expendselected;
             expensesvalue = expvalue;
             expdatetodisplayvalue = expdatetodispvalue;
@@ -54,6 +54,58 @@ namespace CERS.Observer
             usermobile = observorLoginDetailslist.ElementAt(0).ObserverContact;
             ObserverId = observorLoginDetailslist.ElementAt(0).Auto_ID;
             searchbar_expendituredetails.Placeholder = App.GetLabelByKey("Search");
+        }
+
+        private void OnPageAppearing(object? sender, EventArgs e)
+        {
+            try
+            {
+                if (this.Handler != null && searchbar_expendituredetails?.Handler != null)
+                {
+                    searchbar_expendituredetails.TextChanged += searchbar_expendituredetails_TextChanged;
+                }
+            }
+            catch (ObjectDisposedException)
+            {
+                // Ignore if already disposed
+            }
+        }
+
+        private void OnPageDisappearing(object? sender, EventArgs e)
+        {
+            try
+            {
+                if (searchbar_expendituredetails != null)
+                {
+                    searchbar_expendituredetails.TextChanged -= searchbar_expendituredetails_TextChanged;
+                }
+            }
+            catch (ObjectDisposedException)
+            {
+                // Ignore if already disposed
+            }
+        }
+
+        protected override void OnDisappearing()
+        {
+            try
+            {
+                // Additional cleanup
+                if (listView_expendituredetails != null)
+                {
+                    listView_expendituredetails.ItemsSource = null;
+                }
+                
+                // Unsubscribe from events
+                this.Appearing -= OnPageAppearing;
+                this.Disappearing -= OnPageDisappearing;
+                
+                base.OnDisappearing();
+            }
+            catch (ObjectDisposedException)
+            {
+                // Ignore disposal exceptions
+            }
         }
 
         private async Task LoadDataAsync(string type, string value)
@@ -109,10 +161,32 @@ namespace CERS.Observer
                 // Set ItemsSource with delay to ensure CollectionView is ready
                 Dispatcher.Dispatch(async () =>
                 {
-                    await Task.Delay(50);
-                    if (this.Handler != null && listView_expendituredetails != null)
+                    try
                     {
+                        await Task.Delay(50);
+                        
+                        // Multiple disposal checks
+                        if (this.Handler == null || listView_expendituredetails?.Handler == null || observerExpenditureDetailsList == null)
+                            return;
+                            
+                        // Clear first to prevent layout issues
+                        listView_expendituredetails.ItemsSource = null;
+                        await Task.Delay(10);
+                        
+                        // Check again after delay
+                        if (this.Handler == null || listView_expendituredetails?.Handler == null)
+                            return;
+                            
                         listView_expendituredetails.ItemsSource = observerExpenditureDetailsList;
+                    }
+                    catch (ObjectDisposedException)
+                    {
+                        // Silently handle disposed objects during data loading
+                        return;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error setting ItemsSource: {ex.Message}");
                     }
                 });
                 
@@ -178,31 +252,58 @@ namespace CERS.Observer
             // Ensure UI update happens on main thread with delay
             Dispatcher.Dispatch(async () =>
             {
-                await Task.Delay(100); // Small delay to ensure UI is ready
-                if (this.Handler != null && listView_expendituredetails != null)
+                try
                 {
+                    await Task.Delay(50);
+                    
+                    // Multiple disposal checks
+                    if (this.Handler == null || listView_expendituredetails?.Handler == null || observerExpenditureDetailsList == null)
+                        return;
+                        
+                    // Clear first to prevent layout issues
+                    listView_expendituredetails.ItemsSource = null;
+                    await Task.Delay(10);
+                    
+                    // Check again after delay
+                    if (this.Handler == null || listView_expendituredetails?.Handler == null)
+                        return;
+                        
                     listView_expendituredetails.ItemsSource = observerExpenditureDetailsList;
+                }
+                catch (ObjectDisposedException)
+                {
+                    // Silently handle disposed objects during data loading
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error setting ItemsSource (date): {ex.Message}");
                 }
             });
         }
 
         private void searchbar_expendituredetails_TextChanged(object? sender, TextChangedEventArgs e)
         {
-            // MAUI Lifecycle Check: Ensure the page and controls are still valid.
-            if (this.Handler == null || searchbar_expendituredetails == null || listView_expendituredetails == null)
-            {
-                return; // Page or controls are disposed, do nothing.
-            }
-
             try
             {
-                string texttosearch = searchbar_expendituredetails.Text?.ToLower().Trim() ?? string.Empty;
-
-                if (_allExpenditures == null) return; // Don't search if master list isn't ready
-
-                if (!string.IsNullOrEmpty(texttosearch))
+                // MAUI Lifecycle Check: Ensure the page and controls are still valid
+                if (this.Handler == null || searchbar_expendituredetails == null || listView_expendituredetails == null)
                 {
-                    var filteredList = _allExpenditures.Where(t =>
+                    return; // Page or controls are disposed, do nothing
+                }
+
+                // Add null checks to prevent crashes
+                if (observerExpenditureDetailsList == null || !observerExpenditureDetailsList.Any())
+                    return;
+
+                // Additional disposal check
+                if (sender is SearchBar searchBar && searchBar.Handler == null)
+                    return;
+                if (!string.IsNullOrEmpty(searchbar_expendituredetails.Text))
+                {
+                    string texttosearch = searchbar_expendituredetails.Text.ToLower().Trim();
+
+                    var filteredList = observerExpenditureDetailsList.Where(t => t != null && (
                         (t.ExpenseID?.ToLower().Contains(texttosearch) == true)
                         || (t.expDate?.ToLower().Contains(texttosearch) == true)
                         || (t.amtType?.ToLower().Contains(texttosearch) == true)
@@ -220,25 +321,86 @@ namespace CERS.Observer
                         || (t.ExpTypeNameLocal?.ToLower().Contains(texttosearch) == true)
                         || (t.PayModeName?.ToLower().Contains(texttosearch) == true)
                         || (t.PayModeNameLocal?.ToLower().Contains(texttosearch) == true)
-                    ).ToList();
+                    )).ToList();
 
-                    listView_expendituredetails.ItemsSource = filteredList;
+                    // Double-check before setting ItemsSource
+                    if (this.Handler != null && listView_expendituredetails != null)
+                    {
+                        // Force refresh for CollectionView with delay
+                        Dispatcher.Dispatch(async () =>
+                        {
+                            try
+                            {
+                                // Double-check disposal before UI update
+                                if (this.Handler == null || listView_expendituredetails?.Handler == null)
+                                    return;
+                                    
+                                listView_expendituredetails.ItemsSource = null;
+                                await Task.Delay(10);
+                                
+                                // Check again after delay
+                                if (this.Handler == null || listView_expendituredetails?.Handler == null)
+                                    return;
+                                    
+                                listView_expendituredetails.ItemsSource = filteredList;
+                            }
+                            catch (ObjectDisposedException)
+                            {
+                                // Silently handle disposed objects
+                                return;
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine($"Error in search filter: {ex.Message}");
+                            }
+                        });
+                    }
                 }
                 else
                 {
-                    // If search text is empty, restore the original list from the master list.
-                    listView_expendituredetails.ItemsSource = _allExpenditures;
+                    // Restore original list when search is cleared
+                    if (this.Handler != null && listView_expendituredetails != null && observerExpenditureDetailsList != null)
+                    {
+                        // Force refresh for CollectionView with delay
+                        Dispatcher.Dispatch(async () =>
+                        {
+                            try
+                            {
+                                // Double-check disposal before UI update
+                                if (this.Handler == null || listView_expendituredetails?.Handler == null)
+                                    return;
+                                    
+                                listView_expendituredetails.ItemsSource = null;
+                                await Task.Delay(10);
+                                
+                                // Check again after delay
+                                if (this.Handler == null || listView_expendituredetails?.Handler == null)
+                                    return;
+                                    
+                                listView_expendituredetails.ItemsSource = observerExpenditureDetailsList;
+                            }
+                            catch (ObjectDisposedException)
+                            {
+                                // Silently handle disposed objects
+                                return;
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine($"Error restoring search: {ex.Message}");
+                            }
+                        });
+                    }
                 }
+            }
+            catch (ObjectDisposedException)
+            {
+                // Silently handle disposed object exceptions
+                return;
             }
             catch (Exception ex)
             {
-                // Log the exception or handle it gracefully.
-                Console.WriteLine($"An error occurred during search: {ex.Message}");
-                // Optionally, restore the original list to prevent a crash state.
-                if (listView_expendituredetails != null)
-                {
-                    listView_expendituredetails.ItemsSource = observerExpenditureDetailsList;
-                }
+                // Log other exceptions but don't crash
+                Console.WriteLine($"Search error: {ex.Message}");
             }
         }
 

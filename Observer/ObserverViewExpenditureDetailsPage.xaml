@@ -14,16 +14,37 @@
         </StackLayout>
     </NavigationPage.TitleView>
     <Grid>
-        <StackLayout Margin="9">
-            <Label x:Name="lbl_heading0" FontSize="18" BackgroundColor="Navy" TextColor="White" FontAttributes="Bold" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center"/>
-            <Label x:Name="lbl_heading" FontSize="18" BackgroundColor="Navy" TextColor="White" FontAttributes="Bold" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center"/>
+        <Grid Margin="9" RowDefinitions="Auto,Auto,Auto,*">
+            <Label Grid.Row="0" 
+                   x:Name="lbl_heading0" 
+                   FontSize="16" 
+                   BackgroundColor="Navy" 
+                   TextColor="White" 
+                   FontAttributes="Bold" 
+                   HorizontalOptions="Fill" 
+                   HorizontalTextAlignment="Center"/>
+            
+            <Label Grid.Row="1" 
+                   x:Name="lbl_heading" 
+                   FontSize="16" 
+                   BackgroundColor="Navy" 
+                   TextColor="White" 
+                   FontAttributes="Bold" 
+                   HorizontalOptions="Fill" 
+                   HorizontalTextAlignment="Center"/>
 
-            <SearchBar  x:Name="searchbar_expendituredetails" CancelButtonColor="Red" HorizontalOptions="FillAndExpand" Placeholder="Search" TextChanged="searchbar_expendituredetails_TextChanged"/>
+            <SearchBar Grid.Row="2" 
+                       x:Name="searchbar_expendituredetails" 
+                       CancelButtonColor="Red" 
+                       HorizontalOptions="Fill" 
+                       Placeholder="Search" 
+                       TextChanged="searchbar_expendituredetails_TextChanged"/>
 
-            <ListView x:Name="listView_expendituredetails" HasUnevenRows="True" SeparatorColor="#126b8a"  SelectionMode="None" >
-                <ListView.ItemTemplate >
+            <CollectionView Grid.Row="3" 
+                            x:Name="listView_expendituredetails" 
+                            SelectionMode="None" >
+                <CollectionView.ItemTemplate >
                     <DataTemplate>
-                        <ViewCell >
                             <Frame VerticalOptions="StartAndExpand" Margin="0,10,0,10"  HasShadow="False" CornerRadius="20" BackgroundColor="White" BorderColor="Navy">
                                 <StackLayout Padding="15,12,15,8" Spacing="4">
 
@@ -103,11 +124,10 @@
 
                                 </StackLayout>
                             </Frame>
-                        </ViewCell>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackLayout>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
 
         <ContentView x:Name="popupRemarks" BackgroundColor="#C0808080" Padding="20" IsVisible="false" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
             <StackLayout HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="white">
