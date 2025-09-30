@@ -169,7 +169,6 @@ namespace CERS.Observer
             }
             isRowEven = !isRowEven;
         }
-
         private async void listView_candidatedetails_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             var currentRecord = e.Item as ObserverCandidates;
@@ -188,7 +187,6 @@ namespace CERS.Observer
 
         protected override void OnAppearing()
         {
-            base.OnAppearing();
 
 
             observorLoginDetailslist = observorLoginDetailsDatabase.GetObservorLoginDetails("Select * from ObservorLoginDetails").ToList();
