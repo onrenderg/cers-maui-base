@@ -39,21 +39,54 @@ namespace CERS.Observer
             InitializeComponent();
             this.Appearing += OnPageAppearing;
             this.Disappearing += OnPageDisappearing;
-            expensestype = expendselected;
             expensesvalue = expvalue;
             expdatetodisplayvalue = expdatetodispvalue;
             autoid = candidateid;
 
-
-            _ = LoadDataAsync(expensestype, expensesvalue);
+            expensestype = expendselected;
+            
+            // Initial data load
+            RefreshData();
 
             observorLoginDetailslist = observorLoginDetailsDatabase.GetObservorLoginDetails("Select * from ObservorLoginDetails").ToList();
+            
+            if (observorLoginDetailslist == null || !observorLoginDetailslist.Any())
+            {
+                Console.WriteLine("ERROR: No observer login details found");
+                DisplayAlert("Error", "Observer details not found. Please login again.", "OK");
+                return;
+            }
+            
             lbl_heading0.Text = App.GetLabelByKey("name") + " : " + observorLoginDetailslist.ElementAt(0).ObserverName + "\n"
              + App.GetLabelByKey("designation") + " : " + observorLoginDetailslist.ElementAt(0).ObserverDesignation + "\n"
               + App.GetLabelByKey("mobileno") + " : " + observorLoginDetailslist.ElementAt(0).ObserverContact;
             usermobile = observorLoginDetailslist.ElementAt(0).ObserverContact;
             ObserverId = observorLoginDetailslist.ElementAt(0).Auto_ID;
             searchbar_expendituredetails.Placeholder = App.GetLabelByKey("Search");
+}
+
+        private void RefreshData()
+        {
+            try
+            {
+                Console.WriteLine($"RefreshData called: expensestype='{expensestype}', expensesvalue='{expensesvalue}'");
+                if (expensestype.Equals("type"))
+                {
+                    loadtypewisedata(expensesvalue);
+                }
+                else if (expensestype.Equals("date"))
+                {
+                    Console.WriteLine("Calling loaddatewisedata...");
+                    loaddatewisedata(expensesvalue);
+                    Console.WriteLine("loaddatewisedata completed");
+                }
+                
+                Console.WriteLine("Observer data refreshed successfully");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error refreshing observer data: {ex.Message}");
+            }
         }
 
         private void OnPageAppearing(object? sender, EventArgs e)
@@ -64,10 +97,13 @@ namespace CERS.Observer
                 {
                     searchbar_expendituredetails.TextChanged += searchbar_expendituredetails_TextChanged;
                 }
+                
+                // Ensure data is loaded when page appears
+                RefreshData();
             }
-            catch (ObjectDisposedException)
+            catch (Exception ex)
             {
-                // Ignore if already disposed
+                Console.WriteLine($"Error in OnPageAppearing: {ex.Message}");
             }
         }
 
@@ -108,17 +144,6 @@ namespace CERS.Observer
             }
         }
 
-        private async Task LoadDataAsync(string type, string value)
-        {
-            if (type.Equals("type"))
-            {
-                loadtypewisedata(value);
-            }
-            else if (type.Equals("date"))
-            {
-                await loaddatewisedata(value);
-            }
-        }
 
         void loadtypewisedata(string expvalue)
         {
@@ -156,39 +181,27 @@ namespace CERS.Observer
                         $" where expcode='{expvalue}'";
                 
                 observerExpenditureDetailsList = observerExpenditureDetailsDatabase.GetObserverExpenditureDetails(query).ToList();
-                _allExpenditures = observerExpenditureDetailsList;
+_allExpenditures = observerExpenditureDetailsList;
                 
-                // Set ItemsSource with delay to ensure CollectionView is ready
-                Dispatcher.Dispatch(async () =>
+                Console.WriteLine($"DEBUG: Handler={this.Handler != null}, ListView={listView_expendituredetails != null}, Count={observerExpenditureDetailsList?.Count ?? 0}");
+                
+                // Set ItemsSource directly on main thread
+                try
                 {
-                    try
+                    if (listView_expendituredetails != null)
                     {
-                        await Task.Delay(50);
-                        
-                        // Multiple disposal checks
-                        if (this.Handler == null || listView_expendituredetails?.Handler == null || observerExpenditureDetailsList == null)
-                            return;
-                            
-                        // Clear first to prevent layout issues
-                        listView_expendituredetails.ItemsSource = null;
-                        await Task.Delay(10);
-                        
-                        // Check again after delay
-                        if (this.Handler == null || listView_expendituredetails?.Handler == null)
-                            return;
-                            
                         listView_expendituredetails.ItemsSource = observerExpenditureDetailsList;
+                        Console.WriteLine($"Loaded {observerExpenditureDetailsList?.Count ?? 0} items");
                     }
-                    catch (ObjectDisposedException)
-                    {
-                        // Silently handle disposed objects during data loading
-                        return;
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"Error setting ItemsSource: {ex.Message}");
-                    }
-                });
+                }
+                catch (ObjectDisposedException)
+                {
+                    // Silently handle disposed objects
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error setting ItemsSource: {ex.Message}");
+                }
                 
                 if (observerExpenditureDetailsList != null && observerExpenditureDetailsList.Any())
                 {
@@ -209,77 +222,67 @@ namespace CERS.Observer
             }
         }
 
-        async Task loaddatewisedata(string expvalue)
+        void loaddatewisedata(string expvalue)
         {
-            if (this.Handler == null) return;
-
-            query = $"Select *" +
-                 $",case  when amount <> '' then ('₹ ' || amount) else ('₹ 0') end amounttodisplay" +
-                    $",case  when amountoutstanding <> '' then ('₹ ' || amountoutstanding) else ('₹ 0') end amountoutstandingtodisplay" +
-                    $", (case  when {App.Language} =0 then ExpTypeName else ExpTypeNameLocal end)ExpTypeName " +
-                    $", (case  when {App.Language} =0 then PayModeName else PayModeNameLocal end)PayModeName " +
-                    $",'{App.GetLabelByKey("lbl_expdate")}' as lblexpDate" +
-                    $",'{App.GetLabelByKey("lbl_exptype")}' as lblexptype" +
-                    $",'{App.GetLabelByKey("lbl_amounttype")}' as lblamtType" +
-                    $",'{App.GetLabelByKey("lblObserverRemarks")}' as lblObserverRemarks" +
-                    $",'{App.GetLabelByKey("lbl_amountoutstanding")}' as lbl_amountoutstanding" +
-                    $",'{App.GetLabelByKey("lbl_amount")}' as lblAmount" +
-                    $",'{App.GetLabelByKey("lbl_paymentdate")}' as lblpaymentDate" +
-                    $",'{App.GetLabelByKey("lbl_voucherBillNumber")}' as lblvoucherBillNumber" +
-                    $",'{App.GetLabelByKey("lbl_payMode")}' as lblpayMode" +
-                    $",'{App.GetLabelByKey("lbl_payeeName")}' as lblpayeeName" +
-                    $",'{App.GetLabelByKey("lbl_payeeAddress")}' as lblpayeeAddress" +
-                    $",'{App.GetLabelByKey("lbl_sourceMoney")}' as lblsourceMoney" +
-                    $",'{App.GetLabelByKey("lblRemarks")}' as lblremarks" +
-                    //$",'{App.GetLabelByKey("raiseobjection")}' as lblraiseobjection" +
-                    $",'{App.GetLabelByKey("EnteredOn")}' as lblEnteredOn" +
-                    $",'{App.GetLabelByKey("Edit")}' as lbledit" +
-                    $", (case when ExpStatus='P' then 'true' else 'false' end)btnEditVisibility" +
-                    $",'true' as exptypevisibility" +
-                    $",'false' as expdatevisibility" +
-                    $",(case when evidenceFile ='Y' then 'true' else 'false' end)pdfvisibility" +
-                    $",(case when ObserverRemarks <> '' then '{App.GetLabelByKey("viewreplyremarks")}' else '{App.GetLabelByKey("raiseobjection")}' end)lblObserverRemarks" +
-                    $" from ObserverExpenditureDetails " +
-                    $" where expDate='{expvalue}'";
-            var result = await Task.Run(() => observerExpenditureDetailsDatabase.GetObserverExpenditureDetails(query).ToList());
-
-            if (this.Handler == null) return;
-
-            _allExpenditures = result;
-            observerExpenditureDetailsList = new List<ObserverExpenditureDetails>(_allExpenditures);
-            lbl_heading.Text = App.GetLabelByKey("lbl_expdate") + " - " + expdatetodisplayvalue;
-            
-            // Ensure UI update happens on main thread with delay
-            Dispatcher.Dispatch(async () =>
+            try
             {
-                try
+                query = $"Select *" +
+                        $",case  when amount <> '' then ('₹ ' || amount) else ('₹ 0') end amounttodisplay" +
+                        $",case  when amountoutstanding <> '' then ('₹ ' || amountoutstanding) else ('₹ 0') end amountoutstandingtodisplay" +
+                        $", (case  when {App.Language} =0 then ExpTypeName else ExpTypeNameLocal end)ExpTypeName " +
+                        $", (case  when {App.Language} =0 then PayModeName else PayModeNameLocal end)PayModeName " +
+                        $",'{App.GetLabelByKey("lbl_expdate")}' as lblexpDate" +
+                        $",'{App.GetLabelByKey("lbl_exptype")}' as lblexptype" +
+                        $",'{App.GetLabelByKey("lbl_amounttype")}' as lblamtType" +
+                        $",'{App.GetLabelByKey("lblObserverRemarks")}' as lblObserverRemarks" +
+                        $",'{App.GetLabelByKey("lbl_amountoutstanding")}' as lbl_amountoutstanding" +
+                        $",'{App.GetLabelByKey("lbl_amount")}' as lblAmount" +
+                        $",'{App.GetLabelByKey("lbl_paymentdate")}' as lblpaymentDate" +
+                        $",'{App.GetLabelByKey("lbl_voucherBillNumber")}' as lblvoucherBillNumber" +
+                        $",'{App.GetLabelByKey("lbl_payMode")}' as lblpayMode" +
+                        $",'{App.GetLabelByKey("lbl_payeeName")}' as lblpayeeName" +
+                        $",'{App.GetLabelByKey("lbl_payeeAddress")}' as lblpayeeAddress" +
+                        $",'{App.GetLabelByKey("lbl_sourceMoney")}' as lblsourceMoney" +
+                        $",'{App.GetLabelByKey("lblRemarks")}' as lblremarks" +
+                        $",'{App.GetLabelByKey("EnteredOn")}' as lblEnteredOn" +
+                        $",'{App.GetLabelByKey("Edit")}' as lbledit" +
+                        $", (case when ExpStatus='P' then 'true' else 'false' end)btnEditVisibility" +
+                        $",'{App.GetLabelByKey("Reply")}' as lblReplyToObserverRemarks" +
+                        $", (case when ObserverRemarks <> '' then 'true' else 'false' end)btnrplyobserverremarksvisibility" +
+                        $",'true' as exptypevisibility" +
+                        $",'false' as expdatevisibility" +
+                        $",CASE WHEN expDate IS NOT NULL THEN date(expDate) ELSE '' END as expDateDisplay" +
+                        $",CASE WHEN paymentDate IS NOT NULL THEN date(paymentDate) ELSE '' END as paymentDateDisplay" +
+                        $",CASE WHEN evidenceFile = 'Y' THEN 'true' ELSE 'false' END as pdfvisibility" +
+                        $" from ObserverExpenditureDetails " +
+                        $" where expDate='{expvalue}'";
+                
+                observerExpenditureDetailsList = observerExpenditureDetailsDatabase.GetObserverExpenditureDetails(query).ToList();
+                _allExpenditures = observerExpenditureDetailsList;
+                
+                Console.WriteLine($"loaddatewisedata: Loaded {observerExpenditureDetailsList?.Count ?? 0} items");
+                
+                if (this.Handler != null && lbl_heading != null)
+                {
+                    lbl_heading.Text = App.GetLabelByKey("lbl_expdate") + " - " + expdatetodisplayvalue;
+                }
+                
+                // Set ItemsSource with delay to ensure CollectionView is ready
+                Dispatcher.Dispatch(async () =>
                 {
                     await Task.Delay(50);
-                    
-                    // Multiple disposal checks
-                    if (this.Handler == null || listView_expendituredetails?.Handler == null || observerExpenditureDetailsList == null)
-                        return;
-                        
-                    // Clear first to prevent layout issues
-                    listView_expendituredetails.ItemsSource = null;
-                    await Task.Delay(10);
-                    
-                    // Check again after delay
-                    if (this.Handler == null || listView_expendituredetails?.Handler == null)
-                        return;
-                        
-                    listView_expendituredetails.ItemsSource = observerExpenditureDetailsList;
-                }
-                catch (ObjectDisposedException)
-                {
-                    // Silently handle disposed objects during data loading
-                    return;
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error setting ItemsSource (date): {ex.Message}");
-                }
-            });
+                    if (this.Handler != null && listView_expendituredetails != null)
+                    {
+                        listView_expendituredetails.ItemsSource = observerExpenditureDetailsList;
+                        Console.WriteLine($"ItemsSource set with {observerExpenditureDetailsList?.Count ?? 0} items");
+                    }
+                });
+            }
+            catch (ObjectDisposedException)
+            {
+                // Page disposed during data loading
+                return;
+            }
         }
 
         private void searchbar_expendituredetails_TextChanged(object? sender, TextChangedEventArgs e)
@@ -324,7 +327,7 @@ namespace CERS.Observer
                     )).ToList();
 
                     // Double-check before setting ItemsSource
-                    if (this.Handler != null && listView_expendituredetails != null)
+                    if (listView_expendituredetails != null)
                     {
                         // Force refresh for CollectionView with delay
                         Dispatcher.Dispatch(async () =>
@@ -445,8 +448,15 @@ namespace CERS.Observer
                     viewAllRemarkslist = viewAllRemarksDatabase.GetViewAllRemarks(query).ToList();
                     if (viewAllRemarkslist.Any())
                     {
-                        listview_Remarks.ItemsSource = viewAllRemarkslist;
-                        popupreplyremarks.IsVisible = false;
+    popupreplyremarks.IsVisible = false;
+                        
+                        // Delay to ensure popup is rendered before setting ItemsSource
+                        Dispatcher.Dispatch(async () =>
+                        {
+                            await Task.Delay(50);
+                            listview_Remarks.ItemsSource = null;
+                            listview_Remarks.ItemsSource = viewAllRemarkslist;
+                        });
 
                         string query1 = $"Select * from ObserverExpenditureDetails where ExpenseID='{expenseid}'";
                         observerExpenditureDetailsList = observerExpenditureDetailsDatabase.GetObserverExpenditureDetails(query1).ToList();
@@ -593,17 +603,18 @@ namespace CERS.Observer
                 }
 
                 await Navigation.PopAsync();
+                Loading_activity.IsVisible = false;
             }
-            Loading_activity.IsVisible = false;
         }
 
 
-        private void listview_Remarks_ItemTapped(object sender, ItemTappedEventArgs e)
+        private void listview_Remarks_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            /* var currentRecord = e.Item as ViewAllRemarks;
-             string ExpenseId = currentRecord.ExpenseId.ToString();
-             string ObserverRemarksId = currentRecord.ObserverRemarksId.ToString();*/
-
+            if (e.CurrentSelection.Count > 0)
+            {
+                // Clear selection
+                ((CollectionView)sender).SelectedItem = null;
+            }
         }
 
         private void img_edit_Clicked(object sender, EventArgs e)
@@ -632,8 +643,6 @@ namespace CERS.Observer
                 PopupeditremarkscancelBtn.Text = App.GetLabelByKey("Cancel");
                 popupeditremarks.IsVisible = true;
             }
-            /* var service=new HitServices();
-             int response_updaterem = await service.UpdateObserverRemarks_Post(expenseid, ObserverRemarksId, entry_remarks.Text);*/
         }
 
         private void PopupeditremarkscancelBtn_Clicked(object sender, EventArgs e)
@@ -728,3 +737,23 @@ namespace CERS.Observer
       }*/
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -47,6 +47,13 @@ namespace CERS.Observer
 
             observorLoginDetailslist = observorLoginDetailsDatabase.GetObservorLoginDetails("Select * from ObservorLoginDetails").ToList();
             
+            if (observorLoginDetailslist == null || !observorLoginDetailslist.Any())
+            {
+                Console.WriteLine("ERROR: No observer login details found");
+                DisplayAlert("Error", "Observer details not found. Please login again.", "OK");
+                return;
+            }
+            
              mobilenumber = observorLoginDetailslist.ElementAt(0).ObserverContact;
             lbl_heading.Text = App.GetLabelByKey("name")+" : "+ observorLoginDetailslist.ElementAt(0).ObserverName + "\n"
                + App.GetLabelByKey("designation") + " : "+ observorLoginDetailslist.ElementAt(0).ObserverDesignation + "\n"
@@ -54,6 +61,11 @@ namespace CERS.Observer
 
 
             observerWardslist = observerWardsDatabase.GetObserverWards("Select * from observerWards").ToList();
+            
+            if (observerWardslist == null || !observerWardslist.Any())
+            {
+                Console.WriteLine("WARNING: No observer wards found");
+            }
             
             picker_wards.ItemsSource = observerWardslist;
             if (App.Language == 0)

@@ -44,6 +44,13 @@ namespace CERS
             RefreshData();
             
             userDetails = userDetailsDatabase.GetUserDetails("Select * from UserDetails").ToList();
+            
+            if (userDetails == null || !userDetails.Any())
+            {
+                Console.WriteLine("ERROR: No user details found in constructor");
+                // Will be handled in OnAppearing
+            }
+            
             lbl_heading0.Text = App.setselfagentuserheading();
             searchbar_expendituredetails.Placeholder = App.GetLabelByKey("Search");
         }
@@ -408,9 +415,17 @@ namespace CERS
                 viewAllRemarkslist = viewAllRemarksDatabase.GetViewAllRemarks(query).ToList();
                 if (viewAllRemarkslist.Any())
                 {
-                    listview_Remarks.ItemsSource = viewAllRemarkslist;
-                    popupRemarksCancel.Text = App.GetLabelByKey("Cancel");
                     popupRemarks.IsVisible = true;
+                    
+                    // Delay to ensure popup is rendered before setting ItemsSource
+                    Dispatcher.Dispatch(async () =>
+                    {
+                        await Task.Delay(50);
+                        listview_Remarks.ItemsSource = null;
+                        listview_Remarks.ItemsSource = viewAllRemarkslist;
+                    });
+                    
+                    popupRemarksCancel.Text = App.GetLabelByKey("Cancel");
                 }
                 else
                 {

@@ -34,21 +34,26 @@ namespace CERS.Observer
             lbl_title.Text = App.GetLabelByKey("deptt");
             lbl_dept.Text = App.GetLabelByKey("deptt");
             lbl_call.Text = App.GetLabelByKey("CallUs");
-            lbl_website.Text = App.GetLabelByKey("Website");
             lbl_email.Text = App.GetLabelByKey("Email");
             lbl_policy.Text = App.GetLabelByKey("PrivacyPolicy");
             lbl_logout.Text = App.GetLabelByKey("Logout");
             lbl_language.Text = App.GetLabelByKey("chnglang");
 
             observorLoginDetailsList = observorLoginDetailsDatabase.GetObservorLoginDetails("Select * from ObservorLoginDetails").ToList();
-            loggedinuser = observorLoginDetailsList.ElementAt(0).ObserverName;
-
-
-
+            
+            if (observorLoginDetailsList == null || !observorLoginDetailsList.Any())
+            {
+                Console.WriteLine("ERROR: No observer login details found");
+                loggedinuser = "Unknown";
+            }
+            else
+            {
+                loggedinuser = observorLoginDetailsList.ElementAt(0).ObserverName;
+            }
         }
+        
         protected override void OnAppearing()
         {
-            base.OnAppearing();
             Tab_Home_Label.Text = App.GetLabelByKey("Home");
             Tab_New_Label.Text = App.GetLabelByKey("addexpenses");
             Tab_Settings_Label.Text = App.GetLabelByKey("More");

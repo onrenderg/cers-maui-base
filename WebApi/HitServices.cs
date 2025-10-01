@@ -517,12 +517,22 @@ namespace CERS.WebApi
                 if (userType.Equals("Observor"))
                 {
                     observorLoginDetailslist = observorLoginDetailsDatabase.GetObservorLoginDetails("Select * from ObservorLoginDetails").ToList();
+                    if (observorLoginDetailslist == null || !observorLoginDetailslist.Any())
+                    {
+                        System.Diagnostics.Debug.WriteLine("[CheckOtp] ERROR: No observer login details found");
+                        return 404;
+                    }
                     otpId = observorLoginDetailslist.ElementAt(0).OTPID;
                     System.Diagnostics.Debug.WriteLine($"[CheckOtp] Retrieved Observer OTPID: {otpId}");
                 }
                 else
                 {
                     userDetailslist = userDetailsDatabase.GetUserDetails("Select * from UserDetails").ToList();
+                    if (userDetailslist == null || !userDetailslist.Any())
+                    {
+                        System.Diagnostics.Debug.WriteLine("[CheckOtp] ERROR: No user details found");
+                        return 404;
+                    }
                     otpId = userDetailslist.ElementAt(0).OTPID;
                     System.Diagnostics.Debug.WriteLine($"[CheckOtp] Retrieved User OTPID: {otpId}");
                 }
@@ -775,6 +785,11 @@ namespace CERS.WebApi
                 try
                 {
                     userDetailslist = userDetailsDatabase.GetUserDetails("Select * from UserDetails").ToList();
+                    if (userDetailslist == null || !userDetailslist.Any())
+                    {
+                        System.Diagnostics.Debug.WriteLine("[ExpenditureDetails_Get] ERROR: No user details found");
+                        return 404;
+                    }
                     string AutoID = userDetailslist.ElementAt(0).AUTO_ID;
                     var client = new HttpClient();
                     //var byteArray = Encoding.ASCII.GetBytes(App.basic_auth());

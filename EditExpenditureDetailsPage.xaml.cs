@@ -56,7 +56,19 @@ namespace CERS
         protected override async void OnAppearing()
         {
             base.OnAppearing();
+
+            if (this.Handler == null) return;
+
             userDetails = userDetailsDatabase.GetUserDetails("Select * from UserDetails").ToList();
+            
+            // Check if userDetails is empty to prevent NullReferenceException
+            if (userDetails == null || !userDetails.Any())
+            {
+                Console.WriteLine("ERROR: No user details found in database");
+                await DisplayAlert("Error", "User details not found. Please login again.", "OK");
+                return;
+            }
+            
             lbl_heading.Text = App.setselfagentuserheading();
 
             AUTO_ID = userDetails.ElementAt(0).AUTO_ID;
@@ -124,10 +136,19 @@ namespace CERS
                 datepicker_paymentdate.MinimumDate = Convert.ToDateTime(userDetails.ElementAt(0).NominationDate);
                 loadpreviousdata(expenseid);
             }
+            catch (ObjectDisposedException)
+            {
+                // Page was disposed - silently return
+                return;
+            }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error in OnAppearing: {ex.Message}");
-                await DisplayAlert("Error", $"Failed to load data: {ex.Message}", "OK");
+                // Check if page is still valid before showing alert
+                if (this.Handler != null)
+                {
+                    await DisplayAlert("Error", $"Failed to load data: {ex.Message}", "OK");
+                }
             }
 
         }

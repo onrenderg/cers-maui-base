@@ -130,19 +130,21 @@
         </Grid>
 
         <ContentView x:Name="popupRemarks" BackgroundColor="#C0808080" Padding="20" IsVisible="false" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
-            <StackLayout HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="white">
-                <Label x:Name="lbl_popupRemarks" Text="Remarks" Padding="6" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="16" FontAttributes="Bold" TextColor="Navy" />
+            <StackLayout HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="white" Padding="10" Margin="10" WidthRequest="400">
+                <Label x:Name="lbl_popupRemarks" Text="Remarks" Padding="10" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="16" FontAttributes="Bold" TextColor="Navy" Margin="0,0,0,10" />
                 <!--<Frame  Padding="0" Margin="3" CornerRadius="20" BorderColor="Navy">
                     <SearchBar Placeholder="Type Remarks Name" x:Name="SearchBar_Remarks" IsSpellCheckEnabled="False"
                     PlaceholderColor="#736f6f" BackgroundColor="#e0e0e0" TextColor="Black"  CancelButtonColor="Red"  Keyboard="Plain" TextChanged="SearchBar_Remarks_TextChanged"/>
                 </Frame>-->
 
-                <ListView x:Name="listview_Remarks" HasUnevenRows="True" SeparatorColor="#126b8a"  SelectionMode="None"  BackgroundColor="White">
-                    <ListView.ItemTemplate >
+                <CollectionView x:Name="listview_Remarks" BackgroundColor="White" Margin="5" MinimumHeightRequest="200" MaximumHeightRequest="400">
+                    <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <ViewCell >
-                                <Frame VerticalOptions="StartAndExpand" Margin="3"  HasShadow="False" CornerRadius="20" BackgroundColor="White" BorderColor="Navy">
-                                    <StackLayout Orientation="Vertical">
+                                <Border Stroke="Navy" StrokeThickness="1" BackgroundColor="White" Margin="5" Padding="10">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="20"/>
+                                    </Border.StrokeShape>
+                                    <StackLayout Orientation="Vertical" Spacing="5">
 
                                         <!--<Grid >
                                             <Grid.RowDefinitions>
@@ -169,11 +171,10 @@
                                         <!--</Grid>-->
                                     </StackLayout>
 
-                                </Frame>
-                            </ViewCell>
+                                </Border>
                         </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
 
                 <Button BackgroundColor="Navy" TextColor="White" FontAttributes="Bold"  x:Name="popupRemarksCancel" Clicked="popupRemarksCancel_Clicked" Text="Cancel" Margin="5" HorizontalOptions="FillAndExpand"/>
             </StackLayout>
@@ -208,3 +209,4 @@
         </ContentView>
     </Grid>
 </ContentPage>
+

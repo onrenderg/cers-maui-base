@@ -45,7 +45,10 @@
                             SelectionMode="None" >
                 <CollectionView.ItemTemplate >
                     <DataTemplate>
-                            <Frame VerticalOptions="StartAndExpand" Margin="0,10,0,10"  HasShadow="False" CornerRadius="20" BackgroundColor="White" BorderColor="Navy">
+                            <Border Stroke="Navy" StrokeThickness="1" BackgroundColor="White" Margin="0,10,0,10">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="20"/>
+                                </Border.StrokeShape>
                                 <StackLayout Padding="15,12,15,8" Spacing="4">
 
                                     <StackLayout IsVisible="{Binding expdatevisibility}" Spacing="2">
@@ -123,22 +126,24 @@
                                     <!--<Button  Grid.Row="14" Grid.ColumnSpan="2" CommandParameter="{Binding ExpenseID}"  Text="{Binding lblremarks}" FontAttributes="Bold" HorizontalOptions="Center" FontSize="18" BackgroundColor="Navy" TextColor="White" CornerRadius="15"  Clicked="btn_remarks_Clicked" x:Name="btn_remarks"/>-->
 
                                 </StackLayout>
-                            </Frame>
+                            </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </Grid>
 
         <ContentView x:Name="popupRemarks" BackgroundColor="#C0808080" Padding="20" IsVisible="false" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
-            <StackLayout HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="white">
-                <Label x:Name="lbl_popupRemarks" FontSize="18" BackgroundColor="Navy" TextColor="White" FontAttributes="Bold" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" Margin="3"/>
+            <StackLayout HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="white" Padding="10" Margin="10" WidthRequest="400">
+                <Label x:Name="lbl_popupRemarks" FontSize="18" BackgroundColor="Navy" TextColor="White" FontAttributes="Bold" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" Padding="10" Margin="0,0,0,10"/>
 
-                <ListView x:Name="listview_Remarks" HasUnevenRows="True" SeparatorColor="#126b8a"  SelectionMode="None" ItemTapped="listview_Remarks_ItemTapped"  BackgroundColor="White">
-                    <ListView.ItemTemplate >
+                <CollectionView x:Name="listview_Remarks" BackgroundColor="White" SelectionMode="Single" SelectionChanged="listview_Remarks_SelectionChanged" Margin="5" HeightRequest="350">
+                    <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <ViewCell >
-                                <Frame VerticalOptions="StartAndExpand" Margin="3"  HasShadow="False" CornerRadius="20" BackgroundColor="White" BorderColor="Navy">
-                                    <StackLayout Orientation="Vertical">
+                                <Border Stroke="Navy" StrokeThickness="1" BackgroundColor="White" Margin="5" Padding="10">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="20"/>
+                                    </Border.StrokeShape>
+                                    <StackLayout Orientation="Vertical" Spacing="5">
                                         <Label Text="{Binding lblObserverRemarks}" TextColor="Navy"  HorizontalTextAlignment="Start"  FontAttributes="Bold" Grid.Row="0" Grid.Column="0"/>
                                         <Label Text="{Binding ObserverRemarks}"  HorizontalOptions="Start" HorizontalTextAlignment="Start" TextColor="Maroon" Grid.Row="1" Grid.Column="0"/>
 
@@ -152,11 +157,10 @@
 
                                     </StackLayout>
 
-                                </Frame>
-                            </ViewCell>
+                                </Border>
                         </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
                 <StackLayout Orientation="Horizontal">
                     <Button BackgroundColor="Navy" TextColor="White" FontAttributes="Bold"  x:Name="popupRemarksCancel" Clicked="popupRemarksCancel_Clicked" Text="Cancel" Margin="5" HorizontalOptions="FillAndExpand"/>
                     <Button BackgroundColor="Navy"  TextColor="White" FontAttributes="Bold"  x:Name="popupRemarksAddNew" Clicked="popupRemarksAddNew_Clicked" Text="Add New" Margin="5" HorizontalOptions="FillAndExpand"/>
@@ -231,3 +235,6 @@
         </ContentView>
     </Grid>
 </ContentPage>
+
+
+
