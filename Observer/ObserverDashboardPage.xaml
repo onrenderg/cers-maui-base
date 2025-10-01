@@ -38,17 +38,17 @@
                                 <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
 
-                            <Grid x:Name="grid_data" Margin="4" Grid.Row="0" >
+                            <Grid x:Name="grid_data" Margin="8,4,8,4" ColumnSpacing="10" Grid.Row="0" >
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="auto"/>
                                     <RowDefinition Height="auto"/>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="7.5*"/>
-                                    <ColumnDefinition Width="2.5*"/>
+                                    <ColumnDefinition Width="6*"/>
+                                    <ColumnDefinition Width="4*"/>
                                 </Grid.ColumnDefinitions>
-                                <Label VerticalOptions="Center" FontSize="16" x:Name="lblcandidatename"   HorizontalOptions="StartAndExpand" TextColor="Navy"  Grid.Column="0" FontAttributes="Bold" />
-                                <Label VerticalOptions="Center"  FontSize="16" x:Name="lblAmount" HorizontalOptions="EndAndExpand" TextColor="Navy"    Grid.Column="1" FontAttributes="Bold"  />
+                                <Label VerticalOptions="Center" FontSize="16" x:Name="lblcandidatename"   HorizontalOptions="Start" TextColor="Navy"  Grid.Column="0" FontAttributes="Bold" />
+                                <Label VerticalOptions="Center"  FontSize="16" x:Name="lblAmount" HorizontalOptions="End" TextColor="Navy"    Grid.Column="1" FontAttributes="Bold"  />
                             </Grid>
 
                             <ListView x:Name="listView_candidatedetails" HasUnevenRows="True" VerticalOptions="FillAndExpand" SeparatorColor="Transparent"  SelectionMode="None" Grid.Row="2" ItemTapped="listView_candidatedetails_ItemTapped">
@@ -56,19 +56,19 @@
                                 <ListView.ItemTemplate >
                                     <DataTemplate>
                                         <ViewCell Appearing="ViewCell_Appearing">
-                                            <StackLayout Margin="4" >
-                                                <Grid RowSpacing="5" >
+                                            <StackLayout Margin="8,4,8,4" >
+                                                <Grid RowSpacing="5" ColumnSpacing="10" >
                                                     <Grid.RowDefinitions>
                                                         <RowDefinition Height="auto"/>
                                                     </Grid.RowDefinitions>
                                                     <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="8*"/>
-                                                        <ColumnDefinition Width="2*"/>
+                                                        <ColumnDefinition Width="6*"/>
+                                                        <ColumnDefinition Width="4*"/>
                                                         <!--<ColumnDefinition Width="2*"/>-->
                                                     </Grid.ColumnDefinitions>
 
-                                                    <Label VerticalOptions="Center"  HorizontalOptions="StartAndExpand"  FontSize="16" Text="{Binding VOTER_NAME}"   TextColor="Navy"  Grid.Column="0"/>
-                                                    <Label  VerticalOptions="Center"  HorizontalOptions="EndAndExpand"  FontSize="16"  Text="{Binding Amount}" TextColor="Navy"   Grid.Column="1" />
+                                                    <Label VerticalOptions="Center"  HorizontalOptions="Start"  FontSize="16" Text="{Binding VOTER_NAME}"   TextColor="Navy"  Grid.Column="0" LineBreakMode="TailTruncation"/>
+                                                    <Label  VerticalOptions="Center"  HorizontalOptions="End"  FontSize="16"  Text="{Binding Amount}" TextColor="Navy"   Grid.Column="1" LineBreakMode="NoWrap" />
 
                                                 </Grid>
                                             </StackLayout>
