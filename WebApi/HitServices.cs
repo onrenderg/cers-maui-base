@@ -380,9 +380,14 @@ namespace CERS.WebApi
                     }
                     return (int)response.StatusCode;
                 }
-                catch
+                catch (Exception ex)
                 {
-                    await Application.Current!.MainPage!.DisplayAlert("Exception", "Something went wrong. Please try again!", "OK");
+                    // Log the actual error for debugging
+                    System.Diagnostics.Debug.WriteLine($"Remarks_Get Exception: {ex.Message}");
+                    System.Diagnostics.Debug.WriteLine($"Stack Trace: {ex.StackTrace}");
+                    
+                    // Show detailed error to user for debugging
+                    await Application.Current!.MainPage!.DisplayAlert("Exception", $"Error loading remarks: {ex.Message}", "OK");
                     return 500;
                 }
             }
@@ -620,9 +625,14 @@ namespace CERS.WebApi
                     }
                     return (int)response.StatusCode;
                 }
-                catch
+                catch (Exception ex)
                 {
-                    await Application.Current!.MainPage!.DisplayAlert("Exception", "Something went wrong. Please try again!", "OK");
+                    // Log the actual error for debugging
+                    System.Diagnostics.Debug.WriteLine($"Remarks_Get Exception: {ex.Message}");
+                    System.Diagnostics.Debug.WriteLine($"Stack Trace: {ex.StackTrace}");
+                    
+                    // Show detailed error to user for debugging
+                    await Application.Current!.MainPage!.DisplayAlert("Exception", $"Error loading remarks: {ex.Message}", "OK");
                     return 500;
                 }
             }
@@ -677,9 +687,14 @@ namespace CERS.WebApi
                     }
                     return (int)response.StatusCode;
                 }
-                catch
+                catch (Exception ex)
                 {
-                    await Application.Current!.MainPage!.DisplayAlert("Exception", "Something went wrong. Please try again!", "OK");
+                    // Log the actual error for debugging
+                    System.Diagnostics.Debug.WriteLine($"Remarks_Get Exception: {ex.Message}");
+                    System.Diagnostics.Debug.WriteLine($"Stack Trace: {ex.StackTrace}");
+                    
+                    // Show detailed error to user for debugging
+                    await Application.Current!.MainPage!.DisplayAlert("Exception", $"Error loading remarks: {ex.Message}", "OK");
                     return 500;
                 }
             }
@@ -734,9 +749,14 @@ namespace CERS.WebApi
                     }
                     return (int)response.StatusCode;
                 }
-                catch
+                catch (Exception ex)
                 {
-                    await Application.Current!.MainPage!.DisplayAlert("Exception", "Something went wrong. Please try again!", "OK");
+                    // Log the actual error for debugging
+                    System.Diagnostics.Debug.WriteLine($"Remarks_Get Exception: {ex.Message}");
+                    System.Diagnostics.Debug.WriteLine($"Stack Trace: {ex.StackTrace}");
+                    
+                    // Show detailed error to user for debugging
+                    await Application.Current!.MainPage!.DisplayAlert("Exception", $"Error loading remarks: {ex.Message}", "OK");
                     return 500;
                 }
             }
@@ -817,9 +837,14 @@ namespace CERS.WebApi
                     }
                     return (int)response.StatusCode;
                 }
-                catch
+                catch (Exception ex)
                 {
-                    await Application.Current!.MainPage!.DisplayAlert("Exception", "Something went wrong. Please try again!", "OK");
+                    // Log the actual error for debugging
+                    System.Diagnostics.Debug.WriteLine($"Remarks_Get Exception: {ex.Message}");
+                    System.Diagnostics.Debug.WriteLine($"Stack Trace: {ex.StackTrace}");
+                    
+                    // Show detailed error to user for debugging
+                    await Application.Current!.MainPage!.DisplayAlert("Exception", $"Error loading remarks: {ex.Message}", "OK");
                     return 500;
                 }
             }
@@ -902,9 +927,14 @@ namespace CERS.WebApi
                     }
                     return (int)response.StatusCode;
                 }
-                catch
+                catch (Exception ex)
                 {
-                    await Application.Current!.MainPage!.DisplayAlert("Exception", "Something went wrong. Please try again!", "OK");
+                    // Log the actual error for debugging
+                    System.Diagnostics.Debug.WriteLine($"Remarks_Get Exception: {ex.Message}");
+                    System.Diagnostics.Debug.WriteLine($"Stack Trace: {ex.StackTrace}");
+                    
+                    // Show detailed error to user for debugging
+                    await Application.Current!.MainPage!.DisplayAlert("Exception", $"Error loading remarks: {ex.Message}", "OK");
                     return 500;
                 }
             }
@@ -961,9 +991,14 @@ namespace CERS.WebApi
                     }
                     return (int)response.StatusCode;
                 }
-                catch
+                catch (Exception ex)
                 {
-                    await Application.Current!.MainPage!.DisplayAlert("Exception", "Something went wrong. Please try again!", "OK");
+                    // Log the actual error for debugging
+                    System.Diagnostics.Debug.WriteLine($"Remarks_Get Exception: {ex.Message}");
+                    System.Diagnostics.Debug.WriteLine($"Stack Trace: {ex.StackTrace}");
+                    
+                    // Show detailed error to user for debugging
+                    await Application.Current!.MainPage!.DisplayAlert("Exception", $"Error loading remarks: {ex.Message}", "OK");
                     return 500;
                 }
             }
@@ -1026,9 +1061,14 @@ namespace CERS.WebApi
                     }
                     return (int)response.StatusCode;
                 }
-                catch
+                catch (Exception ex)
                 {
-                    await Application.Current!.MainPage!.DisplayAlert("Exception", "Something went wrong. Please try again!", "OK");
+                    // Log the actual error for debugging
+                    System.Diagnostics.Debug.WriteLine($"Remarks_Get Exception: {ex.Message}");
+                    System.Diagnostics.Debug.WriteLine($"Stack Trace: {ex.StackTrace}");
+                    
+                    // Show detailed error to user for debugging
+                    await Application.Current!.MainPage!.DisplayAlert("Exception", $"Error loading remarks: {ex.Message}", "OK");
                     return 500;
                 }
             }
@@ -1084,9 +1124,14 @@ namespace CERS.WebApi
                     }
                     return (int)response.StatusCode;
                 }
-                catch
+                catch (Exception ex)
                 {
-                    await Application.Current!.MainPage!.DisplayAlert("Exception", "Something went wrong. Please try again!", "OK");
+                    // Log the actual error for debugging
+                    System.Diagnostics.Debug.WriteLine($"Remarks_Get Exception: {ex.Message}");
+                    System.Diagnostics.Debug.WriteLine($"Stack Trace: {ex.StackTrace}");
+                    
+                    // Show detailed error to user for debugging
+                    await Application.Current!.MainPage!.DisplayAlert("Exception", $"Error loading remarks: {ex.Message}", "OK");
                     return 500;
                 }
             }
@@ -1460,9 +1505,14 @@ namespace CERS.WebApi
                     }
                     return (int)response.StatusCode;
                 }
-                catch
+                catch (Exception ex)
                 {
-                    await Application.Current!.MainPage!.DisplayAlert("Exception", "Something went wrong. Please try again!", "OK");
+                    // Log the actual error for debugging
+                    System.Diagnostics.Debug.WriteLine($"Remarks_Get Exception: {ex.Message}");
+                    System.Diagnostics.Debug.WriteLine($"Stack Trace: {ex.StackTrace}");
+                    
+                    // Show detailed error to user for debugging
+                    await Application.Current!.MainPage!.DisplayAlert("Exception", $"Error loading remarks: {ex.Message}", "OK");
                     return 500;
                 }
             }

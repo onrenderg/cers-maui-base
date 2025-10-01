@@ -49,19 +49,25 @@ namespace CERS
         }
 
         // ADD: Override OnAppearing to refresh data when returning from EditExpenditureDetailsPage
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
             
             try
             {
-                // Refresh data when page appears (e.g., returning from EditExpenditureDetailsPage)
+                // Refresh data from server to ensure button visibility is accurate
+                var service = new HitServices();
+                await service.ExpenditureDetails_Get();
+                
+                // Refresh local data display
                 RefreshData();
-                Console.WriteLine("Data refreshed on page appearing");
+                Console.WriteLine("Data refreshed from server on page appearing");
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error refreshing data on page appearing: {ex.Message}");
+                // Still try to load local data even if API fails
+                RefreshData();
             }
         }
 
@@ -374,21 +380,41 @@ namespace CERS
 
             Loading_activity.IsVisible = false;
 
-            string query = $"Select *,(ExpenseId ||'$'||ObserverRemarksId)ExpenseObserverRemId" +
-                $", (case when UserRemarks <> '' then 'false' else 'true' end ) imgreplyvisibility" +
-                $", (case when UserRemarksDtTm <> '' then UserRemarksDtTm else ObserverRemarksDtTm end ) RepliedDatetime" +
-                $", '{App.GetLabelByKey("lblObserverRemarks")}'||' '||(case when UserRemarksDtTm <> '' then '' else ObserverRemarksDtTm end)  as lblObserverRemarks" +
-                $", '{App.GetLabelByKey("UserResponse")}' ||' '||(case when UserRemarksDtTm <> '' then UserRemarksDtTm else '' end) as lblUserRemarks" +
-              //  $", (case when UserRemarksDtTm <> '' then '{App.GetLabelByKey("UserResponseDatetime")}' else '{App.GetLabelByKey("ObserverResponseDatetime")}' end ) lblRepliedDatetime" +
-               // $", (case when UserRemarksDtTm <> '' then '{App.GetLabelByKey("UserResponseDatetime")}'||' '|| UserRemarksDtTm else '{App.GetLabelByKey("ObserverResponseDatetime")}' ||' '||ObserverRemarksDtTm end ) lblRepliedDatetime" +
-                $" from viewAllRemarks order by UserRemarksDtTm desc";
-            viewAllRemarkslist = viewAllRemarksDatabase.GetViewAllRemarks(query).ToList();
-            if (viewAllRemarkslist.Any())
+            // Check if API call was successful
+            if (response_remarks == 200)
             {
-                listview_Remarks.ItemsSource = viewAllRemarkslist;
-                popupRemarksCancel.Text = App.GetLabelByKey("Cancel");
-                popupRemarks.IsVisible = true;
+                string query = $"Select *,(ExpenseId ||'$'||ObserverRemarksId)ExpenseObserverRemId" +
+                    $", (case when UserRemarks <> '' then 'false' else 'true' end ) imgreplyvisibility" +
+                    $", (case when UserRemarksDtTm <> '' then UserRemarksDtTm else ObserverRemarksDtTm end ) RepliedDatetime" +
+                    $", '{App.GetLabelByKey("lblObserverRemarks")}'||' '||(case when UserRemarksDtTm <> '' then '' else ObserverRemarksDtTm end)  as lblObserverRemarks" +
+                    $", '{App.GetLabelByKey("UserResponse")}' ||' '||(case when UserRemarksDtTm <> '' then UserRemarksDtTm else '' end) as lblUserRemarks" +
+                  //  $", (case when UserRemarksDtTm <> '' then '{App.GetLabelByKey("UserResponseDatetime")}' else '{App.GetLabelByKey("ObserverResponseDatetime")}' end ) lblRepliedDatetime" +
+                   // $", (case when UserRemarksDtTm <> '' then '{App.GetLabelByKey("UserResponseDatetime")}'||' '|| UserRemarksDtTm else '{App.GetLabelByKey("ObserverResponseDatetime")}' ||' '||ObserverRemarksDtTm end ) lblRepliedDatetime" +
+                    $" from viewAllRemarks order by UserRemarksDtTm desc";
+                viewAllRemarkslist = viewAllRemarksDatabase.GetViewAllRemarks(query).ToList();
+                if (viewAllRemarkslist.Any())
+                {
+                    listview_Remarks.ItemsSource = viewAllRemarkslist;
+                    popupRemarksCancel.Text = App.GetLabelByKey("Cancel");
+                    popupRemarks.IsVisible = true;
+                }
+                else
+                {
+                    // No remarks found in database after successful API call - silently do nothing
+                    // This means the API returned 200 but with empty data
+                }
             }
+            else if (response_remarks == 404)
+            {
+                // No remarks exist on server - silently do nothing (button shouldn't have been visible)
+                // This can happen if local database is out of sync with server
+            }
+            else
+            {
+                // API call failed - show error message
+                await DisplayAlert(App.GetLabelByKey("AppName"), "Failed to load observer remarks. Please try again.", App.GetLabelByKey("Close"));
+            }
+            
             lbl_popupRemarks.Text = App.GetLabelByKey("UserResponse");
             lbl_remarks.Text = App.GetLabelByKey("UserResponse") + "*";
             entry_remarks.Placeholder = App.GetLabelByKey("Remarks");
