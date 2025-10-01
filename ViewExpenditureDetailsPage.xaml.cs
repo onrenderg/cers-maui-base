@@ -53,21 +53,35 @@ namespace CERS
         {
             base.OnAppearing();
             
+            // Check if page is still valid before doing anything
+            if (this.Handler == null) return;
+            
             try
             {
                 // Refresh data from server to ensure button visibility is accurate
                 var service = new HitServices();
                 await service.ExpenditureDetails_Get();
                 
+                // Check again after async operation
+                if (this.Handler == null) return;
+                
                 // Refresh local data display
                 RefreshData();
                 Console.WriteLine("Data refreshed from server on page appearing");
             }
+            catch (ObjectDisposedException)
+            {
+                // Page was disposed during async operation - silently return
+                return;
+            }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error refreshing data on page appearing: {ex.Message}");
-                // Still try to load local data even if API fails
-                RefreshData();
+                // Check if page is still valid before trying to refresh
+                if (this.Handler != null)
+                {
+                    RefreshData();
+                }
             }
         }
 
