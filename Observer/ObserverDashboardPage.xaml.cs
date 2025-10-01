@@ -80,13 +80,18 @@ namespace CERS.Observer
 
             try
             {
-                lbl_lastupdated.Text = App.GetLabelByKey("LastUpdated") + observerWardslist.ElementAt(0).lastupdated;
-
+                if (observerWardslist != null && observerWardslist.Any())
+                {
+                    lbl_lastupdated.Text = App.GetLabelByKey("LastUpdated") + observerWardslist.ElementAt(0).lastupdated;
+                }
+                else
+                {
+                    lbl_lastupdated.Text = App.GetLabelByKey("LastUpdated") + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+                }
             }
             catch
             {
                 lbl_lastupdated.Text = App.GetLabelByKey("LastUpdated") + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
-
             }
         }
 

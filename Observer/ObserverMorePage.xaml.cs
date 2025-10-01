@@ -17,8 +17,8 @@ namespace CERS.Observer
         public string[] Footer_Image_Source;
         public Image[] Footer_Images;
       ObservorLoginDetailsDatabase observorLoginDetailsDatabase = new ObservorLoginDetailsDatabase();
-        List<ObservorLoginDetails> observorLoginDetailsList;    
-        string loggedinuser;
+        List<ObservorLoginDetails> observorLoginDetailsList = new();    
+        string loggedinuser = string.Empty;
         public ObserverMorePage()
         {
             InitializeComponent();
