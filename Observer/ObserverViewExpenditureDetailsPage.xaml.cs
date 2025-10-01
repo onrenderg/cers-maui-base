@@ -430,38 +430,57 @@ namespace CERS.Observer
 
                 Loading_activity.IsVisible = false;
 
-
-                string query = $"Select *,(ExpenseId ||'$'||ObserverRemarksId)ExpenseObserverRemId" +
-                // $", (case when UserRemarks <> '' then 'false' else 'true' end ) imgreplyvisibility" +
-                $", (case when UserRemarks <> '' then 'false' else 'true' end ) imgeditvisibility" +
-                $", (case when UserRemarksDtTm <> '' then UserRemarksDtTm else ObserverRemarksDtTm end ) RepliedDatetime" +
-                $", '{App.GetLabelByKey("lblObserverRemarks")}'||' '||(case when UserRemarksDtTm <> '' then '' else ObserverRemarksDtTm end)  as lblObserverRemarks" +
-                $", '{App.GetLabelByKey("UserResponse")}' ||' '||(case when UserRemarksDtTm <> '' then UserRemarksDtTm else '' end) as lblUserRemarks" +
-                // $", (case when UserRemarksDtTm <> '' then '{App.GetLabelByKey("UserResponseDatetime")}' else '{App.GetLabelByKey("ObserverResponseDatetime")}' end ) lblRepliedDatetime" +
-                $" from viewAllRemarks order by ObserverRemarksDtTm desc";
-
-                viewAllRemarkslist = viewAllRemarksDatabase.GetViewAllRemarks(query).ToList();
-                if (viewAllRemarkslist.Any())
+                // Check if API call was successful
+                if (response_remarks == 200)
                 {
-                    listview_Remarks.ItemsSource = viewAllRemarkslist;
-                    popupreplyremarks.IsVisible = false;
+                    string query = $"Select *,(ExpenseId ||'$'||ObserverRemarksId)ExpenseObserverRemId" +
+                    // $", (case when UserRemarks <> '' then 'false' else 'true' end ) imgreplyvisibility" +
+                    $", (case when UserRemarks <> '' then 'false' else 'true' end ) imgeditvisibility" +
+                    $", (case when UserRemarksDtTm <> '' then UserRemarksDtTm else ObserverRemarksDtTm end ) RepliedDatetime" +
+                    $", '{App.GetLabelByKey("lblObserverRemarks")}'||' '||(case when UserRemarksDtTm <> '' then '' else ObserverRemarksDtTm end)  as lblObserverRemarks" +
+                    $", '{App.GetLabelByKey("UserResponse")}' ||' '||(case when UserRemarksDtTm <> '' then UserRemarksDtTm else '' end) as lblUserRemarks" +
+                    // $", (case when UserRemarksDtTm <> '' then '{App.GetLabelByKey("UserResponseDatetime")}' else '{App.GetLabelByKey("ObserverResponseDatetime")}' end ) lblRepliedDatetime" +
+                    $" from viewAllRemarks order by ObserverRemarksDtTm desc";
 
-                    string query1 = $"Select * from ObserverExpenditureDetails where ExpenseID='{expenseid}'";
-                    observerExpenditureDetailsList = observerExpenditureDetailsDatabase.GetObserverExpenditureDetails(query1).ToList();
-
-                    if (App.Language == 0)
+                    viewAllRemarkslist = viewAllRemarksDatabase.GetViewAllRemarks(query).ToList();
+                    if (viewAllRemarkslist.Any())
                     {
-                        lbl_popupRemarks.Text = App.GetLabelByKey("lbl_exptype") + " - " + observerExpenditureDetailsList.ElementAt(0).ExpTypeName
-                        + " \n" + App.GetLabelByKey("lbl_expdate") + " - " + observerExpenditureDetailsList.ElementAt(0).expDateDisplay
-                        + " \n" + App.GetLabelByKey("lbl_payeeName") + " - " + observerExpenditureDetailsList.ElementAt(0).payeeName;
+                        listview_Remarks.ItemsSource = viewAllRemarkslist;
+                        popupreplyremarks.IsVisible = false;
+
+                        string query1 = $"Select * from ObserverExpenditureDetails where ExpenseID='{expenseid}'";
+                        observerExpenditureDetailsList = observerExpenditureDetailsDatabase.GetObserverExpenditureDetails(query1).ToList();
+
+                        if (App.Language == 0)
+                        {
+                            lbl_popupRemarks.Text = App.GetLabelByKey("lbl_exptype") + " - " + observerExpenditureDetailsList.ElementAt(0).ExpTypeName
+                            + " \n" + App.GetLabelByKey("lbl_expdate") + " - " + observerExpenditureDetailsList.ElementAt(0).expDateDisplay
+                            + " \n" + App.GetLabelByKey("lbl_payeeName") + " - " + observerExpenditureDetailsList.ElementAt(0).payeeName;
+                        }
+                        else
+                        {
+                            lbl_popupRemarks.Text = App.GetLabelByKey("lbl_exptype") + " - " + observerExpenditureDetailsList.ElementAt(0).ExpTypeNameLocal
+                            + " \n" + App.GetLabelByKey("lbl_expdate") + " - " + observerExpenditureDetailsList.ElementAt(0).expDateDisplay
+                            + " \n" + App.GetLabelByKey("lbl_payeeName") + " - " + observerExpenditureDetailsList.ElementAt(0).payeeName;
+                        }
+                        popupRemarks.IsVisible = true;
                     }
                     else
                     {
-                        lbl_popupRemarks.Text = App.GetLabelByKey("lbl_exptype") + " - " + observerExpenditureDetailsList.ElementAt(0).ExpTypeNameLocal
-                        + " \n" + App.GetLabelByKey("lbl_expdate") + " - " + observerExpenditureDetailsList.ElementAt(0).expDateDisplay
-                        + " \n" + App.GetLabelByKey("lbl_payeeName") + " - " + observerExpenditureDetailsList.ElementAt(0).payeeName;
+                        // No remarks found in database after successful API call
+                        await DisplayAlert(App.GetLabelByKey("AppName"), "No remarks found for this expenditure.", App.GetLabelByKey("Close"));
                     }
-                    popupRemarks.IsVisible = true;
+                }
+                else if (response_remarks == 404)
+                {
+                    // No remarks exist on server - show add new popup
+                    popupRemarks.IsVisible = false;
+                    popupreplyremarks.IsVisible = true;
+                }
+                else
+                {
+                    // API call failed - show error message
+                    await DisplayAlert(App.GetLabelByKey("AppName"), "Failed to load remarks. Please try again.", App.GetLabelByKey("Close"));
                 }
             }
             else
