@@ -52,8 +52,9 @@ namespace CERS.Observer
             
             if (observorLoginDetailslist == null || !observorLoginDetailslist.Any())
             {
-                Console.WriteLine("ERROR: No observer login details found");
-                DisplayAlert("Error", "Observer details not found. Please login again.", "OK");
+                System.Diagnostics.Debug.WriteLine("ERROR: No observer login details found in ObserverViewExpenditureDetailsPage");
+                // Can't call DisplayAlert in constructor - set default values
+                lbl_heading0.Text = "No observer details found";
                 return;
             }
             

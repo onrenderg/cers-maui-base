@@ -31,30 +31,34 @@ namespace CERS.Observer
 
         public ObserverDashboardPage()
         {
-            InitializeComponent();
-            Footer_Labels = new Label[3] { Tab_Home_Label, Tab_New_Label, Tab_Settings_Label };
-            Footer_Images = new Image[3] { Tab_Home_Image, Tab_New_Image, Tab_Settings_Image };
-            Footer_Image_Source = new string[3] { "ic_homewhite.png", "ic_addwhite.png", "ic_morewhite.png" };
+            try
+            {
+                System.Diagnostics.Debug.WriteLine("[ObserverDashboardPage] Constructor started");
+                InitializeComponent();
+                
+                System.Diagnostics.Debug.WriteLine("[ObserverDashboardPage] InitializeComponent completed");
+                
+                Footer_Labels = new Label[3] { Tab_Home_Label, Tab_New_Label, Tab_Settings_Label };
+                Footer_Images = new Image[3] { Tab_Home_Image, Tab_New_Image, Tab_Settings_Image };
+                Footer_Image_Source = new string[3] { "ic_homewhite.png", "ic_addwhite.png", "ic_morewhite.png" };
 
-          /*  Tab_Home_Label.Text = App.GetLabelByKey("Home");
-            Tab_New_Label.Text = App.GetLabelByKey("addexpenses");
-            Tab_Settings_Label.Text = App.GetLabelByKey("More");*/
+                System.Diagnostics.Debug.WriteLine("[ObserverDashboardPage] Setting label texts");
+                lbl_selectward.Text = App.GetLabelByKey("lblselectward");
+                lblcandidatename.Text = App.GetLabelByKey("lblcandidatename");
+                lbl_tapfooter.Text = App.GetLabelByKey("taptoviewentry");
 
-            lbl_selectward.Text = App.GetLabelByKey("lblselectward");
-            lblcandidatename.Text = App.GetLabelByKey("lblcandidatename");
-           // lblAmount.Text = App.GetLabelByKey("Amount")+ "(₹)";
-            lbl_tapfooter.Text = App.GetLabelByKey("taptoviewentry");
-
-            observorLoginDetailslist = observorLoginDetailsDatabase.GetObservorLoginDetails("Select * from ObservorLoginDetails").ToList();
+                System.Diagnostics.Debug.WriteLine("[ObserverDashboardPage] Getting observer login details");
+                observorLoginDetailslist = observorLoginDetailsDatabase.GetObservorLoginDetails("Select * from ObservorLoginDetails").ToList();
             
             if (observorLoginDetailslist == null || !observorLoginDetailslist.Any())
             {
-                Console.WriteLine("ERROR: No observer login details found");
-                DisplayAlert("Error", "Observer details not found. Please login again.", "OK");
+                System.Diagnostics.Debug.WriteLine("ERROR: No observer login details found");
+                // Can't call DisplayAlert in constructor - will show in OnAppearing if needed
+                mobilenumber = string.Empty;
                 return;
             }
             
-             mobilenumber = observorLoginDetailslist.ElementAt(0).ObserverContact;
+            mobilenumber = observorLoginDetailslist.ElementAt(0).ObserverContact;
             lbl_heading.Text = App.GetLabelByKey("name")+" : "+ observorLoginDetailslist.ElementAt(0).ObserverName + "\n"
                + App.GetLabelByKey("designation") + " : "+ observorLoginDetailslist.ElementAt(0).ObserverDesignation + "\n"
                 + App.GetLabelByKey("mobileno") + " : " + observorLoginDetailslist.ElementAt(0).ObserverContact;
@@ -62,21 +66,41 @@ namespace CERS.Observer
 
             observerWardslist = observerWardsDatabase.GetObserverWards("Select * from observerWards").ToList();
             
-            if (observerWardslist == null || !observerWardslist.Any())
+            if (observerWardslist == null)
             {
-                Console.WriteLine("WARNING: No observer wards found");
+                System.Diagnostics.Debug.WriteLine("WARNING: observerWardslist is null, initializing empty list");
+                observerWardslist = new List<ObserverWards>();
             }
             
-            picker_wards.ItemsSource = observerWardslist;
-            if (App.Language == 0)
+            if (!observerWardslist.Any())
             {
-                picker_wards.ItemDisplayBinding = new Binding("Panchayat_Name");
+                System.Diagnostics.Debug.WriteLine("WARNING: No observer wards found");
             }
-            else
+            
+            try
             {
-                picker_wards.ItemDisplayBinding = new Binding("Panchayat_Name_Local");
+                picker_wards.ItemsSource = observerWardslist;
+                
+                if (App.Language == 0)
+                {
+                    picker_wards.ItemDisplayBinding = new Binding("Panchayat_Name");
+                }
+                else
+                {
+                    picker_wards.ItemDisplayBinding = new Binding("Panchayat_Name_Local");
+                }
+                
+                // Only set SelectedIndex if there are items
+                if (observerWardslist != null && observerWardslist.Any())
+                {
+                    picker_wards.SelectedIndex = 0;
+                }
             }
-            picker_wards.SelectedIndex = 0;
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"ERROR setting picker_wards: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Stack: {ex.StackTrace}");
+            }
 
             try
             {
@@ -92,6 +116,20 @@ namespace CERS.Observer
             catch
             {
                 lbl_lastupdated.Text = App.GetLabelByKey("LastUpdated") + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+            }
+            
+                System.Diagnostics.Debug.WriteLine("[ObserverDashboardPage] Constructor completed successfully");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[ObserverDashboardPage] CONSTRUCTOR EXCEPTION: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"[ObserverDashboardPage] Exception type: {ex.GetType().Name}");
+                System.Diagnostics.Debug.WriteLine($"[ObserverDashboardPage] Stack: {ex.StackTrace}");
+                
+                // Initialize to prevent further crashes
+                mobilenumber = string.Empty;
+                observerWardslist = new List<ObserverWards>();
+                observorLoginDetailslist = new List<ObservorLoginDetails>();
             }
         }
 
@@ -124,11 +162,16 @@ namespace CERS.Observer
 
         private async void picker_wards_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (picker_wards.SelectedIndex != -1)
+            try
             {
-                panchayatcode = observerWardslist.ElementAt(picker_wards.SelectedIndex).Panchayat_Code;
-                // paymodename = paymentModeslist.ElementAt(picker_payMode.SelectedIndex).paymode_Desc;
-                Loading_activity.IsVisible = true; 
+                System.Diagnostics.Debug.WriteLine("[ObserverDashboardPage] picker_wards_SelectedIndexChanged triggered");
+                
+                if (picker_wards.SelectedIndex != -1 && observerWardslist != null && observerWardslist.Any() && 
+                    picker_wards.SelectedIndex < observerWardslist.Count)
+                {
+                    System.Diagnostics.Debug.WriteLine($"[ObserverDashboardPage] Selected index: {picker_wards.SelectedIndex}");
+                    panchayatcode = observerWardslist.ElementAt(picker_wards.SelectedIndex).Panchayat_Code;
+                    Loading_activity.IsVisible = true; 
                 var service = new HitServices();
                 int response_getwards = await service.ObserverCandidates_Get(panchayatcode);
                 if (response_getwards == 200)
@@ -165,6 +208,17 @@ namespace CERS.Observer
                     lbl_totalamount.IsVisible = false;
 
                 }
+                Loading_activity.IsVisible = false;
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine($"[ObserverDashboardPage] WARNING: Cannot process selection - SelectedIndex: {picker_wards.SelectedIndex}, List count: {observerWardslist?.Count ?? 0}");
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[ObserverDashboardPage] picker_wards_SelectedIndexChanged EXCEPTION: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"[ObserverDashboardPage] Stack: {ex.StackTrace}");
                 Loading_activity.IsVisible = false;
             }
         }
@@ -204,22 +258,64 @@ namespace CERS.Observer
 
         protected override void OnAppearing()
         {
+            try
+            {
+                System.Diagnostics.Debug.WriteLine("[ObserverDashboardPage] OnAppearing started");
+                base.OnAppearing();
 
+                System.Diagnostics.Debug.WriteLine("[ObserverDashboardPage] Getting observer login details");
+                observorLoginDetailslist = observorLoginDetailsDatabase.GetObservorLoginDetails("Select * from ObservorLoginDetails").ToList();
+                
+                if (observorLoginDetailslist == null || !observorLoginDetailslist.Any())
+                {
+                    System.Diagnostics.Debug.WriteLine("[ObserverDashboardPage] No observer details in OnAppearing");
+                    lbl_heading.Text = "No observer details";
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("[ObserverDashboardPage] Setting heading text");
+                    lbl_heading.Text = App.GetLabelByKey("name") + " : " + observorLoginDetailslist.ElementAt(0).ObserverName + "\n"
+                     + App.GetLabelByKey("designation") + " : " + observorLoginDetailslist.ElementAt(0).ObserverDesignation + "\n"
+                      + App.GetLabelByKey("mobileno") + " : " + observorLoginDetailslist.ElementAt(0).ObserverContact;
+                }
 
-            observorLoginDetailslist = observorLoginDetailsDatabase.GetObservorLoginDetails("Select * from ObservorLoginDetails").ToList();
-            lbl_heading.Text = App.GetLabelByKey("name") + " : " + observorLoginDetailslist.ElementAt(0).ObserverName + "\n"
-             + App.GetLabelByKey("designation") + " : " + observorLoginDetailslist.ElementAt(0).ObserverDesignation + "\n"
-              + App.GetLabelByKey("mobileno") + " : " + observorLoginDetailslist.ElementAt(0).ObserverContact;
-
-            Tab_Home_Label.Text = App.GetLabelByKey("Home");
-            Tab_New_Label.Text = App.GetLabelByKey("addexpenses");
-            Tab_Settings_Label.Text = App.GetLabelByKey("More");
-           
-
-
-            Footer_Image_Source = new string[3] { "ic_home.png", "ic_addwhite.png", "ic_morewhite.png" };
-            Footer_Images[Preferences.Get("Active", 0)].Source = Footer_Image_Source[Preferences.Get("Active", 0)];
-            Footer_Labels[Preferences.Get("Active", 0)].TextColor = Color.FromArgb("#0f0f0f");
+                System.Diagnostics.Debug.WriteLine("[ObserverDashboardPage] Setting footer labels");
+                Tab_Home_Label.Text = App.GetLabelByKey("Home");
+                Tab_New_Label.Text = App.GetLabelByKey("addexpenses");
+                Tab_Settings_Label.Text = App.GetLabelByKey("More");
+                
+                System.Diagnostics.Debug.WriteLine("[ObserverDashboardPage] Setting footer images");
+                Footer_Image_Source = new string[3] { "ic_home.png", "ic_addwhite.png", "ic_morewhite.png" };
+                
+                int activeIndex = Preferences.Get("Active", 0);
+                System.Diagnostics.Debug.WriteLine($"[ObserverDashboardPage] Active index: {activeIndex}");
+                
+                if (Footer_Images != null && activeIndex >= 0 && activeIndex < Footer_Images.Length && Footer_Images[activeIndex] != null)
+                {
+                    Footer_Images[activeIndex].Source = Footer_Image_Source[activeIndex];
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine($"[ObserverDashboardPage] WARNING: Footer_Images invalid or null at index {activeIndex}");
+                }
+                
+                if (Footer_Labels != null && activeIndex >= 0 && activeIndex < Footer_Labels.Length && Footer_Labels[activeIndex] != null)
+                {
+                    Footer_Labels[activeIndex].TextColor = Color.FromArgb("#0f0f0f");
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine($"[ObserverDashboardPage] WARNING: Footer_Labels invalid or null at index {activeIndex}");
+                }
+                
+                System.Diagnostics.Debug.WriteLine("[ObserverDashboardPage] OnAppearing completed");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[ObserverDashboardPage] OnAppearing EXCEPTION: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"[ObserverDashboardPage] Exception type: {ex.GetType().Name}");
+                System.Diagnostics.Debug.WriteLine($"[ObserverDashboardPage] Stack: {ex.StackTrace}");
+            }
         }
         }
 }

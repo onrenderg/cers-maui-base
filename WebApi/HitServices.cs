@@ -76,15 +76,21 @@ namespace CERS.WebApi
                               {
                                   if (AESCryptography.DecryptAES(parsed["data"][0]["Mandatory"]?.ToString() ?? "") == "Y")
                                   {
-                                      await Application.Current!.MainPage!.DisplayAlert("New Version", $"There is a new version (v{AESCryptography.DecryptAES(parsed["data"][0]["VersionNumber"]?.ToString() ?? "")}) of this app available.\nWhatsNew: {AESCryptography.DecryptAES(parsed["data"][0]["WhatsNew"]?.ToString() ?? "")}", "Update");
-                                      await Launcher.OpenAsync(AESCryptography.DecryptAES(parsed["data"][0]["StoreLink"]?.ToString() ?? ""));
+                                      if (Application.Current?.MainPage != null)
+                                      {
+                                          await Application.Current.MainPage.DisplayAlert("New Version", $"There is a new version (v{AESCryptography.DecryptAES(parsed["data"][0]["VersionNumber"]?.ToString() ?? "")}) of this app available.\nWhatsNew: {AESCryptography.DecryptAES(parsed["data"][0]["WhatsNew"]?.ToString() ?? "")}", "Update");
+                                          await Launcher.OpenAsync(AESCryptography.DecryptAES(parsed["data"][0]["StoreLink"]?.ToString() ?? ""));
+                                      }
                                   }
                                   else
                                   {
-                                      var update = await Application.Current!.MainPage!.DisplayAlert("New Version", $"There is a new version (v{AESCryptography.DecryptAES(parsed["data"][0]["VersionNumber"]?.ToString() ?? "")}) of this app available.\nWhatsNew: {AESCryptography.DecryptAES(parsed["data"][0]["WhatsNew"]?.ToString() ?? "")}\nWould you like to update now?", "Yes", "No");
-                                      if (update)
+                                      if (Application.Current?.MainPage != null)
                                       {
-                                          await Launcher.OpenAsync(AESCryptography.DecryptAES(parsed["data"][0]["StoreLink"]?.ToString() ?? ""));
+                                          var update = await Application.Current.MainPage.DisplayAlert("New Version", $"There is a new version (v{AESCryptography.DecryptAES(parsed["data"][0]["VersionNumber"]?.ToString() ?? "")}) of this app available.\nWhatsNew: {AESCryptography.DecryptAES(parsed["data"][0]["WhatsNew"]?.ToString() ?? "")}\nWould you like to update now?", "Yes", "No");
+                                          if (update)
+                                          {
+                                              await Launcher.OpenAsync(AESCryptography.DecryptAES(parsed["data"][0]["StoreLink"]?.ToString() ?? ""));
+                                          }
                                       }
                                   }
                               }
@@ -150,15 +156,21 @@ namespace CERS.WebApi
                                 {
                                     if (AESCryptography.DecryptAES(parsed["data"]?[0]?["Mandatory"]?.ToString() ?? "N") == "Y")
                                     {
-                                        await Application.Current!.MainPage!.DisplayAlert("New Version", $"There is a new version (v{AESCryptography.DecryptAES(parsed["data"]?[0]?["VersionNumber"]?.ToString() ?? "0")}) of this app available.\nWhatsNew: {AESCryptography.DecryptAES(parsed["data"]?[0]?["WhatsNew"]?.ToString() ?? "")}", "Update");
-                                        await Launcher.OpenAsync(AESCryptography.DecryptAES(parsed["data"]?[0]?["StoreLink"]?.ToString() ?? ""));
+                                        if (Application.Current?.MainPage != null)
+                                        {
+                                            await Application.Current.MainPage.DisplayAlert("New Version", $"There is a new version (v{AESCryptography.DecryptAES(parsed["data"]?[0]?["VersionNumber"]?.ToString() ?? "0")}) of this app available.\nWhatsNew: {AESCryptography.DecryptAES(parsed["data"]?[0]?["WhatsNew"]?.ToString() ?? "")}", "Update");
+                                            await Launcher.OpenAsync(AESCryptography.DecryptAES(parsed["data"]?[0]?["StoreLink"]?.ToString() ?? ""));
+                                        }
                                     }
                                     else
                                     {
-                                        var update = await Application.Current!.MainPage!.DisplayAlert("New Version", $"There is a new version (v{AESCryptography.DecryptAES(parsed["data"]?[0]?["VersionNumber"]?.ToString() ?? "0")}) of this app available.\nWhatsNew: {AESCryptography.DecryptAES(parsed["data"]?[0]?["WhatsNew"]?.ToString() ?? "")}\nWould you like to update now?", "Yes", "No");
-                                        if (update)
+                                        if (Application.Current?.MainPage != null)
                                         {
-                                            await Launcher.OpenAsync(AESCryptography.DecryptAES(parsed["data"]?[0]?["StoreLink"]?.ToString() ?? ""));
+                                            var update = await Application.Current.MainPage.DisplayAlert("New Version", $"There is a new version (v{AESCryptography.DecryptAES(parsed["data"]?[0]?["VersionNumber"]?.ToString() ?? "0")}) of this app available.\nWhatsNew: {AESCryptography.DecryptAES(parsed["data"]?[0]?["WhatsNew"]?.ToString() ?? "")}\nWould you like to update now?", "Yes", "No");
+                                            if (update)
+                                            {
+                                                await Launcher.OpenAsync(AESCryptography.DecryptAES(parsed["data"]?[0]?["StoreLink"]?.ToString() ?? ""));
+                                            }
                                         }
                                     }
                                 }
@@ -183,55 +195,110 @@ namespace CERS.WebApi
 
         public async Task<string> GetToken()
         {
-            System.Diagnostics.Debug.WriteLine("[GetToken] Starting token generation...");
-            
-            var current = Connectivity.NetworkAccess;
-            System.Diagnostics.Debug.WriteLine($"[GetToken] Network access: {current}");
-            
-            if (current == NetworkAccess.Internet)
+            try
             {
-                try
+                System.Diagnostics.Debug.WriteLine("[GetToken] Starting token generation...");
+                
+                var current = Connectivity.NetworkAccess;
+                System.Diagnostics.Debug.WriteLine($"[GetToken] Network access: {current}");
+                
+                if (current == NetworkAccess.Internet)
                 {
-                    System.Diagnostics.Debug.WriteLine("[GetToken] Creating HTTP client");
-                    var client = new HttpClient();
-                    
-                    string basicAuth = Preferences.Get("BasicAuth", "xx:xx");
-                    System.Diagnostics.Debug.WriteLine($"[GetToken] BasicAuth from preferences: {basicAuth}");
-                    
-                    // Try Xamarin approach first - use credentials directly without URL decoding
-                    var byteArray = Encoding.ASCII.GetBytes(basicAuth);
-                    string base64Auth = Convert.ToBase64String(byteArray);
-                    System.Diagnostics.Debug.WriteLine($"[GetToken] Base64 encoded auth (Xamarin style): {base64Auth}");
-                    
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", base64Auth);
-                    string url = baseurl + $"api/GenerateToken";
-                    System.Diagnostics.Debug.WriteLine($"[GetToken] Token URL: {url}");
+                    try
+                    {
+                        System.Diagnostics.Debug.WriteLine("[GetToken] Creating HTTP client");
+                        using var client = new HttpClient();
+                        client.Timeout = TimeSpan.FromSeconds(30);
+                        
+                        string basicAuth = Preferences.Get("BasicAuth", "xx:xx");
+                        if (string.IsNullOrEmpty(basicAuth))
+                        {
+                            System.Diagnostics.Debug.WriteLine("[GetToken] BasicAuth is null or empty");
+                            return "";
+                        }
+                        
+                        System.Diagnostics.Debug.WriteLine($"[GetToken] BasicAuth from preferences: {basicAuth}");
+                        
+                        // Try Xamarin approach first - use credentials directly without URL decoding
+                        var byteArray = Encoding.ASCII.GetBytes(basicAuth);
+                        string base64Auth = Convert.ToBase64String(byteArray);
+                        System.Diagnostics.Debug.WriteLine($"[GetToken] Base64 encoded auth (Xamarin style): {base64Auth}");
+                        
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", base64Auth);
+                        string url = baseurl + $"api/GenerateToken";
+                        System.Diagnostics.Debug.WriteLine($"[GetToken] Token URL: {url}");
 
-                    System.Diagnostics.Debug.WriteLine("[GetToken] Making token request...");
-                    HttpResponseMessage response = await client.GetAsync(url);
-                    System.Diagnostics.Debug.WriteLine($"[GetToken] Token response status: {response.StatusCode}");
+                        System.Diagnostics.Debug.WriteLine("[GetToken] Making token request...");
+                        HttpResponseMessage response = await client.GetAsync(url).ConfigureAwait(false);
+                        
+                        if (response == null)
+                        {
+                            System.Diagnostics.Debug.WriteLine("[GetToken] Response is null");
+                            return "";
+                        }
+                        
+                        System.Diagnostics.Debug.WriteLine($"[GetToken] Token response status: {response.StatusCode}");
 
-                    var result = await response.Content.ReadAsStringAsync();
-                    System.Diagnostics.Debug.WriteLine($"[GetToken] Token response content: {result}");
-                    
-                    var parsed = JObject.Parse(result);
-                    string tokenId = parsed["TokenID"]?.ToString() ?? "";
-                    System.Diagnostics.Debug.WriteLine($"[GetToken] Extracted TokenID: {tokenId}");
-                    
-                    return tokenId;
+                        var result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        System.Diagnostics.Debug.WriteLine($"[GetToken] Token response content: {result}");
+                        
+                        if (string.IsNullOrEmpty(result))
+                        {
+                            System.Diagnostics.Debug.WriteLine("[GetToken] Response content is null or empty");
+                            return "";
+                        }
+                        
+                        var parsed = JObject.Parse(result);
+                        string tokenId = parsed?["TokenID"]?.ToString() ?? "";
+                        System.Diagnostics.Debug.WriteLine($"[GetToken] Extracted TokenID: {tokenId}");
+                        
+                        return tokenId;
+                    }
+                    catch (HttpRequestException httpEx)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[GetToken] HTTP Exception: {httpEx.Message}");
+                        System.Diagnostics.Debug.WriteLine($"[GetToken] Stack trace: {httpEx.StackTrace}");
+                        return "";
+                    }
+                    catch (TaskCanceledException timeoutEx)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[GetToken] Timeout Exception: {timeoutEx.Message}");
+                        return "";
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[GetToken] Exception occurred: {ex.Message}");
+                        System.Diagnostics.Debug.WriteLine($"[GetToken] Exception type: {ex.GetType().Name}");
+                        System.Diagnostics.Debug.WriteLine($"[GetToken] Stack trace: {ex.StackTrace}");
+                        
+                        // Only show alert if MainPage is available
+                        try
+                        {
+                            if (Application.Current?.MainPage != null)
+                            {
+                                await MainThread.InvokeOnMainThreadAsync(async () =>
+                                {
+                                    await Application.Current.MainPage.DisplayAlert("Exception", $"Token generation failed: {ex.Message}", "OK");
+                                });
+                            }
+                        }
+                        catch
+                        {
+                            // Ignore errors showing the alert
+                        }
+                        return "";
+                    }
                 }
-                catch (Exception ex)
+                else
                 {
-                    System.Diagnostics.Debug.WriteLine($"[GetToken] Exception occurred: {ex.Message}");
-                    System.Diagnostics.Debug.WriteLine($"[GetToken] Stack trace: {ex.StackTrace}");
-                    await Application.Current!.MainPage!.DisplayAlert("Exception", "Something went wrong. Please try again!", "OK");
+                    System.Diagnostics.Debug.WriteLine("[GetToken] No internet connection");
                     return "";
                 }
             }
-            else
+            catch (Exception outerEx)
             {
-                System.Diagnostics.Debug.WriteLine("[GetToken] No internet connection");
-                await Application.Current!.MainPage!.DisplayAlert("CERS", App.NoInternet_, App.Btn_Close);
+                System.Diagnostics.Debug.WriteLine($"[GetToken] OUTER Exception: {outerEx.Message}");
+                System.Diagnostics.Debug.WriteLine($"[GetToken] OUTER Stack trace: {outerEx.StackTrace}");
                 return "";
             }
         }
@@ -312,19 +379,29 @@ namespace CERS.WebApi
                     }
                     else
                     {
-                        await Application.Current!.MainPage!.DisplayAlert("CERS", parsed["Message"]?.ToString() ?? "", App.Btn_Close);
+                        if (Application.Current?.MainPage != null)
+                        {
+                            await Application.Current.MainPage.DisplayAlert("CERS", parsed["Message"]?.ToString() ?? "", App.Btn_Close);
+                        }
                     }
                     return (int)response.StatusCode;
                 }
-                catch 
+                catch (Exception ex)
                 {
-                    await Application.Current!.MainPage!.DisplayAlert("Exception", "Something went wrong. Please try again!", "OK");
+                    System.Diagnostics.Debug.WriteLine($"userlogin_Get Exception: {ex.Message}");
+                    if (Application.Current?.MainPage != null)
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Exception", "Something went wrong. Please try again!", "OK");
+                    }
                     return 500;
                 }
             }
             else
             {
-                await Application.Current!.MainPage!.DisplayAlert("CERS", App.NoInternet_, App.Btn_Close);
+                if (Application.Current?.MainPage != null)
+                {
+                    await Application.Current.MainPage.DisplayAlert("CERS", App.NoInternet_, App.Btn_Close);
+                }
                 return 101;
             }
         }
@@ -383,17 +460,23 @@ namespace CERS.WebApi
                 catch (Exception ex)
                 {
                     // Log the actual error for debugging
-                    System.Diagnostics.Debug.WriteLine($"Remarks_Get Exception: {ex.Message}");
+                    System.Diagnostics.Debug.WriteLine($"observorlogin_Get Exception: {ex.Message}");
                     System.Diagnostics.Debug.WriteLine($"Stack Trace: {ex.StackTrace}");
                     
-                    // Show detailed error to user for debugging
-                    await Application.Current!.MainPage!.DisplayAlert("Exception", $"Error loading remarks: {ex.Message}", "OK");
+                    // Show detailed error to user for debugging only if MainPage is available
+                    if (Application.Current?.MainPage != null)
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Exception", $"Error loading observer login: {ex.Message}", "OK");
+                    }
                     return 500;
                 }
             }
             else
             {
-                await Application.Current!.MainPage!.DisplayAlert(App.GetLabelByKey("AppName"), App.NoInternet_, App.Btn_Close);
+                if (Application.Current?.MainPage != null)
+                {
+                    await Application.Current.MainPage.DisplayAlert(App.GetLabelByKey("AppName"), App.NoInternet_, App.Btn_Close);
+                }
                 return 101;
             }
         }
@@ -479,7 +562,10 @@ namespace CERS.WebApi
                     else
                     {
                         System.Diagnostics.Debug.WriteLine($"[GetOtp] API returned error: {parsed["Message"]}");
-                        await Application.Current!.MainPage!.DisplayAlert("CERS", parsed["Message"]?.ToString() ?? "", App.Btn_Close);
+                        if (Application.Current?.MainPage != null)
+                        {
+                            await Application.Current.MainPage.DisplayAlert("CERS", parsed["Message"]?.ToString() ?? "", App.Btn_Close);
+                        }
                     }
                     return (int)response.StatusCode;
                 }
@@ -487,14 +573,20 @@ namespace CERS.WebApi
                 {
                     System.Diagnostics.Debug.WriteLine($"[GetOtp] Exception occurred: {ex.Message}");
                     System.Diagnostics.Debug.WriteLine($"[GetOtp] Stack trace: {ex.StackTrace}");
-                    await Application.Current!.MainPage!.DisplayAlert("Exception", "Something went wrong. Please try again!", "OK");
+                    if (Application.Current?.MainPage != null)
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Exception", "Something went wrong. Please try again!", "OK");
+                    }
                     return 500;
                 }
             }
             else
             {
                 System.Diagnostics.Debug.WriteLine("[GetOtp] No internet connection");
-                await Application.Current!.MainPage!.DisplayAlert("CERS", App.NoInternet_, App.Btn_Close);
+                if (Application.Current?.MainPage != null)
+                {
+                    await Application.Current.MainPage.DisplayAlert("CERS", App.NoInternet_, App.Btn_Close);
+                }
                 return 101;
             }
         }
@@ -577,33 +669,70 @@ namespace CERS.WebApi
                 {
                     System.Diagnostics.Debug.WriteLine($"[CheckOtp] Exception occurred: {ex.Message}");
                     System.Diagnostics.Debug.WriteLine($"[CheckOtp] Stack trace: {ex.StackTrace}");
-                    await Application.Current!.MainPage!.DisplayAlert("Exception", "Something went wrong. Please try again!", "OK");
+                    if (Application.Current?.MainPage != null)
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Exception", "Something went wrong. Please try again!", "OK");
+                    }
                     return 500;
                 }
             }
             else
             {
                 System.Diagnostics.Debug.WriteLine("[CheckOtp] No internet connection");
-                await Application.Current!.MainPage!.DisplayAlert("CERS", App.NoInternet_, App.Btn_Close);
+                if (Application.Current?.MainPage != null)
+                {
+                    await Application.Current.MainPage.DisplayAlert("CERS", App.NoInternet_, App.Btn_Close);
+                }
                 return 101;
             }
         }
 
         public async Task<int> LocalResources_Get()
         {
-            var current = Connectivity.NetworkAccess;
-            if (current == NetworkAccess.Internet)
+            try
             {
-                try
+                System.Diagnostics.Debug.WriteLine("[LocalResources_Get] Starting...");
+                
+                var current = Connectivity.NetworkAccess;
+                System.Diagnostics.Debug.WriteLine($"[LocalResources_Get] Network status: {current}");
+                
+                if (current == NetworkAccess.Internet)
                 {
-                    var client = new HttpClient();
-                    //var byteArray = Encoding.ASCII.GetBytes(App.basic_auth());
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await GetToken());
+                    try
+                    {
+                        System.Diagnostics.Debug.WriteLine("[LocalResources_Get] Getting token...");
+                        string token = await GetToken().ConfigureAwait(false);
+                        
+                        if (string.IsNullOrEmpty(token))
+                        {
+                            System.Diagnostics.Debug.WriteLine("[LocalResources_Get] Token is null or empty, aborting");
+                            return 401;
+                        }
+                        
+                        System.Diagnostics.Debug.WriteLine("[LocalResources_Get] Creating HTTP client");
+                        using var client = new HttpClient();
+                        client.Timeout = TimeSpan.FromSeconds(30);
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-                    HttpResponseMessage response = await client.GetAsync(baseurl + $"api/LocalResources");
-
-                    var result = await response.Content.ReadAsStringAsync();
-                    var parsed = JObject.Parse(result);
+                        System.Diagnostics.Debug.WriteLine("[LocalResources_Get] Making API request");
+                        HttpResponseMessage response = await client.GetAsync(baseurl + $"api/LocalResources").ConfigureAwait(false);
+                        
+                        if (response == null)
+                        {
+                            System.Diagnostics.Debug.WriteLine("[LocalResources_Get] Response is null");
+                            return 500;
+                        }
+                        
+                        System.Diagnostics.Debug.WriteLine($"[LocalResources_Get] Response status: {response.StatusCode}");
+                        var result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        
+                        if (string.IsNullOrEmpty(result))
+                        {
+                            System.Diagnostics.Debug.WriteLine("[LocalResources_Get] Response content is null or empty");
+                            return 500;
+                        }
+                        
+                        var parsed = JObject.Parse(result);
                     languageMasterDatabase.DeleteLanguageMaster();
                     if ((int)response.StatusCode == 200)
                     {
@@ -631,25 +760,48 @@ namespace CERS.WebApi
                     }
                     else if ((int)response.StatusCode == 404)
                     {
-                        await Application.Current!.MainPage!.DisplayAlert(App.GetLabelByKey("AppName"), parsed["Message"]?.ToString() ?? "", App.Btn_Close);
+                        if (Application.Current?.MainPage != null)
+                        {
+                            await Application.Current.MainPage.DisplayAlert(App.GetLabelByKey("AppName"), parsed["Message"]?.ToString() ?? "", App.Btn_Close);
+                        }
                     }
                     return (int)response.StatusCode;
                 }
                 catch (Exception ex)
                 {
                     // Log the actual error for debugging
-                    System.Diagnostics.Debug.WriteLine($"Remarks_Get Exception: {ex.Message}");
+                    System.Diagnostics.Debug.WriteLine($"LocalResources_Get Exception: {ex.Message}");
                     System.Diagnostics.Debug.WriteLine($"Stack Trace: {ex.StackTrace}");
                     
-                    // Show detailed error to user for debugging
-                    await Application.Current!.MainPage!.DisplayAlert("Exception", $"Error loading remarks: {ex.Message}", "OK");
+                    // Show detailed error to user for debugging only if MainPage is available
+                    if (Application.Current?.MainPage != null)
+                    {
+                        try
+                        {
+                            await MainThread.InvokeOnMainThreadAsync(async () =>
+                            {
+                                await Application.Current.MainPage.DisplayAlert("Exception", $"Error loading resources: {ex.Message}", "OK");
+                            });
+                        }
+                        catch
+                        {
+                            // Ignore errors showing alerts
+                        }
+                    }
                     return 500;
                 }
             }
             else
             {
-                await Application.Current!.MainPage!.DisplayAlert(App.GetLabelByKey("AppName"), App.NoInternet_, App.Btn_Close);
+                System.Diagnostics.Debug.WriteLine("[LocalResources_Get] No internet connection");
                 return 101;
+            }
+            }
+            catch (Exception outerEx)
+            {
+                System.Diagnostics.Debug.WriteLine($"[LocalResources_Get] OUTER Exception: {outerEx.Message}");
+                System.Diagnostics.Debug.WriteLine($"[LocalResources_Get] OUTER Stack: {outerEx.StackTrace}");
+                return 500;
             }
         }
 
@@ -693,24 +845,33 @@ namespace CERS.WebApi
                     }
                     else if ((int)response.StatusCode == 404)
                     {
-                        await Application.Current!.MainPage!.DisplayAlert(App.GetLabelByKey("AppName"), parsed["Message"]?.ToString() ?? "", App.Btn_Close);
+                        if (Application.Current?.MainPage != null)
+                        {
+                            await Application.Current.MainPage.DisplayAlert(App.GetLabelByKey("AppName"), parsed["Message"]?.ToString() ?? "", App.Btn_Close);
+                        }
                     }
                     return (int)response.StatusCode;
                 }
                 catch (Exception ex)
                 {
                     // Log the actual error for debugging
-                    System.Diagnostics.Debug.WriteLine($"Remarks_Get Exception: {ex.Message}");
+                    System.Diagnostics.Debug.WriteLine($"ExpenseSources_Get Exception: {ex.Message}");
                     System.Diagnostics.Debug.WriteLine($"Stack Trace: {ex.StackTrace}");
                     
-                    // Show detailed error to user for debugging
-                    await Application.Current!.MainPage!.DisplayAlert("Exception", $"Error loading remarks: {ex.Message}", "OK");
+                    // Show detailed error to user for debugging only if MainPage is available
+                    if (Application.Current?.MainPage != null)
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Exception", $"Error loading expense sources: {ex.Message}", "OK");
+                    }
                     return 500;
                 }
             }
             else
             {
-                await Application.Current!.MainPage!.DisplayAlert(App.GetLabelByKey("AppName"), App.NoInternet_, App.Btn_Close);
+                if (Application.Current?.MainPage != null)
+                {
+                    await Application.Current.MainPage.DisplayAlert(App.GetLabelByKey("AppName"), App.NoInternet_, App.Btn_Close);
+                }
                 return 101;
             }
         }
@@ -755,24 +916,33 @@ namespace CERS.WebApi
                     }
                     else if ((int)response.StatusCode == 404)
                     {
-                        await Application.Current!.MainPage!.DisplayAlert(App.GetLabelByKey("AppName"), parsed["Message"]?.ToString() ?? "", App.Btn_Close);
+                        if (Application.Current?.MainPage != null)
+                        {
+                            await Application.Current.MainPage.DisplayAlert(App.GetLabelByKey("AppName"), parsed["Message"]?.ToString() ?? "", App.Btn_Close);
+                        }
                     }
                     return (int)response.StatusCode;
                 }
                 catch (Exception ex)
                 {
                     // Log the actual error for debugging
-                    System.Diagnostics.Debug.WriteLine($"Remarks_Get Exception: {ex.Message}");
+                    System.Diagnostics.Debug.WriteLine($"PaymentMode_Get Exception: {ex.Message}");
                     System.Diagnostics.Debug.WriteLine($"Stack Trace: {ex.StackTrace}");
                     
-                    // Show detailed error to user for debugging
-                    await Application.Current!.MainPage!.DisplayAlert("Exception", $"Error loading remarks: {ex.Message}", "OK");
+                    // Show detailed error to user for debugging only if MainPage is available
+                    if (Application.Current?.MainPage != null)
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Exception", $"Error loading payment modes: {ex.Message}", "OK");
+                    }
                     return 500;
                 }
             }
             else
             {
-                await Application.Current!.MainPage!.DisplayAlert(App.GetLabelByKey("AppName"), App.NoInternet_, App.Btn_Close);
+                if (Application.Current?.MainPage != null)
+                {
+                    await Application.Current.MainPage.DisplayAlert(App.GetLabelByKey("AppName"), App.NoInternet_, App.Btn_Close);
+                }
                 return 101;
             }
         }
@@ -855,17 +1025,23 @@ namespace CERS.WebApi
                 catch (Exception ex)
                 {
                     // Log the actual error for debugging
-                    System.Diagnostics.Debug.WriteLine($"Remarks_Get Exception: {ex.Message}");
+                    System.Diagnostics.Debug.WriteLine($"ExpenditureDetails_Get Exception: {ex.Message}");
                     System.Diagnostics.Debug.WriteLine($"Stack Trace: {ex.StackTrace}");
                     
-                    // Show detailed error to user for debugging
-                    await Application.Current!.MainPage!.DisplayAlert("Exception", $"Error loading remarks: {ex.Message}", "OK");
+                    // Show detailed error to user for debugging only if MainPage is available
+                    if (Application.Current?.MainPage != null)
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Exception", $"Error loading expenditure details: {ex.Message}", "OK");
+                    }
                     return 500;
                 }
             }
             else
             {
-                await Application.Current!.MainPage!.DisplayAlert(App.GetLabelByKey("AppName"), App.NoInternet_, App.Btn_Close);
+                if (Application.Current?.MainPage != null)
+                {
+                    await Application.Current.MainPage.DisplayAlert(App.GetLabelByKey("AppName"), App.NoInternet_, App.Btn_Close);
+                }
                 return 101;
             }
         }
@@ -1068,11 +1244,17 @@ namespace CERS.WebApi
                     }
                     else if ((int)response.StatusCode == 404)
                     {
-                        await Application.Current!.MainPage!.DisplayAlert(App.GetLabelByKey("AppName") ?? "CERS", parsed["Message"]?.ToString() ?? "", App.Btn_Close);
+                        if (Application.Current?.MainPage != null)
+                        {
+                            await Application.Current.MainPage.DisplayAlert(App.GetLabelByKey("AppName") ?? "CERS", parsed["Message"]?.ToString() ?? "", App.Btn_Close);
+                        }
                     }
                     else if ((int)response.StatusCode == 401)
                     {
-                        await Application.Current!.MainPage!.DisplayAlert(App.GetLabelByKey("AppName")?? "CERS", parsed["Message"]?.ToString() ?? "", App.Btn_Close);
+                        if (Application.Current?.MainPage != null)
+                        {
+                            await Application.Current.MainPage.DisplayAlert(App.GetLabelByKey("AppName")?? "CERS", parsed["Message"]?.ToString() ?? "", App.Btn_Close);
+                        }
                     }
                     return (int)response.StatusCode;
                 }
@@ -1527,18 +1709,24 @@ namespace CERS.WebApi
                     System.Diagnostics.Debug.WriteLine($"Stack Trace: {ex.StackTrace}");
                     
                     // Show detailed error to user for debugging
-                    await Application.Current!.MainPage!.DisplayAlert("Exception", $"Error loading remarks: {ex.Message}", "OK");
+                    if (Application.Current?.MainPage != null)
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Exception", $"Error loading remarks: {ex.Message}", "OK");
+                    }
                     return 500;
                 }
             }
             else
             {
-                await Application.Current!.MainPage!.DisplayAlert(App.GetLabelByKey("AppName"), App.NoInternet_, App.Btn_Close);
+                if (Application.Current?.MainPage != null)
+                {
+                    await Application.Current.MainPage.DisplayAlert(App.GetLabelByKey("AppName"), App.NoInternet_, App.Btn_Close);
+                }
                 return 101;
             }
         }
 
-        public async Task<int> UpdateObserverRemarks_Post(string expenseid, string ObserverRemarksId, string remarks)
+        public async Task<int> UpdateObserverRemarks_Post(string expenseid, string remarks, string ObserverRemarksId)
         {
             var current = Connectivity.NetworkAccess;
             if (current == NetworkAccess.Internet)
@@ -1561,23 +1749,28 @@ namespace CERS.WebApi
 
                     var result = await response.Content.ReadAsStringAsync();
                     var parsed = JObject.Parse(result);
-                    await Application.Current!.MainPage!.DisplayAlert(App.GetLabelByKey("AppName"), parsed["Message"]?.ToString() ?? "", App.Btn_Close);
-                    /*if ((int)response.StatusCode != 200)
+                    
+                    if (Application.Current?.MainPage != null)
                     {
-
-                        await Application.Current!.MainPage!.DisplayAlert( App.GetLabelByKey("AppName"), parsed["Message"]?.ToString() ?? "", App.Btn_Close);
-                    }*/
+                        await Application.Current.MainPage.DisplayAlert(App.GetLabelByKey("AppName"), parsed["Message"]?.ToString() ?? "", App.Btn_Close);
+                    }
                     return (int)response.StatusCode;
                 }
                 catch (Exception)
                 {
-                    await Application.Current!.MainPage!.DisplayAlert("Exception", "Something went wrong. Please try again!", "OK");
+                    if (Application.Current?.MainPage != null)
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Exception", "Something went wrong. Please try again!", "OK");
+                    }
                     return 500;
                 }
             }
             else
             {
-                await Application.Current!.MainPage!.DisplayAlert(App.GetLabelByKey("AppName"), App.NoInternet_, App.Btn_Close);
+                if (Application.Current?.MainPage != null)
+                {
+                    await Application.Current.MainPage.DisplayAlert(App.GetLabelByKey("AppName"), App.NoInternet_, App.Btn_Close);
+                }
                 return 101;
             }
         }

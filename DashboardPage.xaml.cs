@@ -38,6 +38,15 @@ namespace CERS
         {
             base.OnAppearing();
             userDetails = userDetailsDatabase.GetUserDetails("Select * from UserDetails").ToList();
+            
+            // Check if userDetails has data before accessing
+            if (userDetails == null || userDetails.Count == 0)
+            {
+                expstatus = string.Empty;
+                lbl_heading.Text = "No User Data";
+                return;
+            }
+            
             expstatus = userDetails.ElementAt(0).ExpStatus;
 
             lbl_heading.Text = App.setselfagentuserheading();
