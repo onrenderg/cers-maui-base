@@ -262,8 +262,8 @@ namespace CERS
             try
             {
                 resultdateadd30 = DateTime.Parse(userDetails.ElementAt(0).Resultdatethirtydays);
-                // if (currentdate >= resultdateadd30) // mgogo bypass date check citi
-                if (currentdate >= resultdateadd30 && false) // TEMPORARY DATE CHECK BYPASS
+                if (currentdate >= resultdateadd30) // mgogo bypass date check citi
+                // if (currentdate >= resultdateadd30 && false) // TEMPORARY DATE CHECK BYPASS
                 {
                     await DisplayAlert(App.GetLabelByKey("AppName"), App.GetLabelByKey("expensedateover"), App.Btn_Close);
                     return; // Stop here if date expired
@@ -275,8 +275,8 @@ namespace CERS
             }
 
             // THEN EXPSTATUS CHECK
-            // if (!expstatus.Equals("F")) // mgogo bypass exp check 
-            if (!expstatus.Equals("F") || true)
+            if (!expstatus.Equals("F")) // mgogo bypass exp check 
+            // if (!expstatus.Equals("F") || true)
             {
                 Preferences.Set("Active", 1);
                 Application.Current!.MainPage = new NavigationPage(new AddExpenditureDetailsPage());
