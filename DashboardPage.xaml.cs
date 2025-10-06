@@ -255,31 +255,29 @@ namespace CERS
 
         private async void Tab_New_Tapped(object sender, EventArgs e)
         {
-            if (!expstatus.Equals("F") || true) // TEMPORARY BYPASS FOR TESTING
+            // DATE CHECK FIRST
+            DateTime currentdate = DateTime.Now;
+            userDetails = userDetailsDatabase.GetUserDetails("Select * from UserDetails").ToList();
+            DateTime resultdateadd30;
+            try
             {
-                DateTime currentdate = DateTime.Now;
-                userDetails = userDetailsDatabase.GetUserDetails("Select * from UserDetails").ToList();
-                // mogogo
-                DateTime resultdateadd30;
-                try
+                resultdateadd30 = DateTime.Parse(userDetails.ElementAt(0).Resultdatethirtydays);
+                if (currentdate >= resultdateadd30)
                 {
-                    resultdateadd30 = DateTime.Parse(userDetails.ElementAt(0).Resultdatethirtydays);
-                    // mgogo
-                    // if (currentdate >= resultdateadd30)
-                    // {
-                    //     await DisplayAlert(App.GetLabelByKey("AppName"), App.GetLabelByKey("expensedateover"), App.btn_Close);
-                    // }
-                    // else
-                    // {
-                        Preferences.Set("Active", 1);
-                        Application.Current!.MainPage = new NavigationPage(new AddExpenditureDetailsPage());
-                    // }
+                    await DisplayAlert(App.GetLabelByKey("AppName"), App.GetLabelByKey("expensedateover"), App.Btn_Close);
+                    return; // Stop here if date expired
                 }
-                catch
-                {
-                    Preferences.Set("Active", 1);
-                    Application.Current!.MainPage = new NavigationPage(new AddExpenditureDetailsPage());
-                }
+            }
+            catch
+            {
+                // If date parsing fails, continue to other checks
+            }
+
+            // THEN EXPSTATUS CHECK
+            if (!expstatus.Equals("F"))
+            {
+                Preferences.Set("Active", 1);
+                Application.Current!.MainPage = new NavigationPage(new AddExpenditureDetailsPage());
             }
             else
             {
@@ -287,32 +285,32 @@ namespace CERS
             }
         }
 
+// @mgogo  bypass
         private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
-            if (!expstatus.Equals("F") || true) // TEMPORARY BYPASS FOR TESTING
+            // DATE CHECK FIRST
+            DateTime currentdate = DateTime.Now;
+            userDetails = userDetailsDatabase.GetUserDetails("Select * from UserDetails").ToList();
+            DateTime resultdateadd30;
+            try
             {
-                DateTime currentdate = DateTime.Now;
-                userDetails = userDetailsDatabase.GetUserDetails("Select * from UserDetails").ToList();
-                DateTime resultdateadd30;
-                try
+                resultdateadd30 = DateTime.Parse(userDetails.ElementAt(0).Resultdatethirtydays);
+                if (currentdate >= resultdateadd30)
                 {
-                    resultdateadd30 = DateTime.Parse(userDetails.ElementAt(0).Resultdatethirtydays);
-                    // mgogo
-                    // if (currentdate >= resultdateadd30)
-                    // {
-                    //     await DisplayAlert(App.GetLabelByKey("AppName"), App.GetLabelByKey("expensedateover"), App.Btn_Close);
-                    // }
-                    // else
-                    // {
-                        Preferences.Set("Active", 1);
-                        Application.Current!.MainPage = new NavigationPage(new AddExpenditureDetailsPage());
-                    // }
+                    await DisplayAlert(App.GetLabelByKey("AppName"), App.GetLabelByKey("expensedateover"), App.Btn_Close);
+                    return; // Stop here if date expired
                 }
-                catch
-                {
-                    Preferences.Set("Active", 1);
-                    Application.Current!.MainPage = new NavigationPage(new AddExpenditureDetailsPage());
-                }
+            }
+            catch
+            {
+                // If date parsing fails, continue to other checks
+            }
+
+            // THEN EXPSTATUS CHECK
+            if (!expstatus.Equals("F"))
+            {
+                Preferences.Set("Active", 1);
+                Application.Current!.MainPage = new NavigationPage(new AddExpenditureDetailsPage());
             }
             else
             {
