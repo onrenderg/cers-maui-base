@@ -255,7 +255,7 @@ namespace CERS
 
         private async void Tab_New_Tapped(object sender, EventArgs e)
         {
-            if (!expstatus.Equals("F"))
+            if (!expstatus.Equals("F") || true) // TEMPORARY BYPASS FOR TESTING
             {
                 DateTime currentdate = DateTime.Now;
                 userDetails = userDetailsDatabase.GetUserDetails("Select * from UserDetails").ToList();
@@ -267,7 +267,7 @@ namespace CERS
                     // mgogo
                     // if (currentdate >= resultdateadd30)
                     // {
-                    //     await DisplayAlert(App.GetLabelByKey("AppName"), App.GetLabelByKey("expensedateover"), App.Btn_Close);
+                    //     await DisplayAlert(App.GetLabelByKey("AppName"), App.GetLabelByKey("expensedateover"), App.btn_Close);
                     // }
                     // else
                     // {
@@ -287,33 +287,9 @@ namespace CERS
             }
         }
 
-        private void Tab_Settings_Tapped(object sender, EventArgs e)
-        {
-            Preferences.Set("Active", 2);
-            Application.Current!.MainPage = new NavigationPage(new MorePage());
-        }
-
-        private void ToolbarItem_Clicked(object sender, EventArgs e)
-        {
-            refreshdata();
-        }
-
-        private async void refreshdata()
-        {
-            Loading_activity.IsVisible = true;
-            var service = new HitServices();
-            await service.ExpenseSources_Get();
-            await service.PaymentMode_Get();
-            await service.ExpenditureDetails_Get();
-            await service.userlogin_Get(usermobileno.Trim());
-            userDetailsDatabase.UpdateCustomquery("update userDetails set IsLoggedIn='Y'");
-            Loading_activity.IsVisible = false;
-            Application.Current!.MainPage = new NavigationPage(new DashboardPage());
-        }
-
         private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
-            if (!expstatus.Equals("F"))
+            if (!expstatus.Equals("F") || true) // TEMPORARY BYPASS FOR TESTING
             {
                 DateTime currentdate = DateTime.Now;
                 userDetails = userDetailsDatabase.GetUserDetails("Select * from UserDetails").ToList();
@@ -408,6 +384,30 @@ namespace CERS
             var service = new HitServices();
             string url = service.baseurl + $"GetDeclarationPdf.aspx?MobileNo={usermobileno}";
             Launcher.OpenAsync(url);
+        }
+
+        private void Tab_Settings_Tapped(object sender, EventArgs e)
+        {
+            Preferences.Set("Active", 2);
+            Application.Current!.MainPage = new NavigationPage(new MorePage());
+        }
+
+        private void ToolbarItem_Clicked(object sender, EventArgs e)
+        {
+            refreshdata();
+        }
+
+        private async void refreshdata()
+        {
+            Loading_activity.IsVisible = true;
+            var service = new HitServices();
+            await service.ExpenseSources_Get();
+            await service.PaymentMode_Get();
+            await service.ExpenditureDetails_Get();
+            await service.userlogin_Get(usermobileno.Trim());
+            userDetailsDatabase.UpdateCustomquery("update userDetails set IsLoggedIn='Y'");
+            Loading_activity.IsVisible = false;
+            Application.Current!.MainPage = new NavigationPage(new DashboardPage());
         }
     }
 }

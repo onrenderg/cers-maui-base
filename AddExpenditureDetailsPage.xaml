@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CERS.AddExpenditureDetailsPage"
@@ -27,27 +27,20 @@
                         <Label x:Name="lbl_mandatory" Text="Mandatory Fields*" FontSize="14"   HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center"/>
 
                         <Label  x:Name="lbl_expdate" FontSize="16" HorizontalOptions="FillAndExpand" FontAttributes="Bold"/>
-                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
-                            <!--<Image Source="calendar.png" Aspect="AspectFit" Margin="0" HeightRequest="40"/>-->
-                            <Entry TextColor="Black"  HorizontalOptions="FillAndExpand"  FontSize="16"  Placeholder="Select Expenditure Date" x:Name="Entry_expdate" Focused="Entry_expdate_Focused" />
-                            <DatePicker x:Name="datepicker_expdate" IsVisible="false"  Format="dd/MM/yyyy" DateSelected="datepicker_expdate_DateSelected"  HorizontalOptions="FillAndExpand"/>
-                        </StackLayout>                                       
+                        <DatePicker x:Name="datepicker_expdate" Format="dd/MM/yyyy" DateSelected="datepicker_expdate_DateSelected" HorizontalOptions="FillAndExpand" FontSize="16"/>                                       
 
                         <Label x:Name="lbl_exptype" FontSize="16" HorizontalOptions="FillAndExpand" FontAttributes="Bold"/>
                         <!--<Picker x:Name="picker_exptype"  FontSize="16" Title="Select Expenditure Source" SelectedIndexChanged="picker_exptype_SelectedIndexChanged"/>-->
                         <Editor Placeholder="Select Expenditure Type" x:Name="editor_exptype"  Focused="editor_exptype_Focused" AutoSize="TextChanges" FontSize="16" />
 
                         <Label  x:Name="lbl_paymentdate" FontSize="16" HorizontalOptions="FillAndExpand" FontAttributes="Bold"/>
-                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
-                            <Entry TextColor="Black" FontSize="16"  HorizontalOptions="FillAndExpand"  Placeholder="Select Payment Date" x:Name="Entry_paymentdate" Focused="Entry_paymentdate_Focused" />
-                            <DatePicker x:Name="datepicker_paymentdate" IsVisible="false"  Format="dd/MM/yyyy" DateSelected="datepicker_paymentdate_DateSelected"  HorizontalOptions="FillAndExpand"/>
-                        </StackLayout>
-
-                        <Label x:Name="lbl_payMode" FontSize="16" HorizontalOptions="FillAndExpand" FontAttributes="Bold"/>
-                        <Picker x:Name="picker_payMode"  FontSize="16"  SelectedIndexChanged="picker_payMode_SelectedIndexChanged"/>
+                        <DatePicker x:Name="datepicker_paymentdate" Format="dd/MM/yyyy" DateSelected="datepicker_paymentdate_DateSelected" HorizontalOptions="FillAndExpand" FontSize="16"/>
 
                         <Label x:Name="lbl_voucherBillNumber" FontSize="16" HorizontalOptions="FillAndExpand" FontAttributes="Bold"/>
                         <Entry x:Name="entry_voucherBillNumber"  FontSize="16" Placeholder="Enter Voucher/Bill Number" MaxLength="100" />                        
+                      
+                        <Label x:Name="lbl_payMode" FontSize="16" HorizontalOptions="FillAndExpand" FontAttributes="Bold"/>
+                        <Picker x:Name="picker_payMode"  FontSize="16"  SelectedIndexChanged="picker_payMode_SelectedIndexChanged"/>
                       
                         <Label x:Name="lbl_amount" FontSize="16" HorizontalOptions="FillAndExpand" FontAttributes="Bold"/>
                         <Entry x:Name="entry_amount" FontSize="16"  Placeholder="Enter Amount" MaxLength="9" Keyboard="Numeric"/>
