@@ -83,7 +83,7 @@
 
                     </StackLayout>
                 </Frame>
-                <Label VerticalOptions="End" Margin="0" Padding="0" x:Name="lbl_lastupdated" TextColor="Navy" FontAttributes="Bold" HorizontalOptions="Center" FontSize="14" HorizontalTextAlignment="Center"/>
+                <Label VerticalOptions="End" Margin="0" Padding="0" x:Name="lbl_lastupdated"  FontAttributes="Bold" HorizontalOptions="Center" FontSize="14" HorizontalTextAlignment="Center"/>
 
             </StackLayout>
 

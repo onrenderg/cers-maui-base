@@ -68,7 +68,7 @@
                         <Grid Grid.Row="4" ColumnDefinitions="*,*" HorizontalOptions="Fill">
                             <Entry Grid.Column="0" 
                                    Grid.ColumnSpan="2"
-                                   TextColor="Black" 
+                                   
                                    HorizontalOptions="Fill" 
                                    FontSize="16" 
                                    Placeholder="Select Expenditure Date" 
@@ -105,7 +105,7 @@
                         <Grid Grid.Row="8" ColumnDefinitions="*,*" HorizontalOptions="Fill">
                             <Entry Grid.Column="0" 
                                    Grid.ColumnSpan="2"
-                                   TextColor="Black" 
+                                   
                                    FontSize="16" 
                                    HorizontalOptions="Fill" 
                                    Placeholder="Select Payment Date" 
