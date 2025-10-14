@@ -35,6 +35,7 @@ namespace CERS
         {
             InitializeComponent();
             expenseid = expendid;
+            Console.WriteLine($"[CONSTRUCTOR] EditExpenditureDetailsPage created with ExpenseID: {expendid}");
             Footer_Labels = new Label[3] { Tab_Home_Label, Tab_New_Label, Tab_Settings_Label };
             Footer_Images = new Image[3] { Tab_Home_Image, Tab_New_Image, Tab_Settings_Image };
             // Footer_Image_Source = new string[5] { "ic_homeselected.png", "ic_update.png", "ic_add.png", "ic_stock.png", "ic_more.png" };          
@@ -56,10 +57,13 @@ namespace CERS
         protected override async void OnAppearing()
         {
             base.OnAppearing();
+            Console.WriteLine($"[ONAPPEARING] OnAppearing called for ExpenseID: {expenseid}");
 
-            if (this.Handler == null) return;
+            // REMOVED Handler check - it prevents initialization in MAUI
+            // if (this.Handler == null) return;
 
             userDetails = userDetailsDatabase.GetUserDetails("Select * from UserDetails").ToList();
+            Console.WriteLine($"[ONAPPEARING] User details loaded: {userDetails?.Count ?? 0} records");
             
             // Check if userDetails is empty to prevent NullReferenceException
             if (userDetails == null || !userDetails.Any())
@@ -105,7 +109,9 @@ namespace CERS
             entry_remarks.Placeholder = App.GetLabelByKey("Remarks");
             lbl_expenseevidence.Text = App.GetLabelByKey("lbl_expenseevidence");
 
+            Console.WriteLine("[ONAPPEARING] Setting button text to 'Update'");
             btn_save.Text = App.GetLabelByKey("Update");
+            Console.WriteLine($"[ONAPPEARING] Button text is now: {btn_save.Text}");
             Tab_Home_Label.Text = App.GetLabelByKey("Home");
             Tab_New_Label.Text = App.GetLabelByKey("addexpenses");
             Tab_Settings_Label.Text = App.GetLabelByKey("More");
@@ -134,7 +140,9 @@ namespace CERS
                 // datepicker_expdate.MaximumDate = Convert.ToDateTime(userDetails.ElementAt(0).ResultDate);
 
                 datepicker_paymentdate.MinimumDate = Convert.ToDateTime(userDetails.ElementAt(0).NominationDate);
+                Console.WriteLine($"[ONAPPEARING] About to call loadpreviousdata with ExpenseID: {expenseid}");
                 loadpreviousdata(expenseid);
+                Console.WriteLine("[ONAPPEARING] loadpreviousdata call completed");
             }
             catch (ObjectDisposedException)
             {
@@ -144,11 +152,7 @@ namespace CERS
             catch (Exception ex)
             {
                 Console.WriteLine($"Error in OnAppearing: {ex.Message}");
-                // Check if page is still valid before showing alert
-                if (this.Handler != null)
-                {
-                    await DisplayAlert("Error", $"Failed to load data: {ex.Message}", "OK");
-                }
+                await DisplayAlert("ERROR", $"OnAppearing failed: {ex.Message}", "OK");
             }
 
         }
@@ -157,13 +161,22 @@ namespace CERS
         {
             try
             {
+                Console.WriteLine($"[EDIT_LOAD] loadpreviousdata called with ExpenseID: {expendid}");
+                
                 expendituredetailslist = expendituredetailsdatabase.GetExpenditureDetails($"Select * from ExpenditureDetails where ExpenseID='{expendid}'").ToList();
+                Console.WriteLine($"[EDIT_LOAD] Records found: {expendituredetailslist?.Count ?? 0}");
 
                 if (expendituredetailslist == null || expendituredetailslist.Count == 0)
                 {
-                    Console.WriteLine("No expenditure data found for ID: " + expendid);
+                    Console.WriteLine("[EDIT_LOAD] ERROR: No data found!");
+                    MainThread.BeginInvokeOnMainThread(async () =>
+                    {
+                        await DisplayAlert("DEBUG", $"No data for ExpenseID: {expendid}", "OK");
+                    });
                     return;
                 }
+                
+                Console.WriteLine($"[EDIT_LOAD] Found data - Amount: {expendituredetailslist.ElementAt(0).amount}");
 
                 Entry_expdate.Text = expendituredetailslist.ElementAt(0).expDateDisplay;
                 expendituredateselected = expendituredetailslist.ElementAt(0).expDate.Replace('-', '/');
@@ -203,10 +216,16 @@ namespace CERS
                 {
                     imgbtn_viewpdf.IsVisible = true;
                 }
+                
+                Console.WriteLine("[EDIT_LOAD] ✅ Data loaded successfully!");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error loading previous data: {ex.Message}");
+                Console.WriteLine($"[EDIT_LOAD] ❌ ERROR: {ex.Message}");
+                MainThread.BeginInvokeOnMainThread(async () =>
+                {
+                    await DisplayAlert("ERROR", $"loadpreviousdata failed: {ex.Message}", "OK");
+                });
             }
         }
 
