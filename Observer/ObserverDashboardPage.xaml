@@ -32,10 +32,11 @@
                         <Label IsVisible="false" x:Name="lbl_norecords" FontSize="16" FontAttributes="Bold" TextColor="Red" HorizontalOptions="Center"/>
                         <Label  IsVisible="false" x:Name="lbl_totalamount" FontSize="16" FontAttributes="Bold" TextColor="Navy" HorizontalOptions="Center"/>
 
-                        <Grid>
+                        <Grid VerticalOptions="FillAndExpand">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
 
                             <Grid x:Name="grid_data" Margin="8,4,8,4" ColumnSpacing="10" Grid.Row="0" >
@@ -51,7 +52,7 @@
                                 <Label VerticalOptions="Center"  FontSize="16" x:Name="lblAmount" HorizontalOptions="End" TextColor="Navy"    Grid.Column="1" FontAttributes="Bold"  />
                             </Grid>
 
-                            <ListView x:Name="listView_candidatedetails" HasUnevenRows="True" VerticalOptions="FillAndExpand" SeparatorColor="Transparent"  SelectionMode="None" Grid.Row="2" ItemTapped="listView_candidatedetails_ItemTapped">
+                            <ListView x:Name="listView_candidatedetails" HasUnevenRows="True" VerticalOptions="FillAndExpand" SeparatorColor="Transparent"  SelectionMode="None" Grid.Row="1" ItemTapped="listView_candidatedetails_ItemTapped">
                            
                                 <ListView.ItemTemplate >
                                     <DataTemplate>
@@ -76,10 +77,9 @@
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
                             </ListView>
+                            
+                            <Label Grid.Row="2" Margin="0,10,0,5" Padding="0" x:Name="lbl_tapfooter" HorizontalOptions="Center" FontAttributes="Bold" FontSize="14" TextColor="Navy"/>
                         </Grid>
-
-                        <Label  Margin="0" Padding="0" x:Name="lbl_tapfooter" HorizontalOptions="CenterAndExpand" FontAttributes="Bold" FontSize="16" TextColor="Navy"/>
-
 
                     </StackLayout>
                 </Frame>
@@ -130,15 +130,27 @@
 
 
 
-        <ContentView x:Name="Loading_activity" BackgroundColor="#C0808080" Padding="20, 20" IsVisible="false" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
-            <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                <Frame BackgroundColor="White" HorizontalOptions="FillAndExpand">
-                    <StackLayout Orientation="Horizontal" Margin="6" HorizontalOptions="FillAndExpand">
-                        <ActivityIndicator IsVisible="true" IsRunning="true" Margin="5"/>
-                        <Label x:Name="lbl_PleaseWait" Text="Please Wait ..." TextColor="Black" FontAttributes="Bold" HorizontalOptions="FillAndExpand" WidthRequest="600" VerticalTextAlignment="Center"/>
-                    </StackLayout>
-                </Frame>
-            </StackLayout>
-        </ContentView>
+        <Grid x:Name="Loading_activity" 
+              BackgroundColor="#C0808080" 
+              IsVisible="false"
+              ZIndex="1000">
+            <Border BackgroundColor="White" 
+                    StrokeThickness="0"
+                    Padding="20"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10"/>
+                </Border.StrokeShape>
+                <HorizontalStackLayout Spacing="10">
+                    <ActivityIndicator IsVisible="true" IsRunning="true" Color="Navy" IsEnabled="True"/>
+                    <Label x:Name="lbl_PleaseWait" 
+                           Text="Please Wait ..." 
+                           TextColor="Black" 
+                           FontAttributes="Bold" 
+                           VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+            </Border>
+        </Grid>
     </Grid>
 </ContentPage>

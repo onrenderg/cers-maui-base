@@ -36,7 +36,7 @@
 
                             <Label x:Name="Lbl_HP" TextColor="Black" HorizontalOptions="Center" HorizontalTextAlignment="Center" IsVisible="false"/>
                             <StackLayout  Orientation="Horizontal">
-                                <Label x:Name="lbl_dept" Text="State Election Commission, Himachal Pradesh"  FontSize="17" TextColor="DarkBlue" FontAttributes="Bold" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Start" Margin="5,0,0,0"/>
+                                <Label x:Name="lbl_dept" Text="State Election Commission, Himachal Pradesh"  FontSize="17" FontAttributes="Bold" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Start" Margin="5,0,0,0"/>
                                 <!--&#10;-->
                             </StackLayout>
                             <StackLayout Orientation="Horizontal" Padding="10, 15">
