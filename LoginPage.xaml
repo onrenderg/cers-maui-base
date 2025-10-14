@@ -26,8 +26,8 @@
     </NavigationPage.TitleView>
 
     <Grid>
-        <Grid Margin="9" RowDefinitions="Auto,Auto">
-            <ScrollView Grid.Row="0" VerticalOptions="Start">
+        <Grid Margin="9" RowDefinitions="*,Auto">
+            <ScrollView Grid.Row="0" VerticalOptions="FillAndExpand">
                 <Grid RowDefinitions="Auto,Auto,Auto">
                     
                     <!-- Header Section -->
@@ -176,7 +176,6 @@
                                x:Name="lbl_appdescription1" 
                                HorizontalOptions="Fill" 
                                HorizontalTextAlignment="Start" 
-                               LineBreakMode="WordWrap" 
                                FontSize="14"/>
                     </Grid>
                 </Grid>
@@ -184,14 +183,15 @@
 
             <!-- Footer -->
             <Grid Grid.Row="1" 
-                  Margin="10,0,10,0" 
-                  HorizontalOptions="Fill">
+                  Margin="10,10,10,10" 
+                  HorizontalOptions="Fill"
+                  VerticalOptions="End">
                 <Label Text="Centre Of Competence For Mobile Application Development NIC Himachal Pradesh" 
                        FontSize="12" 
-                       Padding="8" 
+                       Padding="5" 
                        BackgroundColor="White" 
                        TextColor="Navy" 
-                       HorizontalTextAlignment="Center" 
+                       HorizontalTextAlignment="Center"
                        HorizontalOptions="Fill" 
                        LineBreakMode="WordWrap" 
                        FontAttributes="Bold"/>
