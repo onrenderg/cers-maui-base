@@ -31,11 +31,76 @@
 
                     <StackLayout>
                         <Label x:Name="lbl_heading1" FontSize="18" HorizontalOptions="CenterAndExpand" FontAttributes="Bold" TextColor="Navy" TextDecorations="Underline"/>
-                        <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand" BackgroundColor="Transparent">
-                            <Label x:Name="lbl_Type" FontSize="16" HorizontalOptions="FillAndExpand" TextColor="Navy"  FontAttributes="Bold"  VerticalOptions="Center"/>
-                            <RadioButton FontSize="16" x:Name="rb_exptype" IsChecked="true" GroupName="expgroup" TextColor="Black" BackgroundColor="Transparent" CheckedChanged="rb_exp_CheckedChanged"/>
-                            <RadioButton FontSize="16" x:Name="rb_expdate" IsChecked="False" GroupName="expgroup" TextColor="Black" BackgroundColor="Transparent" CheckedChanged="rb_exp_CheckedChanged"/>
-                        </StackLayout>
+                        <HorizontalStackLayout HorizontalOptions="Start" BackgroundColor="Transparent" Spacing="10">
+                            <Label x:Name="lbl_Type" FontSize="16" TextColor="Navy" FontAttributes="Bold" VerticalOptions="Center"/>
+                            <RadioButton x:Name="rb_exptype" 
+                                         Content="Type Wise"
+                                         IsChecked="true" 
+                                         GroupName="expgroup" 
+                                         TextColor="Navy" 
+                                         BackgroundColor="Transparent"
+                                         CheckedChanged="rb_exp_CheckedChanged">
+                                <RadioButton.ControlTemplate>
+                                    <ControlTemplate>
+                                        <Border Stroke="Navy" 
+                                                StrokeThickness="2"
+                                                BackgroundColor="Transparent"
+                                                WidthRequest="20"
+                                                HeightRequest="20">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="10"/>
+                                            </Border.StrokeShape>
+                                            <Ellipse x:Name="check"
+                                                     Fill="Navy"
+                                                     WidthRequest="10"
+                                                     HeightRequest="10"
+                                                     HorizontalOptions="Center"
+                                                     VerticalOptions="Center"
+                                                     IsVisible="{Binding IsChecked, Source={RelativeSource TemplatedParent}}"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </RadioButton.ControlTemplate>
+                            </RadioButton>
+                            <Label Text="Type Wise" TextColor="Navy" FontSize="16" VerticalOptions="Center">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="rb_exp_CheckedChanged" CommandParameter="type"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                            
+                            <RadioButton x:Name="rb_expdate" 
+                                         Content="Date Wise"
+                                         IsChecked="False" 
+                                         GroupName="expgroup" 
+                                         TextColor="Navy" 
+                                         BackgroundColor="Transparent"
+                                         CheckedChanged="rb_exp_CheckedChanged">
+                                <RadioButton.ControlTemplate>
+                                    <ControlTemplate>
+                                        <Border Stroke="Navy" 
+                                                StrokeThickness="2"
+                                                BackgroundColor="Transparent"
+                                                WidthRequest="20"
+                                                HeightRequest="20">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="10"/>
+                                            </Border.StrokeShape>
+                                            <Ellipse x:Name="check"
+                                                     Fill="Navy"
+                                                     WidthRequest="10"
+                                                     HeightRequest="10"
+                                                     HorizontalOptions="Center"
+                                                     VerticalOptions="Center"
+                                                     IsVisible="{Binding IsChecked, Source={RelativeSource TemplatedParent}}"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </RadioButton.ControlTemplate>
+                            </RadioButton>
+                            <Label Text="Date Wise" TextColor="Navy" FontSize="16" VerticalOptions="Center">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="rb_exp_CheckedChanged" CommandParameter="date"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </HorizontalStackLayout>
                         <Label IsVisible="false" x:Name="lbl_norecords" FontSize="16" FontAttributes="Bold" TextColor="Red" HorizontalOptions="Center"/>
                         <Label  IsVisible="false" x:Name="lbl_totalamount" FontSize="16" FontAttributes="Bold" TextColor="Navy" HorizontalOptions="Center"/>
 
