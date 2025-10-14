@@ -9,7 +9,7 @@
         <StackLayout  Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
             <Image Source="seclogo.png"  HeightRequest="40"  VerticalOptions="CenterAndExpand"/>
             <StackLayout  Orientation="Vertical" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Spacing="0">
-                <Label x:Name="lbl_title" Text="State Election Commission, H.P." Style="{StaticResource NavigationLabelColor}" FontSize="20" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                <Label x:Name="lbl_title" Text="State Election Commission, H.P." Style="{StaticResource NavigationLabelColor}" FontSize="17" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
             </StackLayout>
         </StackLayout>
     </NavigationPage.TitleView>
