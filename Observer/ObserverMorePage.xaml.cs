@@ -31,7 +31,7 @@ namespace CERS.Observer
             var currentVersion = VersionTracking.CurrentVersion;
             lbl_appversion.Text = App.GetLabelByKey("Version") + " " + currentVersion;
             lbl_appname.Text = App.GetLabelByKey("AppName") + "\n" + App.GetLabelByKey("AppNameFull"); 
-            lbl_title.Text = App.GetLabelByKey("deptt");
+            // lbl_title.Text = App.GetLabelByKey("deptt"); // Removed - use XAML value instead
             lbl_dept.Text = App.GetLabelByKey("deptt");
             lbl_call.Text = App.GetLabelByKey("CallUs");
             lbl_email.Text = App.GetLabelByKey("Email");

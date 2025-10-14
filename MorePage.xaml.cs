@@ -24,20 +24,17 @@ namespace CERS
             InitializeComponent();
             Footer_Labels = new Label[3] { Tab_Home_Label, Tab_New_Label, Tab_Settings_Label };
             Footer_Images = new Image[3] { Tab_Home_Image, Tab_New_Image, Tab_Settings_Image };
-            // Footer_Image_Source = new string[5] { "ic_homeselected.png", "ic_update.png", "ic_add.png", "ic_stock.png", "ic_more.png" };          
             Footer_Image_Source = new string[3] { "ic_homewhite.png", "ic_addwhite.png", "ic_morewhite.png" };
 
             VersionTracking.Track();
             var currentVersion = VersionTracking.CurrentVersion;
             lbl_appversion.Text = App.GetLabelByKey("Version") + " " + currentVersion;
             lbl_appname.Text = App.GetLabelByKey("AppName")+"\n"+App.GetLabelByKey("AppNameFull");
-            lbl_title.Text = App.GetLabelByKey("deptt");
             lbl_dept.Text = App.GetLabelByKey("deptt");
             lbl_call.Text = App.GetLabelByKey("CallUs");
             lbl_website.Text = App.GetLabelByKey("Website");
             lbl_email.Text = App.GetLabelByKey("Email");
             lbl_policy.Text = App.GetLabelByKey("PrivacyPolicy");
-            lbl_logout.Text = App.GetLabelByKey("Logout");
             lbl_language.Text = App.GetLabelByKey("chnglang");
             userDetailsDatabase = new UserDetailsDatabase();
             userDetailslist = userDetailsDatabase.GetUserDetails("Select * from UserDetails").ToList();
