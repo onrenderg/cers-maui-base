@@ -591,20 +591,37 @@ _allExpenditures = observerExpenditureDetailsList;
             }
             else
             {
-                Loading_activity.IsVisible = true;
-                var service = new HitServices();
-                int response_saveobsrem = await service.SaveObserverRemarks_Post(expenseid, ObserverId, entry_remarks.Text);
-                if (this.Handler == null) return;
-
-                if (response_saveobsrem == 200)
+                try
                 {
-                    int reposnse_obserexp = await service.ObserverExpenditureDetails_Get(autoid);
-                    if (this.Handler == null) return;
-                    Loading_activity.IsVisible = false;
-                }
+                    Loading_activity.IsVisible = true;
+                    var service = new HitServices();
+                    int response_saveobsrem = await service.SaveObserverRemarks_Post(expenseid, ObserverId, entry_remarks.Text);
+                    
+                    if (response_saveobsrem == 200)
+                    {
+                        int reposnse_obserexp = await service.ObserverExpenditureDetails_Get(autoid);
+                        if (this.Handler == null) return;
+                        Loading_activity.IsVisible = false;
+                    }
+                    else
+                    {
+                        Loading_activity.IsVisible = false;
+                    }
 
-                await Navigation.PopAsync();
-                Loading_activity.IsVisible = false;
+                    // Close popup before navigation
+                    popupreplyremarks.IsVisible = false;
+                    
+                    if (this.Handler == null) return;
+                    await Navigation.PopAsync();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error saving remarks: {ex.Message}");
+                    if (this.Handler != null)
+                    {
+                        Loading_activity.IsVisible = false;
+                    }
+                }
             }
         }
 
@@ -669,23 +686,38 @@ _allExpenditures = observerExpenditureDetailsList;
             }
             else
             {
-                Loading_activity.IsVisible = true;
-                var service = new HitServices();
-                int response_saveobsrem = await service.UpdateObserverRemarks_Post(expenseid, ObserverRemarksId, entry_editremarks.Text);
-                if (this.Handler == null) return;
-
-                if (response_saveobsrem == 200)
+                try
                 {
-                    int reposnse_obserexp = await service.ObserverExpenditureDetails_Get(autoid);
-                    if (this.Handler == null) return;
-                    Loading_activity.IsVisible = false;
-                }
+                    Loading_activity.IsVisible = true;
+                    var service = new HitServices();
+                    int response_saveobsrem = await service.UpdateObserverRemarks_Post(expensesid, entry_editremarks.Text, ObserverRemarksId);
+                    
+                    if (response_saveobsrem == 200)
+                    {
+                        int reposnse_obserexp = await service.ObserverExpenditureDetails_Get(autoid);
+                        if (this.Handler == null) return;
+                        Loading_activity.IsVisible = false;
+                    }
+                    else
+                    {
+                        Loading_activity.IsVisible = false;
+                    }
 
-                if (this.Handler == null) return;
-                await Navigation.PopAsync();
+                    // Close popup before navigation
+                    popupeditremarks.IsVisible = false;
+                    
+                    if (this.Handler == null) return;
+                    await Navigation.PopAsync();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error updating remarks: {ex.Message}");
+                    if (this.Handler != null)
+                    {
+                        Loading_activity.IsVisible = false;
+                    }
+                }
             }
-            if (this.Handler == null) return;
-            Loading_activity.IsVisible = false;
         }
 
         private void PopupreplyremarkscancelBtn_Clicked(object sender, EventArgs e)
