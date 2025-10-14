@@ -72,16 +72,73 @@
                 <Label x:Name="lbl_heading1" Grid.Row="0" FontSize="18" HorizontalOptions="Center" FontAttributes="Bold" TextColor="Navy" TextDecorations="Underline" Margin="0,0,0,10"/>
 
                 <!-- Radio Button Section -->
-                <Grid Grid.Row="1" Margin="0,0,0,10" BackgroundColor="{AppThemeBinding Light=Transparent, Dark=Transparent}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <Label x:Name="lbl_Type" Grid.Column="0" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" TextColor="Navy"/>
-                    <RadioButton Grid.Column="1" FontSize="16" x:Name="rb_exptype" IsChecked="true" GroupName="expgroup" CheckedChanged="rb_exp_CheckedChanged" TextColor="Navy" BackgroundColor="{AppThemeBinding Light=Transparent, Dark=Transparent}"/>
-                    <RadioButton Grid.Column="2" FontSize="16" x:Name="rb_expdate" IsChecked="False" GroupName="expgroup" CheckedChanged="rb_exp_CheckedChanged" TextColor="Navy" BackgroundColor="{AppThemeBinding Light=Transparent, Dark=Transparent}"/>
-                </Grid>
+                <HorizontalStackLayout Grid.Row="1" Margin="0,0,0,10" Spacing="10" BackgroundColor="Transparent">
+                    <Label x:Name="lbl_Type" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" TextColor="Navy"/>
+                    
+                    <RadioButton x:Name="rb_exptype" 
+                                 Content="Type Wise"
+                                 IsChecked="true" 
+                                 GroupName="expgroup" 
+                                 TextColor="Navy" 
+                                 BackgroundColor="Transparent"
+                                 CheckedChanged="rb_exp_CheckedChanged">
+                        <RadioButton.ControlTemplate>
+                            <ControlTemplate>
+                                <HorizontalStackLayout Spacing="8">
+                                    <Border Stroke="Navy" 
+                                            StrokeThickness="2"
+                                            BackgroundColor="Transparent"
+                                            WidthRequest="20"
+                                            HeightRequest="20"
+                                            VerticalOptions="Center">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="10"/>
+                                        </Border.StrokeShape>
+                                        <Ellipse Fill="Navy"
+                                                 WidthRequest="10"
+                                                 HeightRequest="10"
+                                                 HorizontalOptions="Center"
+                                                 VerticalOptions="Center"
+                                                 IsVisible="{Binding IsChecked, Source={RelativeSource TemplatedParent}}"/>
+                                    </Border>
+                                    <ContentPresenter VerticalOptions="Center"/>
+                                </HorizontalStackLayout>
+                            </ControlTemplate>
+                        </RadioButton.ControlTemplate>
+                    </RadioButton>
+                    
+                    <RadioButton x:Name="rb_expdate" 
+                                 Content="Date Wise"
+                                 IsChecked="False" 
+                                 GroupName="expgroup" 
+                                 TextColor="Navy" 
+                                 BackgroundColor="Transparent"
+                                 CheckedChanged="rb_exp_CheckedChanged">
+                        <RadioButton.ControlTemplate>
+                            <ControlTemplate>
+                                <HorizontalStackLayout Spacing="8">
+                                    <Border Stroke="Navy" 
+                                            StrokeThickness="2"
+                                            BackgroundColor="Transparent"
+                                            WidthRequest="20"
+                                            HeightRequest="20"
+                                            VerticalOptions="Center">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="10"/>
+                                        </Border.StrokeShape>
+                                        <Ellipse Fill="Navy"
+                                                 WidthRequest="10"
+                                                 HeightRequest="10"
+                                                 HorizontalOptions="Center"
+                                                 VerticalOptions="Center"
+                                                 IsVisible="{Binding IsChecked, Source={RelativeSource TemplatedParent}}"/>
+                                    </Border>
+                                    <ContentPresenter VerticalOptions="Center"/>
+                                </HorizontalStackLayout>
+                            </ControlTemplate>
+                        </RadioButton.ControlTemplate>
+                    </RadioButton>
+                </HorizontalStackLayout>
 
                 <!-- Tap Area for Adding Expenses -->
                 <Grid Grid.Row="2">
