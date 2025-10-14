@@ -19,7 +19,7 @@
                        x:Name="lbl_title" 
                        Text="State Election Commission, H.P." 
                        Style="{StaticResource NavigationLabelColor}" 
-                       FontSize="16" 
+                       FontSize="20" 
                        FontAttributes="Bold" 
                        HorizontalTextAlignment="Center" 
                        VerticalTextAlignment="Center" />

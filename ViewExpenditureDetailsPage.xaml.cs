@@ -63,6 +63,9 @@ namespace CERS
             // Check if page is still valid before doing anything
             if (this.Handler == null) return;
             
+            // Hide loading popup if it's still visible
+            Loading_activity.IsVisible = false;
+            
             try
             {
                 // Refresh data from server to ensure button visibility is accurate
@@ -375,13 +378,23 @@ namespace CERS
             }
         }
 
-        private void btn_edit_Clicked(object sender, EventArgs e)
+        private async void btn_edit_Clicked(object sender, EventArgs e)
         {
             Button b = (Button)sender;
             string? expenseid = (sender as Button)?.CommandParameter?.ToString();
             if (!string.IsNullOrEmpty(expenseid))
             {
-                Navigation.PushAsync(new EditExpenditureDetailsPage(expenseid));
+                Loading_activity.IsVisible = true;
+                try
+                {
+                    await Navigation.PushAsync(new EditExpenditureDetailsPage(expenseid));
+                    Loading_activity.IsVisible = false;
+                }
+                catch (Exception ex)
+                {
+                    Loading_activity.IsVisible = false;
+                    await DisplayAlert("Error", ex.Message, "OK");
+                }
             }
         }
 
@@ -425,7 +438,7 @@ namespace CERS
                         listview_Remarks.ItemsSource = viewAllRemarkslist;
                     });
                     
-                    popupRemarksCancel.Text = App.GetLabelByKey("Cancel");
+                    popupRemarksCancel.Text = App.GetLabelByKey("close");
                 }
                 else
                 {

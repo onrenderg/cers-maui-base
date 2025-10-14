@@ -9,7 +9,7 @@
         <StackLayout  Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
             <Image Source="seclogo.png"  HeightRequest="40"  VerticalOptions="CenterAndExpand"/>
             <StackLayout  Orientation="Vertical" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Spacing="0">
-                <Label x:Name="lbl_title" Text="State Election Commission, H.P." Style="{StaticResource NavigationLabelColor}" FontSize="17" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                <Label x:Name="lbl_title" Text="State Election Commission, H.P." Style="{StaticResource NavigationLabelColor}" FontSize="20" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
             </StackLayout>
         </StackLayout>
     </NavigationPage.TitleView>
@@ -176,7 +176,7 @@
                     </CollectionView.ItemTemplate>
                 </CollectionView>
 
-                <Button BackgroundColor="Navy" TextColor="White" FontAttributes="Bold"  x:Name="popupRemarksCancel" Clicked="popupRemarksCancel_Clicked" Text="Cancel" Margin="5" HorizontalOptions="FillAndExpand"/>
+                <Button BackgroundColor="Navy" TextColor="White" FontAttributes="Bold"  x:Name="popupRemarksCancel" Clicked="popupRemarksCancel_Clicked" Text="Close" Margin="5" HorizontalOptions="FillAndExpand"/>
             </StackLayout>
         </ContentView>
 
@@ -189,7 +189,7 @@
                         <Entry x:Name="entry_remarks" PlaceholderColor="Black" TextColor="Black" Placeholder="Enter remarks" Keyboard="Text" MaxLength="250" HorizontalOptions="FillAndExpand"/>
 
                         <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Spacing="10">
-                            <Button BackgroundColor="Navy" TextColor="White" x:Name="PopupreplyremarkscancelBtn" Clicked="PopupreplyremarkscancelBtn_Clicked" HorizontalOptions="FillAndExpand" Text="Cancel" Margin="0,0,5,0"/>
+                            <Button BackgroundColor="Navy" TextColor="White" x:Name="PopupreplyremarkscancelBtn" Clicked="PopupreplyremarkscancelBtn_Clicked" HorizontalOptions="FillAndExpand" Text="Close" Margin="0,0,5,0"/>
                             <Button BackgroundColor="Navy" TextColor="White" x:Name="PopupreplyremarksyesBtn" Clicked="PopupreplyremarksyesBtn_Clicked" HorizontalOptions="FillAndExpand" Text="Submit" Margin="5,0,0,0"/>
                         </StackLayout>
                     </StackLayout>
@@ -197,16 +197,28 @@
             </StackLayout>
         </ContentView>
 
-        <ContentView x:Name="Loading_activity" BackgroundColor="#C0808080" Padding="20, 20" IsVisible="false" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
-            <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                <Frame Style="{StaticResource FrameLoadingStyle}">
-                    <StackLayout Orientation="Horizontal" Padding="6">
-                        <ActivityIndicator IsVisible="true" IsRunning="true" Margin="5"/>
-                        <Label x:Name="Lbl_PleaseWait" Text="Please Wait ..." Style="{StaticResource LabelStyle}" HorizontalOptions="FillAndExpand" WidthRequest="600"/>
-                    </StackLayout>
-                </Frame>
-            </StackLayout>
-        </ContentView>
+        <Grid x:Name="Loading_activity" 
+              BackgroundColor="#C0808080" 
+              IsVisible="false"
+              ZIndex="1000">
+            <Border BackgroundColor="White" 
+                    StrokeThickness="0"
+                    Padding="20"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10"/>
+                </Border.StrokeShape>
+                <HorizontalStackLayout Spacing="10">
+                    <ActivityIndicator IsVisible="true" IsRunning="true" Color="Navy" IsEnabled="True"/>
+                    <Label x:Name="Lbl_PleaseWait" 
+                           Text="Please Wait ..." 
+                           TextColor="Black" 
+                           FontAttributes="Bold" 
+                           VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+            </Border>
+        </Grid>
     </Grid>
 </ContentPage>
 

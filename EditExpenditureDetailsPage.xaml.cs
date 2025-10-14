@@ -414,9 +414,8 @@ namespace CERS
             catch (Exception ex)
             {
                 Console.WriteLine(App.GetLabelByKey("exchfl") + ex.ToString());
+                return null;
             }
-
-            return null;
         }
 
         private async void btn_save_Clicked(object? sender, EventArgs e)
@@ -424,16 +423,28 @@ namespace CERS
             //AUTO_ID,expendituresourcecode
             if (await checkvalidtion())
             {
-                var service = new HitServices();
-                int response_savedata = await service.UpdateExpenditure(
-                    expenseid, expendituredateselected, expendituresourcecode, "", entry_amount.Text, entry_amountoutstanding.Text, paymentdateselected,
-                    entry_voucherBillNumber.Text, paymodecode, entry_payeeName.Text, entry_payeeAddress.Text,
-                    entry_sourceMoney.Text, entry_remarks.Text, doc1
-                    );
-                if (response_savedata == 200)
+                Loading_activity.IsVisible = true;
+                try
                 {
-                    // Application.Current!.MainPage = new NavigationPage(new DashboardPage());
-                    await Navigation.PopToRootAsync(); // Go back to Dashboard properly
+                    var service = new HitServices();
+                    int response_savedata = await service.UpdateExpenditure(
+                        expenseid, expendituredateselected, expendituresourcecode, "", entry_amount.Text, entry_amountoutstanding.Text, paymentdateselected,
+                        entry_voucherBillNumber.Text, paymodecode, entry_payeeName.Text, entry_payeeAddress.Text,
+                        entry_sourceMoney.Text, entry_remarks.Text, doc1
+                        );
+                    
+                    Loading_activity.IsVisible = false;
+                    
+                    if (response_savedata == 200)
+                    {
+                        // Application.Current!.MainPage = new NavigationPage(new DashboardPage());
+                        await Navigation.PopToRootAsync(); // Go back to Dashboard properly
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Loading_activity.IsVisible = false;
+                    await DisplayAlert("Error", ex.Message, "OK");
                 }
             }
         }

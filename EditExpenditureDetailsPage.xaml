@@ -342,16 +342,29 @@
             </StackLayout>
         </ContentView>
 
-
-        <ContentView x:Name="Loading_activity" BackgroundColor="#C0808080" Padding="20, 20" IsVisible="false" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
-            <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                <Frame BackgroundColor="White" HorizontalOptions="FillAndExpand">
-                    <StackLayout Orientation="Horizontal" Margin="6" HorizontalOptions="FillAndExpand">
-                        <ActivityIndicator IsVisible="true" IsRunning="true" Margin="5"/>
-                        <Label x:Name="lbl_PleaseWait" Text="Please Wait ..." TextColor="Black" FontAttributes="Bold" HorizontalOptions="FillAndExpand" WidthRequest="600" VerticalTextAlignment="Center"/>
-                    </StackLayout>
-                </Frame>
-            </StackLayout>
-        </ContentView>
+        <Grid x:Name="Loading_activity" 
+              BackgroundColor="#C0808080" 
+              IsVisible="false"
+              ZIndex="1000"
+              AbsoluteLayout.LayoutBounds="0, 0, 1, 1" 
+              AbsoluteLayout.LayoutFlags="All">
+            <Border BackgroundColor="White" 
+                    StrokeThickness="0"
+                    Padding="20"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10"/>
+                </Border.StrokeShape>
+                <HorizontalStackLayout Spacing="10">
+                    <ActivityIndicator IsVisible="true" IsRunning="true" Color="Navy" IsEnabled="True"/>
+                    <Label x:Name="lbl_PleaseWait" 
+                           Text="Please Wait ..." 
+                           TextColor="Black" 
+                           FontAttributes="Bold" 
+                           VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+            </Border>
+        </Grid>
     </AbsoluteLayout>
 </ContentPage>
