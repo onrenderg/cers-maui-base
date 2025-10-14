@@ -27,7 +27,7 @@
                     <StackLayout VerticalOptions="FillAndExpand">
                         <StackLayout Orientation="Horizontal">
                             <Label x:Name="lbl_selectward" FontSize="16" VerticalOptions="Center" TextColor="Navy" FontAttributes="Bold"/>
-                            <Picker x:Name="picker_wards" HorizontalOptions="FillAndExpand" SelectedIndexChanged="picker_wards_SelectedIndexChanged"/>
+                            <Picker x:Name="picker_wards" HorizontalOptions="FillAndExpand" TextColor="Black" SelectedIndexChanged="picker_wards_SelectedIndexChanged"/>
                         </StackLayout>
                         <Label IsVisible="false" x:Name="lbl_norecords" FontSize="16" FontAttributes="Bold" TextColor="Red" HorizontalOptions="Center"/>
                         <Label  IsVisible="false" x:Name="lbl_totalamount" FontSize="16" FontAttributes="Bold" TextColor="Navy" HorizontalOptions="Center"/>
