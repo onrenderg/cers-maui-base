@@ -175,10 +175,9 @@ namespace CERS.Observer
                         $", (case when ObserverRemarks <> '' then 'true' else 'false' end)btnrplyobserverremarksvisibility" +
                         $",'false' as exptypevisibility" +
                         $",'true' as expdatevisibility" +
-                        // $",CASE WHEN expDate IS NOT NULL THEN date(expDate) ELSE '' END as expDateDisplay" +
-                        // $",CASE WHEN paymentDate IS NOT NULL THEN date(paymentDate) ELSE '' END as paymentDateDisplay" +
                         $",CASE WHEN expDate IS NOT NULL THEN strftime('%d-%m-%Y', expDate) ELSE '' END as expDateDisplay" +
-                        $",CASE WHEN paymentDate IS NOT NULL THEN strftime('%d-%m-%Y', paymentDate) ELSE '' END as paymentDateDisplay" + 
+                        $",CASE WHEN paymentDate IS NOT NULL THEN strftime('%d-%m-%Y', paymentDate) ELSE '' END as paymentDateDisplay" +
+
                         $",CASE WHEN evidenceFile = 'Y' THEN 'true' ELSE 'false' END as pdfvisibility" +
                         $" from ObserverExpenditureDetails " +
                         $" where expcode='{expvalue}'";
@@ -254,8 +253,8 @@ _allExpenditures = observerExpenditureDetailsList;
                         $", (case when ObserverRemarks <> '' then 'true' else 'false' end)btnrplyobserverremarksvisibility" +
                         $",'true' as exptypevisibility" +
                         $",'false' as expdatevisibility" +
-                        $",CASE WHEN expDate IS NOT NULL THEN date(expDate) ELSE '' END as expDateDisplay" +
-                        $",CASE WHEN paymentDate IS NOT NULL THEN date(paymentDate) ELSE '' END as paymentDateDisplay" +
+                        $",CASE WHEN expDate IS NOT NULL THEN strftime('%d-%m-%Y', expDate) ELSE '' END as expDateDisplay" +
+                        $",CASE WHEN paymentDate IS NOT NULL THEN strftime('%d-%m-%Y', paymentDate) ELSE '' END as paymentDateDisplay" +
                         $",CASE WHEN evidenceFile = 'Y' THEN 'true' ELSE 'false' END as pdfvisibility" +
                         $" from ObserverExpenditureDetails " +
                         $" where expDate='{expvalue}'";
