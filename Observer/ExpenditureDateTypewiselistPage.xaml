@@ -25,24 +25,25 @@
         </Grid.RowDefinitions>
         
         <StackLayout Margin="9" Grid.Row="0">
-            <StackLayout >
+            <StackLayout VerticalOptions="FillAndExpand">
                 <Label x:Name="lbl_heading" FontSize="18" BackgroundColor="Navy" TextColor="White" FontAttributes="Bold" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center"/>
                 <Frame VerticalOptions="FillAndExpand" HasShadow="False" CornerRadius="20" BackgroundColor="White" BorderColor="#07a6db" Margin="0,10,0,0">
 
                     <StackLayout>
                         <Label x:Name="lbl_heading1" FontSize="18" HorizontalOptions="CenterAndExpand" FontAttributes="Bold" TextColor="Navy" TextDecorations="Underline"/>
-                        <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
-                            <Label x:Name="lbl_Type" FontSize="16" HorizontalOptions="FillAndExpand" FontAttributes="Bold" VerticalOptions="Center"/>
-                            <RadioButton FontSize="16" x:Name="rb_exptype" IsChecked="true" GroupName="expgroup" CheckedChanged="rb_exp_CheckedChanged"/>
-                            <RadioButton FontSize="16" x:Name="rb_expdate" IsChecked="False" GroupName="expgroup" CheckedChanged="rb_exp_CheckedChanged"/>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand" BackgroundColor="Transparent">
+                            <Label x:Name="lbl_Type" FontSize="16" HorizontalOptions="FillAndExpand" TextColor="Navy"  FontAttributes="Bold"  VerticalOptions="Center"/>
+                            <RadioButton FontSize="16" x:Name="rb_exptype" IsChecked="true" GroupName="expgroup" TextColor="Black" BackgroundColor="Transparent" CheckedChanged="rb_exp_CheckedChanged"/>
+                            <RadioButton FontSize="16" x:Name="rb_expdate" IsChecked="False" GroupName="expgroup" TextColor="Black" BackgroundColor="Transparent" CheckedChanged="rb_exp_CheckedChanged"/>
                         </StackLayout>
                         <Label IsVisible="false" x:Name="lbl_norecords" FontSize="16" FontAttributes="Bold" TextColor="Red" HorizontalOptions="Center"/>
                         <Label  IsVisible="false" x:Name="lbl_totalamount" FontSize="16" FontAttributes="Bold" TextColor="Navy" HorizontalOptions="Center"/>
 
-                        <Grid>
+                        <Grid VerticalOptions="FillAndExpand">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
 
                             <Grid x:Name="grid_data" Margin="4" Grid.Row="0" >
@@ -59,7 +60,6 @@
                             </Grid>
 
                             <ListView x:Name="listView_expendituredetailstypewise" HasUnevenRows="True" VerticalOptions="FillAndExpand" SeparatorColor="Transparent"  SelectionMode="None" Grid.Row="1" ItemTapped="listView_expendituredetailstypewise_ItemTapped">
-                     
                                 <ListView.ItemTemplate >
                                     <DataTemplate>
                                         <ViewCell Appearing="ViewCell_Appearing">
@@ -71,7 +71,6 @@
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="8*"/>
                                                         <ColumnDefinition Width="2*"/>
-                                                       
                                                     </Grid.ColumnDefinitions>
 
                                                     <Label VerticalOptions="Center"  HorizontalOptions="StartAndExpand"  FontSize="16" Text="{Binding displaytitle}"   TextColor="Navy"  Grid.Column="0"/>
@@ -83,15 +82,14 @@
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
                             </ListView>
-                        </Grid>
 
-                        <Label  Margin="0" Padding="0" x:Name="lbl_tapfooter" HorizontalOptions="CenterAndExpand" FontAttributes="Bold" FontSize="16" TextColor="Navy"/>
+                            <Label Grid.Row="2" Margin="0,10,0,5" Padding="0" x:Name="lbl_tapfooter" HorizontalOptions="Center" FontAttributes="Bold" FontSize="14" TextColor="Navy"/>
+                        </Grid>
                       
                     </StackLayout>
                 </Frame>
 
-                <Label  Margin="0" Padding="0" x:Name="lbl_lastupdated" TextColor="Navy" FontAttributes="Bold" HorizontalOptions="Center" FontSize="14" HorizontalTextAlignment="Center"/>
-
+                <Label  Margin="0" Padding="0" x:Name="lbl_lastupdated" FontAttributes="Bold" HorizontalOptions="Center" FontSize="14" HorizontalTextAlignment="Center"/>
             </StackLayout>
         </StackLayout>
 
@@ -130,17 +128,28 @@
             </StackLayout>
         </Grid>
 
-
-
-        <ContentView x:Name="Loading_activity" BackgroundColor="#C0808080" Padding="20, 20" IsVisible="false" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
-            <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                <Frame BackgroundColor="White" HorizontalOptions="FillAndExpand">
-                    <StackLayout Orientation="Horizontal" Margin="6" HorizontalOptions="FillAndExpand">
-                        <ActivityIndicator IsVisible="true" IsRunning="true" Margin="5"/>
-                        <Label x:Name="lbl_PleaseWait" Text="Please Wait ..." TextColor="Black" FontAttributes="Bold" HorizontalOptions="FillAndExpand" WidthRequest="600" VerticalTextAlignment="Center"/>
-                    </StackLayout>
-                </Frame>
-            </StackLayout>
-        </ContentView>
+        <Grid x:Name="Loading_activity" 
+              BackgroundColor="#C0808080" 
+              IsVisible="false"
+              ZIndex="1000"
+              Grid.RowSpan="2">
+            <Border BackgroundColor="White" 
+                    StrokeThickness="0"
+                    Padding="20"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10"/>
+                </Border.StrokeShape>
+                <HorizontalStackLayout Spacing="10">
+                    <ActivityIndicator IsVisible="true" IsRunning="true" Color="Navy" IsEnabled="True"/>
+                    <Label x:Name="lbl_PleaseWait" 
+                           Text="Please Wait ..." 
+                           TextColor="Black" 
+                           FontAttributes="Bold" 
+                           VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+            </Border>
+        </Grid>
     </Grid>
 </ContentPage>
