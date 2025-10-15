@@ -135,7 +135,6 @@ namespace CERS
 
             Tab_Home_Label.Text = App.GetLabelByKey("Home");
             Tab_New_Label.Text = App.GetLabelByKey("addexpenses");
-            Tab_Settings_Label.Text = App.GetLabelByKey("More");
             rb_exptype.Content = App.GetLabelByKey("exptypewise");
             rb_expdate.Content = App.GetLabelByKey("expdatewise");
             lbl_Type.Text = App.GetLabelByKey("Expenditure");
@@ -145,6 +144,16 @@ namespace CERS
             Footer_Images[Preferences.Get("Active", 0)].Source = Footer_Image_Source[Preferences.Get("Active", 0)];
             Footer_Labels[Preferences.Get("Active", 0)].TextColor = Color.FromArgb("#0f0f0f");
             lbl_heading1.Text = App.GetLabelByKey("lbl_heading1");
+            
+            // Refresh the ListView with updated data based on current radio button selection
+            if (rb_exptype.IsChecked)
+            {
+                loadexptypewisedata();
+            }
+            else if (rb_expdate.IsChecked)
+            {
+                loadexpdatewisedata();
+            }
         }
 
         private void ViewCell_Appearing(object sender, EventArgs e)

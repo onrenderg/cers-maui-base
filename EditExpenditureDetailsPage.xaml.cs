@@ -433,18 +433,24 @@ namespace CERS
                         entry_sourceMoney.Text, entry_remarks.Text, doc1
                         );
                     
-                    Loading_activity.IsVisible = false;
-                    
                     if (response_savedata == 200)
                     {
+                        // Sync server data to local database before navigating back
+                        await service.ExpenditureDetails_Get();
+                        
+                        Loading_activity.IsVisible = false;
+                        
                         // Application.Current!.MainPage = new NavigationPage(new DashboardPage());
                         await Navigation.PopToRootAsync(); // Go back to Dashboard properly
+                    }
+                    else
+                    {
+                        Loading_activity.IsVisible = false;
                     }
                 }
                 catch (Exception ex)
                 {
                     Loading_activity.IsVisible = false;
-                    await DisplayAlert("Error", ex.Message, "OK");
                 }
             }
         }
