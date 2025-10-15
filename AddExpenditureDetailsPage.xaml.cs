@@ -85,6 +85,7 @@ namespace CERS
             lbl_remarks.Text = App.GetLabelByKey("Remarks");
             entry_remarks.Placeholder = App.GetLabelByKey("Remarks");
             lbl_expenseevidence.Text = App.GetLabelByKey("lbl_expenseevidence");
+            lbl_PleaseWait.Text = App.GetLabelByKey("PleaseWait");
 
             btn_save.Text = App.GetLabelByKey("Save");
             Tab_Home_Label.Text = App.GetLabelByKey("Home");
