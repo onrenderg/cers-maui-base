@@ -61,11 +61,7 @@
                                     </ControlTemplate>
                                 </RadioButton.ControlTemplate>
                             </RadioButton>
-                            <Label Text="Type Wise" TextColor="Navy" FontSize="16" VerticalOptions="Center">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="rb_exp_CheckedChanged" CommandParameter="type"/>
-                                </Label.GestureRecognizers>
-                            </Label>
+                            <Label Text="Type Wise" TextColor="Navy" FontSize="16" VerticalOptions="Center"/>
                             
                             <RadioButton x:Name="rb_expdate" 
                                          Content="Date Wise"
@@ -95,11 +91,7 @@
                                     </ControlTemplate>
                                 </RadioButton.ControlTemplate>
                             </RadioButton>
-                            <Label Text="Date Wise" TextColor="Navy" FontSize="16" VerticalOptions="Center">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="rb_exp_CheckedChanged" CommandParameter="date"/>
-                                </Label.GestureRecognizers>
-                            </Label>
+                            <Label Text="Date Wise" TextColor="Navy" FontSize="16" VerticalOptions="Center"/>
                         </HorizontalStackLayout>
                         <Label IsVisible="false" x:Name="lbl_norecords" FontSize="16" FontAttributes="Bold" TextColor="Red" HorizontalOptions="Center"/>
                         <Label  IsVisible="false" x:Name="lbl_totalamount" FontSize="16" FontAttributes="Bold" TextColor="Navy" HorizontalOptions="Center"/>
