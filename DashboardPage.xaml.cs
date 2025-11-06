@@ -364,7 +364,7 @@ namespace CERS
         private void btn_form46_Clicked(object sender, EventArgs e)
         {
             var service = new HitServices();
-            string url = service.baseurl + $"GetDeclarationPdf.aspx?MobileNo={usermobileno}";
+            string url = HitServices.baseurl + $"GetDeclarationPdf.aspx?MobileNo={usermobileno}";
             Launcher.OpenAsync(url);
         }
 

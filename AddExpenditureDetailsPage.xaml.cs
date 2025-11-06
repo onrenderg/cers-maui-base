@@ -57,7 +57,6 @@ namespace CERS
             lbl_heading1.Text = App.GetLabelByKey("lbl_heading1");
             lbl_mandatory.Text = App.GetLabelByKey("lbl_mandatory");
             lbl_expdate.Text = App.GetLabelByKey("lbl_expdate") + "*";
-            Entry_expdate.Placeholder = App.GetLabelByKey("Entry_expdate");
             lbl_exptype.Text = App.GetLabelByKey("lbl_exptype") + "*";
             // picker_exptype.Title = App.GetLabelByKey("picker_exptype");
             lbl_popupexptype.Text = App.GetLabelByKey("tapexptype");
@@ -73,7 +72,6 @@ namespace CERS
             entry_amountoutstanding.Text = "0";
 
             lbl_paymentdate.Text = App.GetLabelByKey("lbl_paymentdate") + "*";
-            Entry_paymentdate.Placeholder = App.GetLabelByKey("Entry_paymentdate");
             lbl_voucherBillNumber.Text = App.GetLabelByKey("lbl_voucherBillNumber") + "*";
             entry_voucherBillNumber.Placeholder = App.GetLabelByKey("entry_voucherBillNumber");
             lbl_payMode.Text = App.GetLabelByKey("lbl_payMode") + "*";
@@ -163,51 +161,28 @@ namespace CERS
             popupexptype.IsVisible = false;
         }
 
-        private void Entry_expdate_Focused(object sender, FocusEventArgs e)
-        {
-            Entry_expdate.Unfocus();
-            MainThread.BeginInvokeOnMainThread(() =>
-            {
-                try
-                {
-                    datepicker_expdate.MaximumDate = Convert.ToDateTime(userDetails.ElementAt(0).ResultDate);
-                    // datepicker_expdate.MaximumDate = DateTime.Now;
-                    datepicker_expdate.Focus();
-                }
-                catch
-                {
-
-                }
-            });
-        }
-
         private void datepicker_expdate_DateSelected(object sender, DateChangedEventArgs e)
         {
-            expendituredateselected = e.NewDate.ToString("yyyy/MM/dd").Replace('-', '/');
-            Entry_expdate.Text = e.NewDate.ToString("dd/MM/yyyy").Replace('-', '/');
-            Console.WriteLine("dateselected====" + expendituredateselected);
-        }
-
-
-        private void Entry_paymentdate_Focused(object sender, FocusEventArgs e)
-        {
-            Entry_paymentdate.Unfocus();
-            MainThread.BeginInvokeOnMainThread(() =>
+            try
             {
-                try
-                {
-                    datepicker_paymentdate.MaximumDate = Convert.ToDateTime(userDetails.ElementAt(0).Resultdatethirtydays);
-                    // datepicker_paymentdate.MaximumDate = DateTime.Now;
-                    datepicker_paymentdate.Focus();
-                }
-                catch { }
-            });
+                datepicker_expdate.MaximumDate = Convert.ToDateTime(userDetails.ElementAt(0).ResultDate);
+            }
+            catch
+            {
+
+            }
+            expendituredateselected = e.NewDate.ToString("yyyy/MM/dd").Replace('-', '/');
+            Console.WriteLine("dateselected====" + expendituredateselected);
         }
 
         private void datepicker_paymentdate_DateSelected(object sender, DateChangedEventArgs e)
         {
+            try
+            {
+                datepicker_paymentdate.MaximumDate = Convert.ToDateTime(userDetails.ElementAt(0).Resultdatethirtydays);
+            }
+            catch { }
             paymentdateselected = e.NewDate.ToString("yyyy/MM/dd").Replace('-', '/');
-            Entry_paymentdate.Text = e.NewDate.ToString("dd/MM/yyyy").Replace('-', '/');
             Console.WriteLine("paymentdate====" + paymentdateselected);
         }
 
@@ -332,7 +307,7 @@ namespace CERS
         {
             try
             {
-                if (string.IsNullOrEmpty(Entry_expdate.Text))
+                if (string.IsNullOrEmpty(expendituredateselected))
                 {
                     await DisplayAlert(App.GetLabelByKey("AppName"), App.GetLabelByKey("Entry_expdate"), App.GetLabelByKey("close"));
                     return false;
@@ -365,7 +340,7 @@ namespace CERS
                     return false;
                 }
 
-                if (string.IsNullOrEmpty(Entry_paymentdate.Text))
+                if (string.IsNullOrEmpty(paymentdateselected))
                 {
                     await DisplayAlert(App.GetLabelByKey("AppName"), App.GetLabelByKey("Entry_paymentdate"), App.GetLabelByKey("close"));
                     return false;
