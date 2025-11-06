@@ -57,6 +57,7 @@ namespace CERS
             lbl_heading1.Text = App.GetLabelByKey("lbl_heading1");
             lbl_mandatory.Text = App.GetLabelByKey("lbl_mandatory");
             lbl_expdate.Text = App.GetLabelByKey("lbl_expdate") + "*";
+            Entry_expdate.Placeholder = App.GetLabelByKey("Entry_expdate");
             lbl_exptype.Text = App.GetLabelByKey("lbl_exptype") + "*";
             // picker_exptype.Title = App.GetLabelByKey("picker_exptype");
             lbl_popupexptype.Text = App.GetLabelByKey("tapexptype");
@@ -72,6 +73,7 @@ namespace CERS
             entry_amountoutstanding.Text = "0";
 
             lbl_paymentdate.Text = App.GetLabelByKey("lbl_paymentdate") + "*";
+            Entry_paymentdate.Placeholder = App.GetLabelByKey("Entry_paymentdate");
             lbl_voucherBillNumber.Text = App.GetLabelByKey("lbl_voucherBillNumber") + "*";
             entry_voucherBillNumber.Placeholder = App.GetLabelByKey("entry_voucherBillNumber");
             lbl_payMode.Text = App.GetLabelByKey("lbl_payMode") + "*";
@@ -114,24 +116,11 @@ namespace CERS
             try
             {
                 datepicker_expdate.MinimumDate = Convert.ToDateTime(userDetails.ElementAt(0).NominationDate);
-                datepicker_expdate.MaximumDate = Convert.ToDateTime(userDetails.ElementAt(0).ResultDate);
-                datepicker_expdate.Date = DateTime.Today; // Set default to current date
-                
                 datepicker_paymentdate.MinimumDate = Convert.ToDateTime(userDetails.ElementAt(0).NominationDate);
-                datepicker_paymentdate.MaximumDate = Convert.ToDateTime(userDetails.ElementAt(0).Resultdatethirtydays);
-                datepicker_paymentdate.Date = DateTime.Today; // Set default to current date
-                
-                // Initialize the selected date variables with current date
-                expendituredateselected = DateTime.Today.ToString("yyyy/MM/dd");
-                paymentdateselected = DateTime.Today.ToString("yyyy/MM/dd");
             }
             catch
             {
-                // Handle date parsing errors silently - still set defaults
-                datepicker_expdate.Date = DateTime.Today;
-                datepicker_paymentdate.Date = DateTime.Today;
-                expendituredateselected = DateTime.Today.ToString("yyyy/MM/dd");
-                paymentdateselected = DateTime.Today.ToString("yyyy/MM/dd");
+
             }
         }
         private void editor_exptype_Focused(object? sender, FocusEventArgs e)
@@ -174,71 +163,53 @@ namespace CERS
             popupexptype.IsVisible = false;
         }
 
+        private void Entry_expdate_Focused(object sender, FocusEventArgs e)
+        {
+            Entry_expdate.Unfocus();
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                try
+                {
+                    datepicker_expdate.MaximumDate = Convert.ToDateTime(userDetails.ElementAt(0).ResultDate);
+                    // datepicker_expdate.MaximumDate = DateTime.Now;
+                    datepicker_expdate.Focus();
+                }
+                catch
+                {
 
+                }
+            });
+        }
 
-// mgogo
-        // private void Entry_expdate_Focused(object? sender, FocusEventArgs e)
-        // {
-        //     Entry_expdate.Unfocus();
-        //     MainThread.BeginInvokeOnMainThread(() =>
-        //     {
-        //         try
-        //         {
-        //             datepicker_expdate.MaximumDate = Convert.ToDateTime(userDetails.ElementAt(0).ResultDate);
-        //             // datepicker_expdate.MaximumDate = DateTime.Now;
-        //             datepicker_expdate.Focus();
-        //         }
-        //         catch
-        //         {
-
-        //         }
-        //     });
-        // }
-
-
-
-
-        // private void datepicker_expdate_DateSelected(object? sender, DateChangedEventArgs e)
-        // {
-        //     expendituredateselected = e.NewDate.ToString("yyyy/MM/dd").Replace('-', '/');
-        //     Entry_expdate.Text = e.NewDate.ToString("dd/MM/yyyy").Replace('-', '/');
-        //     Console.WriteLine("dateselected====" + expendituredateselected);
-        // }
-
-        private void datepicker_expdate_DateSelected(object? sender, DateChangedEventArgs e)
+        private void datepicker_expdate_DateSelected(object sender, DateChangedEventArgs e)
         {
             expendituredateselected = e.NewDate.ToString("yyyy/MM/dd").Replace('-', '/');
+            Entry_expdate.Text = e.NewDate.ToString("dd/MM/yyyy").Replace('-', '/');
             Console.WriteLine("dateselected====" + expendituredateselected);
         }
 
 
-        // private void Entry_paymentdate_Focused(object? sender, FocusEventArgs e)
-        // {
-        //     Entry_paymentdate.Unfocus();
-        //     MainThread.BeginInvokeOnMainThread(() =>
-        //     {
-        //         try
-        //         {
-        //             datepicker_paymentdate.MaximumDate = Convert.ToDateTime(userDetails.ElementAt(0).Resultdatethirtydays);
-        //             // datepicker_paymentdate.MaximumDate = DateTime.Now;
-                    
-        //             // Make the DatePicker visible and focusable
-        //             datepicker_paymentdate.IsVisible = true;
-        //             datepicker_paymentdate.Focus();
-        //         }
-        //         catch 
-        //         {
-        //             // Fallback - make DatePicker visible even if date parsing fails
-        //             datepicker_paymentdate.IsVisible = true;
-        //     });
-        // }
+        private void Entry_paymentdate_Focused(object sender, FocusEventArgs e)
+        {
+            Entry_paymentdate.Unfocus();
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                try
+                {
+                    datepicker_paymentdate.MaximumDate = Convert.ToDateTime(userDetails.ElementAt(0).Resultdatethirtydays);
+                    // datepicker_paymentdate.MaximumDate = DateTime.Now;
+                    datepicker_paymentdate.Focus();
+                }
+                catch { }
+            });
+        }
 
-        //     Console.WriteLine("paymentdate====" + paymentdateselected);
-            
-        //     // Hide the DatePicker after selection
-        //     datepicker_paymentdate.IsVisible = false;
-        // }
-
+        private void datepicker_paymentdate_DateSelected(object sender, DateChangedEventArgs e)
+        {
+            paymentdateselected = e.NewDate.ToString("yyyy/MM/dd").Replace('-', '/');
+            Entry_paymentdate.Text = e.NewDate.ToString("dd/MM/yyyy").Replace('-', '/');
+            Console.WriteLine("paymentdate====" + paymentdateselected);
+        }
 
         private void picker_payMode_SelectedIndexChanged(object? sender, EventArgs e)
         {
@@ -264,12 +235,6 @@ namespace CERS
                     entry_voucherBillNumber.Placeholder = App.GetLabelByKey("entertransactionno");
                 }
             }
-        }
-
-        private void datepicker_paymentdate_DateSelected(object? sender, DateChangedEventArgs e)
-        {
-            paymentdateselected = e.NewDate.ToString("yyyy/MM/dd").Replace('-', '/');
-            Console.WriteLine("paymentdate====" + paymentdateselected);
         }
 
         public async void btn_uploaddoc_Clicked(object? sender, EventArgs e)
@@ -367,7 +332,7 @@ namespace CERS
         {
             try
             {
-                if (string.IsNullOrEmpty(expendituredateselected))
+                if (string.IsNullOrEmpty(Entry_expdate.Text))
                 {
                     await DisplayAlert(App.GetLabelByKey("AppName"), App.GetLabelByKey("Entry_expdate"), App.GetLabelByKey("close"));
                     return false;
@@ -400,7 +365,7 @@ namespace CERS
                     return false;
                 }
 
-                if (string.IsNullOrEmpty(paymentdateselected))
+                if (string.IsNullOrEmpty(Entry_paymentdate.Text))
                 {
                     await DisplayAlert(App.GetLabelByKey("AppName"), App.GetLabelByKey("Entry_paymentdate"), App.GetLabelByKey("close"));
                     return false;

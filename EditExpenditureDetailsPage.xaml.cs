@@ -432,20 +432,9 @@ namespace CERS
                         entry_voucherBillNumber.Text, paymodecode, entry_payeeName.Text, entry_payeeAddress.Text,
                         entry_sourceMoney.Text, entry_remarks.Text, doc1
                         );
-                    
                     if (response_savedata == 200)
                     {
-                        // Sync server data to local database before navigating back
-                        await service.ExpenditureDetails_Get();
-                        
-                        Loading_activity.IsVisible = false;
-                        
-                        // Application.Current!.MainPage = new NavigationPage(new DashboardPage());
-                        await Navigation.PopToRootAsync(); // Go back to Dashboard properly
-                    }
-                    else
-                    {
-                        Loading_activity.IsVisible = false;
+                        Application.Current!.MainPage = new NavigationPage(new DashboardPage());
                     }
                 }
                 catch (Exception ex)
@@ -534,82 +523,37 @@ namespace CERS
             }
             return true;
         }
-        // private void Tab_Home_Tapped(object? sender, EventArgs e)
-        // {
-        //     Preferences.Set("Active", 0);
-        //     Application.Current!.MainPage = new NavigationPage(new DashboardPage());
-        // }
-        // Replace Tab navigation methods:
-        private async void Tab_Home_Tapped(object? sender, EventArgs e)
+
+        private void Tab_Home_Tapped(object? sender, EventArgs e)
         {
             Preferences.Set("Active", 0);
-            await Navigation.PopToRootAsync(); // Instead of replacing MainPage
+            Application.Current!.MainPage = new NavigationPage(new DashboardPage());
         }
 
-        // private void Tab_New_Tapped(object? sender, EventArgs e)
-        // {
-        //     /*Preferences.Set("Active", 1);
-        //     Application.Current.MainPage = new NavigationPage(new AddExpenditureDetailsPage());*/
-        //     DateTime currentdate = DateTime.Now;
-        //     userDetails = userDetailsDatabase.GetUserDetails("Select * from UserDetails").ToList();
-        //     DateTime resultdateadd30 = DateTime.Parse(userDetails.ElementAt(0).Resultdatethirtydays);
-        //     if (currentdate >= resultdateadd30)
-        //     {
-        //         DisplayAlert(App.GetLabelByKey("AppName"), App.GetLabelByKey("expensedateover"), App.Btn_Close);
-        //     }
-        //     else
-        //     {
-        //         Preferences.Set("Active", 1);
-        //         Application.Current!.MainPage = new NavigationPage(new AddExpenditureDetailsPage());
-        //     }
-
-        // }
-
-
-        // private void Tab_New_Tapped(object? sender, EventArgs e)
-        // {
-        //     /*Preferences.Set("Active", 1);
-        //     Application.Current.MainPage = new NavigationPage(new AddExpenditureDetailsPage());*/
-        //     DateTime currentdate = DateTime.Now;
-        //     userDetails = userDetailsDatabase.GetUserDetails("Select * from UserDetails").ToList();
-        //     DateTime resultdateadd30 = DateTime.Parse(userDetails.ElementAt(0).Resultdatethirtydays);
-
-        //     // mgogo - Date validation bypassed
-        //     // if (currentdate >= resultdateadd30)
-        //     // {
-        //     //     DisplayAlert(App.GetLabelByKey("AppName"), App.GetLabelByKey("expensedateover"), App.Btn_Close);
-        //     // }
-        //     // else
-        //     // {
-        //     //     Preferences.Set("Active", 1);
-        //     //     Application.Current!.MainPage = new NavigationPage(new AddExpenditureDetailsPage());
-        //     // }
-
-        //     // Direct navigation - bypass date check
-        //     Preferences.Set("Active", 1);
-        //     Application.Current!.MainPage = new NavigationPage(new AddExpenditureDetailsPage());
-        // }
-
-        private async void Tab_New_Tapped(object? sender, EventArgs e)
+        private void Tab_New_Tapped(object? sender, EventArgs e)
         {
-            Preferences.Set("Active", 1);
-            await Navigation.PushAsync(new AddExpenditureDetailsPage()); // Proper navigation
+            /*Preferences.Set("Active", 1);
+            Application.Current.MainPage = new NavigationPage(new AddExpenditureDetailsPage());*/
+            DateTime currentdate = DateTime.Now;
+            userDetails = userDetailsDatabase.GetUserDetails("Select * from UserDetails").ToList();
+            DateTime resultdateadd30 = DateTime.Parse(userDetails.ElementAt(0).Resultdatethirtydays);
+            if (currentdate >= resultdateadd30)
+            {
+                DisplayAlert(App.GetLabelByKey("AppName"), App.GetLabelByKey("expensedateover"), App.Btn_Close);
+            }
+            else
+            {
+                Preferences.Set("Active", 1);
+                Application.Current!.MainPage = new NavigationPage(new AddExpenditureDetailsPage());
+            }
+
         }
 
-        // private void Tab_Settings_Tapped(object? sender, EventArgs e)
-        // {
-        //     Preferences.Set("Active", 2);
-        //     Application.Current!.MainPage = new NavigationPage(new MorePage());
-
-        // }
-        
-        
-
-
-        private async void Tab_Settings_Tapped(object? sender, EventArgs e)
+        private void Tab_Settings_Tapped(object? sender, EventArgs e)
         {
             Preferences.Set("Active", 2);
-            await Navigation.PushAsync(new MorePage()); // Proper navigation
+            Application.Current!.MainPage = new NavigationPage(new MorePage());
+
         }
 
     }

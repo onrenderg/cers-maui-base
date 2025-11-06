@@ -113,22 +113,19 @@ namespace CERS
 
         private void Tab_New_Tapped(object sender, EventArgs e)
         {
-            /*Preferences.Set("Active", 1);
-            Application.Current.MainPage = new NavigationPage(new AddExpenditureDetailsPage());*/
             DateTime currentdate = DateTime.Now;
             List<UserDetails> userDetails;
             userDetails = userDetailsDatabase.GetUserDetails("Select * from UserDetails").ToList();
             DateTime resultdateadd30 = DateTime.Parse(userDetails.ElementAt(0).Resultdatethirtydays);
-            // mgogo
-            // if (currentdate >= resultdateadd30)
-            // {
-            //     DisplayAlert(App.GetLabelByKey("AppName"), App.GetLabelByKey("expensedateover"), App.Btn_Close);
-            // }
-            // else
-            // {
+            if (currentdate >= resultdateadd30)
+            {
+                DisplayAlert(App.GetLabelByKey("AppName"), App.GetLabelByKey("expensedateover"), App.Btn_Close);
+            }
+            else
+            {
                 Preferences.Set("Active", 1);
                 Application.Current!.MainPage = new NavigationPage(new AddExpenditureDetailsPage());
-            // }
+            }
 
         }
 

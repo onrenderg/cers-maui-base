@@ -38,15 +38,6 @@ namespace CERS
         {
             base.OnAppearing();
             userDetails = userDetailsDatabase.GetUserDetails("Select * from UserDetails").ToList();
-            
-            // Check if userDetails has data before accessing
-            if (userDetails == null || userDetails.Count == 0)
-            {
-                expstatus = string.Empty;
-                lbl_heading.Text = "No User Data";
-                return;
-            }
-            
             expstatus = userDetails.ElementAt(0).ExpStatus;
 
             lbl_heading.Text = App.setselfagentuserheading();
@@ -87,34 +78,29 @@ namespace CERS
                     DateTime currentdate = DateTime.Now;
                     DateTime resultdateadd30 = DateTime.Parse(userDetails.ElementAt(0).Resultdatethirtydays);
 
-                    //mgogog
-                    // if (resultdateadd30 >= currentdate)
-                    // {
-                    //     btn_finalsubmit.IsVisible = true;
-                    // }
-                    // else
-                    // {
-                    //     btn_finalsubmit.IsVisible = false;
-                    // }
-                btn_finalsubmit.IsVisible = true; // Show button even if date parsing fails
+                    if (resultdateadd30 >= currentdate)
+                    {
+                        btn_finalsubmit.IsVisible = true;
+                    }
+                    else
+                    {
+                        btn_finalsubmit.IsVisible = false;
+                    }
                 }
                 catch 
                 {
-                    btn_finalsubmit.IsVisible = true; // Show button even if date parsing fails
 
                 }              
             }
 
             expenditureDetailsformstatuslist = expenditureDetailsDatabase.GetExpenditureDetails(
                     "Select * from ExpenditureDetails where ExpStatus='F'").ToList();
-                    //mgogo
-
             if (expenditureDetailsformstatuslist.Any())
             {
                 lbl_tapfooter.Text = App.GetLabelByKey("taptoviewentry1");
                 lbl_tapfooter1.Text = App.GetLabelByKey("obsremavailable");
                 btn_finalsubmit.IsVisible = false;
-                // btn_form46.IsVisible = true;
+                btn_form46.IsVisible = true;
             }
             else
             {
@@ -144,16 +130,6 @@ namespace CERS
             Footer_Images[Preferences.Get("Active", 0)].Source = Footer_Image_Source[Preferences.Get("Active", 0)];
             Footer_Labels[Preferences.Get("Active", 0)].TextColor = Color.FromArgb("#0f0f0f");
             lbl_heading1.Text = App.GetLabelByKey("lbl_heading1");
-            
-            // Refresh the ListView with updated data based on current radio button selection
-            if (rb_exptype.IsChecked)
-            {
-                loadexptypewisedata();
-            }
-            else if (rb_expdate.IsChecked)
-            {
-                loadexpdatewisedata();
-            }
         }
 
         private void ViewCell_Appearing(object sender, EventArgs e)
@@ -252,7 +228,7 @@ namespace CERS
             }
             catch
             {
-                // Handle exception silently
+                lbl_lastupdated.Text = App.GetLabelByKey("LastUpdated") + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
             }
         }
 
@@ -264,31 +240,29 @@ namespace CERS
 
         private async void Tab_New_Tapped(object sender, EventArgs e)
         {
-            // DATE CHECK FIRST
-            DateTime currentdate = DateTime.Now;
-            userDetails = userDetailsDatabase.GetUserDetails("Select * from UserDetails").ToList();
-            DateTime resultdateadd30;
-            try
+            if (!expstatus.Equals("F"))
             {
-                resultdateadd30 = DateTime.Parse(userDetails.ElementAt(0).Resultdatethirtydays);
-                // if (currentdate >= resultdateadd30) // mgogo bypass date check citi
-                if (currentdate >= resultdateadd30 && false) // TEMPORARY DATE CHECK BYPASS
+                DateTime currentdate = DateTime.Now;
+                userDetails = userDetailsDatabase.GetUserDetails("Select * from UserDetails").ToList();
+                DateTime resultdateadd30;
+                try
                 {
-                    await DisplayAlert(App.GetLabelByKey("AppName"), App.GetLabelByKey("expensedateover"), App.Btn_Close);
-                    return; // Stop here if date expired
+                    resultdateadd30 = DateTime.Parse(userDetails.ElementAt(0).Resultdatethirtydays);
+                    if (currentdate >= resultdateadd30)
+                    {
+                        await DisplayAlert(App.GetLabelByKey("AppName"), App.GetLabelByKey("expensedateover"), App.Btn_Close);
+                    }
+                    else
+                    {
+                        Preferences.Set("Active", 1);
+                        Application.Current!.MainPage = new NavigationPage(new AddExpenditureDetailsPage());
+                    }
                 }
-            }
-            catch
-            {
-                // If date parsing fails, continue to other checks
-            }
-
-            // THEN EXPSTATUS CHECK
-            // if (!expstatus.Equals("F")) // mgogo bypass exp check 
-            if (!expstatus.Equals("F") || true)
-            {
-                Preferences.Set("Active", 1);
-                Application.Current!.MainPage = new NavigationPage(new AddExpenditureDetailsPage());
+                catch
+                {
+                    Preferences.Set("Active", 1);
+                    Application.Current!.MainPage = new NavigationPage(new AddExpenditureDetailsPage());
+                }
             }
             else
             {
@@ -296,32 +270,31 @@ namespace CERS
             }
         }
 
-// @mgogo  bypass
         private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
-            // DATE CHECK FIRST
-            DateTime currentdate = DateTime.Now;
-            userDetails = userDetailsDatabase.GetUserDetails("Select * from UserDetails").ToList();
-            DateTime resultdateadd30;
-            try
+            if (!expstatus.Equals("F"))
             {
-                resultdateadd30 = DateTime.Parse(userDetails.ElementAt(0).Resultdatethirtydays);
-                if (currentdate >= resultdateadd30 && false) // TEMPORARY DATE CHECK BYPASS
+                DateTime currentdate = DateTime.Now;
+                userDetails = userDetailsDatabase.GetUserDetails("Select * from UserDetails").ToList();
+                DateTime resultdateadd30;
+                try
                 {
-                    await DisplayAlert(App.GetLabelByKey("AppName"), App.GetLabelByKey("expensedateover"), App.Btn_Close);
-                    return; // Stop here if date expired
+                    resultdateadd30 = DateTime.Parse(userDetails.ElementAt(0).Resultdatethirtydays);
+                    if (currentdate >= resultdateadd30)
+                    {
+                        await DisplayAlert(App.GetLabelByKey("AppName"), App.GetLabelByKey("expensedateover"), App.Btn_Close);
+                    }
+                    else
+                    {
+                        Preferences.Set("Active", 1);
+                        Application.Current!.MainPage = new NavigationPage(new AddExpenditureDetailsPage());
+                    }
                 }
-            }
-            catch
-            {
-                // If date parsing fails, continue to other checks
-            }
-
-            // THEN EXPSTATUS CHECK
-            if (!expstatus.Equals("F") || true)
-            {
-                Preferences.Set("Active", 1);
-                Application.Current!.MainPage = new NavigationPage(new AddExpenditureDetailsPage());
+                catch
+                {
+                    Preferences.Set("Active", 1);
+                    Application.Current!.MainPage = new NavigationPage(new AddExpenditureDetailsPage());
+                }
             }
             else
             {
@@ -348,15 +321,15 @@ namespace CERS
             string expendselected;
             if (rb_exptype.IsChecked)
             {
-                string expCode = currentRecord?.expCode?.ToString() ?? "";
+                string expCode = currentRecord.expCode.ToString();
                 expendselected = "type";
                 Navigation.PushAsync(new ViewExpenditureDetailsPage(expendselected, expCode, ""));
 
             }
             else if (rb_expdate.IsChecked)
             {
-                string expdate = currentRecord?.expDate?.ToString() ?? "";
-                string expdatetodisplay = currentRecord?.expDateDisplay?.ToString() ?? "";
+                string expdate = currentRecord.expDate.ToString();
+                string expdatetodisplay = currentRecord.expDateDisplay.ToString();
                 expendselected = "date";
                 Navigation.PushAsync(new ViewExpenditureDetailsPage(expendselected, expdate, expdatetodisplay));
             }
@@ -391,7 +364,7 @@ namespace CERS
         private void btn_form46_Clicked(object sender, EventArgs e)
         {
             var service = new HitServices();
-            string url = HitServices.baseurl + $"GetDeclarationPdf.aspx?MobileNo={usermobileno}";
+            string url = service.baseurl + $"GetDeclarationPdf.aspx?MobileNo={usermobileno}";
             Launcher.OpenAsync(url);
         }
 
