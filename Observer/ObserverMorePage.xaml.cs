@@ -90,8 +90,7 @@ namespace CERS.Observer
 
         private void policytapped(object sender, EventArgs e)
         {
-            var service = new HitServices();
-            Navigation.PushAsync(new LoadWebViewPage(service.PrivacyPolicyUrl));
+            Navigation.PushAsync(new LoadWebViewPage(HitServices.PrivacyPolicyUrl));
         }
 
         private async void logoutTapped(object sender, EventArgs e)

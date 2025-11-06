@@ -533,7 +533,7 @@ _allExpenditures = observerExpenditureDetailsList;
             var current = Connectivity.NetworkAccess;
             if (current == NetworkAccess.Internet)
             {
-                string url = service.baseurl + "ViewPDF.aspx?" + $"ExpenseID={expenseid}";
+                string url = HitServices.baseurl + "ViewPDF.aspx?" + $"ExpenseID={expenseid}";
                 await Launcher.OpenAsync(url);
             }
             else
